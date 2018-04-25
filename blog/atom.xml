@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://mozilla.github.io/application-services/application-services/blog</id>
+    <title>Firefox Application Services Blog</title>
+    <updated>2018-04-18T06:00:00Z</updated>
+    <generator>Feed for Node.js</generator>
+    <link rel="alternate" href="https://mozilla.github.io/application-services/application-services/blog"/>
+    <subtitle>The best place to stay up-to-date with the latest Firefox Application Services news and events.</subtitle>
+    <logo>https://mozilla.github.io/application-services/application-services/img/app-services.svg</logo>
+    <rights>Copyright © 2018 Firefox Application Services</rights>
+    <entry>
+        <title type="html"><![CDATA[Firefox Accounts Train-109]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html">
+        </link>
+        <updated>2018-04-18T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>This week we shipped FxA train-109 to production,
+with the following highlights:</p>
+]]></summary>
+        <author>
+            <name>Vlad Filippov</name>
+            <uri>https://twitter.com/vladikoff</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Changing your primary email in Firefox Accounts]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/03/08/fxa-primary-email.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/03/08/fxa-primary-email.html">
+        </link>
+        <updated>2018-03-08T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>The Firefox Accounts team recently introduced the ability for a user to change their primary email address. Being one of the main developers to work this feature, I wanted to share my experience and give a summary on what it took to get this feature to our users.</p>
+]]></summary>
+        <author>
+            <name>Vijay Budhram</name>
+        </author>
+    </entry>
+</feed>

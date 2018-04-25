@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Firefox Application Services Blog</title>
+        <link>https://mozilla.github.io/application-services/application-services/blog</link>
+        <description>The best place to stay up-to-date with the latest Firefox Application Services news and events.</description>
+        <lastBuildDate>Wed, 18 Apr 2018 06:00:00 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>Feed for Node.js</generator>
+        <image>
+            <title>Firefox Application Services Blog</title>
+            <url>https://mozilla.github.io/application-services/application-services/img/app-services.svg</url>
+            <link>https://mozilla.github.io/application-services/application-services/blog</link>
+        </image>
+        <copyright>Copyright © 2018 Firefox Application Services</copyright>
+        <item>
+            <title><![CDATA[Firefox Accounts Train-109]]></title>
+            <link>https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html</link>
+            <guid>https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html</guid>
+            <pubDate>Wed, 18 Apr 2018 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>This week we shipped FxA train-109 to production,
+with the following highlights:</p>
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Changing your primary email in Firefox Accounts]]></title>
+            <link>https://mozilla.github.io/application-services/application-services/blog/2018/03/08/fxa-primary-email.html</link>
+            <guid>https://mozilla.github.io/application-services/application-services/blog/2018/03/08/fxa-primary-email.html</guid>
+            <pubDate>Thu, 08 Mar 2018 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>The Firefox Accounts team recently introduced the ability for a user to change their primary email address. Being one of the main developers to work this feature, I wanted to share my experience and give a summary on what it took to get this feature to our users.</p>
+]]></description>
+        </item>
+    </channel>
+</rss>
