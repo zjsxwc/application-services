@@ -4,7 +4,7 @@
         <title>Firefox Application Services Blog</title>
         <link>https://mozilla.github.io/application-services/application-services/blog</link>
         <description>The best place to stay up-to-date with the latest Firefox Application Services news and events.</description>
-        <lastBuildDate>Wed, 18 Apr 2018 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 03 May 2018 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,15 @@
             <link>https://mozilla.github.io/application-services/application-services/blog</link>
         </image>
         <copyright>Copyright © 2018 Firefox Application Services</copyright>
+        <item>
+            <title><![CDATA[Firefox Accounts Train-110]]></title>
+            <link>https://mozilla.github.io/application-services/application-services/blog/2018/05/03/fxa-train-110.html</link>
+            <guid>https://mozilla.github.io/application-services/application-services/blog/2018/05/03/fxa-train-110.html</guid>
+            <pubDate>Thu, 03 May 2018 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>This week we shipped FxA train-110 to production,
+with the following highlights:</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Firefox Accounts Train-109]]></title>
             <link>https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html</link>
