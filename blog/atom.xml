@@ -2,12 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://mozilla.github.io/application-services/application-services/blog</id>
     <title>Firefox Application Services Blog</title>
-    <updated>2018-05-03T06:00:00Z</updated>
+    <updated>2018-05-15T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://mozilla.github.io/application-services/application-services/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Firefox Application Services news and events.</subtitle>
     <logo>https://mozilla.github.io/application-services/application-services/img/app-services.svg</logo>
     <rights>Copyright © 2018 Firefox Application Services</rights>
+    <entry>
+        <title type="html"><![CDATA[Firefox Accounts Train-111 🦔]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/05/15/fxa-train-111.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/05/15/fxa-train-111.html">
+        </link>
+        <updated>2018-05-15T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>This week we shipped FxA train-111 to production,
+with the following highlights:</p>
+]]></summary>
+        <author>
+            <name>Vijay Budhram</name>
+            <uri>https://twitter.com/vbudhram</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-110]]></title>
         <id>https://mozilla.github.io/application-services/application-services/blog/2018/05/03/fxa-train-110.html</id>
