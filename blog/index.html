@@ -9,29 +9,7 @@
 users to opt into two-step authentication. If you enable this feature,
 then in addition to your password, an additional security code will be
 required to log in.</p>
-<p>We chose to implement this feature
-using the well-known authentication standard TOTP (Time-based One-Time Password).
-TOTP codes can be generated using a variety of authenticator applications. For example, Google Authenticator, Duo and Authy all support generating TOTP codes.</p>
-<p>Additionally, we added support for single-use recovery codes in the event
-you lose access to the TOTP application. It is recommend that you save your
-recovery codes in a safe spot since they can be used to bypass TOTP.</p>
-<p>To enable two-step authentication, go to your Firefox Accounts <a href="https://accounts.firefox.com/settings">preferences</a> and
-click “Enable” on the “Two-step authentication” panel.</p>
-<p><img src="/application-services/img/blog/2018-05-24/open_menu.gif" alt=""></p>
-<p>Note: If you do not see the Two-step authentication panel, you can manually enable
-it by following these <a href="https://support.mozilla.org/en-US/kb/secure-firefox-account-two-step-authentication">instructions</a>.</p>
-<p>Using one of the authenticator applications, scan the QR code and then enter
-the security code it displays. Doing this will confirm your device, enable
-TOTP and show your recovery codes.</p>
-<p><img src="/application-services/img/blog/2018-05-24/save_2fa.gif" alt=""></p>
-<p>Note: After setup, make sure you download and save your recovery codes in a
-safe location! You will not be able to see them again, unless you generate new ones.</p>
-<p>Once two-step authentication is enabled, every login will require a
-security code from your TOTP device.</p>
-<p><img src="/application-services/img/blog/2018-05-24/2fa_login.png" alt=""></p>
-<p>Thanks to everyone that helped to work on this feature including UX designers,
-engineers, quality assurance and security teams!</p>
-</span></div></article></div><div class="post"><header class="postHeader"><h1><a href="/application-services/blog/2018/05/15/fxa-train-111.html">Firefox Accounts Train-111 🦔</a></h1><p class="post-meta">May 15, 2018</p><div class="authorBlock"><p class="post-authorName"><a href="https://github.com/vbudhram" target="_blank">Vijay Budhram</a></p></div></header><article class="post-content"><div><span><p>This week we shipped FxA train-111 to production,
+</span></div><div class="read-more"><a class="button" href="/application-services/blog/2018/05/24/two-step-authentication-in-firefox-accounts.html">Read More</a></div></article></div><div class="post"><header class="postHeader"><h1><a href="/application-services/blog/2018/05/15/fxa-train-111.html">Firefox Accounts Train-111 🦔</a></h1><p class="post-meta">May 15, 2018</p><div class="authorBlock"><p class="post-authorName"><a href="https://github.com/vbudhram" target="_blank">Vijay Budhram</a></p></div></header><article class="post-content"><div><span><p>This week we shipped FxA train-111 to production,
 with the following highlights:</p>
 </span></div><div class="read-more"><a class="button" href="/application-services/blog/2018/05/15/fxa-train-111.html">Read More</a></div></article></div><div class="post"><header class="postHeader"><h1><a href="/application-services/blog/2018/05/03/fxa-train-110.html">Firefox Accounts Train-110</a></h1><p class="post-meta">May 3, 2018</p><div class="authorBlock"><p class="post-authorName"><a href="https://twitter.com/vladikoff" target="_blank">Vlad Filippov</a></p></div></header><article class="post-content"><div><span><p>This week we shipped FxA train-110 to production,
 with the following highlights:</p>
