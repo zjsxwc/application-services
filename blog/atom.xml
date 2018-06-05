@@ -9,7 +9,7 @@
     <logo>https://mozilla.github.io/application-services/application-services/img/app-services.svg</logo>
     <rights>Copyright © 2018 Firefox Application Services</rights>
     <entry>
-        <title type="html"/>
+        <title type="html"><![CDATA[Firefox Accounts Train-112]]></title>
         <id>https://mozilla.github.io/application-services/application-services/blog/2018/06/04/fxa-train-112.html</id>
         <link href="https://mozilla.github.io/application-services/application-services/blog/2018/06/04/fxa-train-112.html">
         </link>
@@ -19,6 +19,8 @@
 with the following highlights:</p>
 ]]></summary>
         <author>
+            <name>Shane Tomlinson</name>
+            <uri>https://github.com/shane-tomlinson</uri>
         </author>
     </entry>
     <entry>
