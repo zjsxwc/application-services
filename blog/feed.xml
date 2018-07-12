@@ -4,7 +4,7 @@
         <title>Firefox Application Services Blog</title>
         <link>https://mozilla.github.io/application-services/application-services/blog</link>
         <description>The best place to stay up-to-date with the latest Firefox Application Services news and events.</description>
-        <lastBuildDate>Wed, 20 Jun 2018 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 11 Jul 2018 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,14 @@
             <link>https://mozilla.github.io/application-services/application-services/blog</link>
         </image>
         <copyright>Copyright © 2018 Firefox Application Services</copyright>
+        <item>
+            <title><![CDATA[Firefox Accounts Android Component]]></title>
+            <link>https://mozilla.github.io/application-services/application-services/blog/2018/07/11/android-component.html</link>
+            <guid>https://mozilla.github.io/application-services/application-services/blog/2018/07/11/android-component.html</guid>
+            <pubDate>Wed, 11 Jul 2018 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>The initial version of the Firefox Accounts Android component has been released as part of <a href="https://github.com/mozilla-mobile/android-components/releases">android-components 0.12</a> several weeks ago.</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Firefox Accounts Train-113]]></title>
             <link>https://mozilla.github.io/application-services/application-services/blog/2018/06/20/fxa-train-113.html</link>

@@ -2,12 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://mozilla.github.io/application-services/application-services/blog</id>
     <title>Firefox Application Services Blog</title>
-    <updated>2018-06-20T06:00:00Z</updated>
+    <updated>2018-07-11T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://mozilla.github.io/application-services/application-services/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Firefox Application Services news and events.</subtitle>
     <logo>https://mozilla.github.io/application-services/application-services/img/app-services.svg</logo>
     <rights>Copyright © 2018 Firefox Application Services</rights>
+    <entry>
+        <title type="html"><![CDATA[Firefox Accounts Android Component]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/07/11/android-component.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/07/11/android-component.html">
+        </link>
+        <updated>2018-07-11T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>The initial version of the Firefox Accounts Android component has been released as part of <a href="https://github.com/mozilla-mobile/android-components/releases">android-components 0.12</a> several weeks ago.</p>
+]]></summary>
+        <author>
+            <name>Vlad Filippov</name>
+            <uri>https://github.com/vladikoff</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-113]]></title>
         <id>https://mozilla.github.io/application-services/application-services/blog/2018/06/20/fxa-train-113.html</id>
