@@ -1,0 +1,168 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Frequently Asked Questions · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Frequently Asked Questions · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/application-services/index.html"/><meta property="og:description" content="### When do syncs occur?"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Firefox Sync</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Firefox Sync</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/file-desktop-bug.html">Filing a Desktop bug</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/application-services/docs/sync/faq.html">FAQ</a></li></ul></div><div class="navGroup navGroupActive"><h3>Testing</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/tps.html">TPS</a></li></ul></div><div class="navGroup navGroupActive"><h3>Design Docs</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/extension-storage.html">Extension Storage</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/state-machines.html">State Machines</a></li></ul></div><div class="navGroup navGroupActive"><h3>Team</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/canned-bug-responses.html">Canned Bug Responses</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/redash.html">Redash</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>Frequently Asked Questions</h1></header><article><div><span><h3><a class="anchor" aria-hidden="true" id="when-do-syncs-occur"></a><a href="#when-do-syncs-occur" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>When do syncs occur?</h3>
+<ul>
+<li>Sync uses a timer for regularly scheduled syncs. The time between
+syncs varies in some conditions (eg, it is increased when the device
+is idle) but in general, a single-device account syncs once per
+hour, where multi-device accounts sync once every 10 minutes.</li>
+<li>In addition, Sync maintains a &quot;score&quot; and syncs when reaches a
+threshold, with different types of data contributing a different
+score. For example, a bookmark, password and addon change causes a
+large score increment, so a Sync will start on every bookmark,
+password or addon change. However, new history and tab entries cause
+a smaller increment so a Sync is not performed every time the user
+visits a new page.</li>
+<li>Syncs always happen immediately when the user presses the “Sync Now”
+button in the hamburger menu.</li>
+</ul>
+<p><strong>Server states</strong></p>
+<ul>
+<li>Server can send status codes (503) to &quot;backoff&quot; the Sync interval to
+a server-specified value in the unlikely event of infrastructure
+issues affecting the service.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="how-much-data-syncs"></a><a href="#how-much-data-syncs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How much data syncs?</h3>
+<p><strong>First Sync, or the unusual case of the user being moved to a new Sync
+server</strong></p>
+<ul>
+<li>In this case we fetch all items on the server and apply them locally
+if they don’t already exist. After fetching all items we also look
+for local items that are not on the server and upload these missing
+items - although in the case of “history” we only upload the last 30
+days of visits.</li>
+</ul>
+<p><strong>Subsequent Syncs:</strong></p>
+<ul>
+<li>Sync stores the “last modified” timestamp sent by the server, and
+only fetches new items the server reports has changed since that
+timestamp. Thus, it is not uncommon for a Sync to ask the server for
+new items and be told there are none.</li>
+<li>The client also keeps track of which items have changed locally
+since the last Sync (eg, new bookmarks, new history visits, etc) and
+uploads these entries to the server.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="when-can-users-lose-data"></a><a href="#when-can-users-lose-data" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>When can users lose data?</h3>
+<p>In general, for a user to lose all their Sync data, 2 events must happen
+at the same time:</p>
+<ul>
+<li>The copy of the data on the server is lost</li>
+<li>The copy of the data on each of their devices is lost</li>
+</ul>
+<p>If either of these events happens by itself, Sync will generally recover
+correctly:</p>
+<ul>
+<li>If the server data is lost, it will be repopulated the next time a
+client Syncs.</li>
+<li>If a client is lost, a new client can be connected to the Sync
+account and the data from the server will be pulled down.</li>
+</ul>
+<p>Note that the server data will be lost in 2 main scenarios:</p>
+<ul>
+<li>The encryption used by Sync means that if a user’s password is reset
+(not simply changed), then the data on the server is unable to be
+decrypted. While the data isn’t actually “lost” in this case, it
+might as well be.</li>
+<li>Due to an infrastructure issue with the Sync servers, the user was
+moved to a different Sync server with no data, in the expectation
+that a client will soon Sync and re-upload the data.</li>
+</ul>
+<p>While the above considerations mean that in most cases Sync will recover
+from either a client or server loss, there are a couple of edge-cases
+that makes this unreliable for some users.</p>
+<ul>
+<li>Single device users who have “lost” their only existing device and
+reset their password - in this case the data is lost on the server
+and the only device with a copy of the data no longer exists.</li>
+<li>Single device users who have “lost” their only existing device, and
+are unlucky enough that this corresponds to when an infrastructure
+issue means they have been moved to a different server.</li>
+<li>As above, but for multi-device users who have lost all their
+existing devices.</li>
+</ul>
+<p>As a first sync can often take a long time to complete, we believe that
+some users will also perceive their data as being lost after
+reconnecting their device but before Sync has dragged it all down to the
+new device.</p>
+<p>Note that work is underway to try and reduce these bad scenarios:</p>
+<ul>
+<li>We are considering giving users the choice of using a slightly
+different encryption scheme that will not lose all their data in the
+case of a password reset in exchange for slightly less security of
+their data (ie, mozilla will then hold a key capable of decrypting
+their data). The big challenge here is around UX - how to we
+succinctly explain the tradeoffs and offer that choice so the user
+can make an informed choice?</li>
+<li>We are working on the server infrastructure so the failure of a
+single Sync server will not lose the data - so the data is carried
+across to the new Sync server for that user.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="when-will-client-upload-or-fetch-all-data"></a><a href="#when-will-client-upload-or-fetch-all-data" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>When will client upload or fetch all data?</h3>
+<ul>
+<li>Server node is moved or lost, or user reset their password such that
+the existing data can not be decrypted.</li>
+<li>New device is added and will fetch all data, and upload any local
+data not already on the server.</li>
+</ul>
+<p>What are known situations where a client could corrupt data? The main
+cause of “corruption” is when a change made locally on a device is not
+uploaded to the server. Depending in the data, the perceived level of
+corruption differs.</p>
+<ul>
+<li>For most data, this just appears to the user as though Sync hasn’t
+got the complete data - for example, a history entry or password may
+not appear on all devices. In general, the user perceives the data
+as “missing” rather than “corrupt”</li>
+<li>For bookmarks in particular, the issue is more complex - for
+example, if a single item for a bookmark folder is missing but the
+bookmarks within that folder do exist, Sync can’t reliably replicate
+the bookmarks tree. In general it will then place these child
+bookmarks in the “unfiled bookmarks” folder. The user will often
+perceive this as real corruption as not only are items missing, but
+the tree structure for items that do exist is wrong.</li>
+</ul>
+<p>Unfortunately there are a number of cases where Sync will fail to detect
+a local change, and thus will not upload that change to the server.
+These include:</p>
+<ul>
+<li>User adds/removes item before sync has initialized at startup.</li>
+<li>User makes changes during a sync.</li>
+<li>Client network interrupted during upload of data meaning only
+partial data is on the server. While this is likely to be fixed by
+the next Sync of this client, there is a possibility other devices
+will Sync in the meantime and apply this partial data.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="can-a-client-control-sync-policies"></a><a href="#can-a-client-control-sync-policies" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Can a client control sync policies?</h3>
+<p>Currently client server data is merged (deleted items explicitly
+marked). Giving user control presents a complex decision which is
+difficult to explain outcomes to users.</p>
+<p>With sync 1.1 there were options that applied to the first Sync:</p>
+<ul>
+<li>Merge client data</li>
+<li>Overwrite server data</li>
+<li>Overwrite client data</li>
+</ul>
+<p>There are also preferences the user can set to adjust the timer delay
+and other obscure configuration options.</p>
+<h3><a class="anchor" aria-hidden="true" id="can-a-user-backup-to-a-snapshot-of-data"></a><a href="#can-a-user-backup-to-a-snapshot-of-data" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Can a user backup to a snapshot of data?</h3>
+<p>Not currently, but this is a feature that could be added. Like some of
+the above, a key challenge here is UX and giving the user enough
+information and choice that they can make an informed decision about the
+implications of their choice. For example, if the user chooses to
+restore from a backup, are we sure they are aware the change will affect
+all their devices and not just the current device? Is it possible that
+only this local client is in a bad state, and that the copy of the data
+on the server is in a good state and should be reapplied to this device
+without impacting other devices?</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/sync/file-desktop-bug.html">← Filing a Desktop bug</a><a class="docs-next button" href="/application-services/docs/sync/tps.html">TPS →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px;" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firdfox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>

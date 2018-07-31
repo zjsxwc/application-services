@@ -1,0 +1,134 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Filing a Desktop bug · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Filing a Desktop bug · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/application-services/index.html"/><meta property="og:description" content="We always appreciate it when users let us know about problems they’re"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Firefox Sync</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Firefox Sync</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/welcome.html">Welcome</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/application-services/docs/sync/file-desktop-bug.html">Filing a Desktop bug</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/faq.html">FAQ</a></li></ul></div><div class="navGroup navGroupActive"><h3>Testing</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/tps.html">TPS</a></li></ul></div><div class="navGroup navGroupActive"><h3>Design Docs</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/extension-storage.html">Extension Storage</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/state-machines.html">State Machines</a></li></ul></div><div class="navGroup navGroupActive"><h3>Team</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/canned-bug-responses.html">Canned Bug Responses</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/redash.html">Redash</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>Filing a Desktop bug</h1></header><article><div><span><p>We always appreciate it when users let us know about problems they’re
+experiencing with Sync because it means we can improve it! Here are some
+guidelines on how to file a good Sync bug:</p>
+<h3><a class="anchor" aria-hidden="true" id="get-the-sync-log-on-the-machine-you-re-having-problems"></a><a href="#get-the-sync-log-on-the-machine-you-re-having-problems" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Get the Sync log on the machine you’re having problems</h3>
+<ol>
+<li>In the Firefox address bar, type <code>about:sync-log</code> and press
+Enter. A list of Sync logs should appear.</li>
+<li>Find the last log file entry in the list and click on it. It should
+be called something like <code>error-sync-1307991874508.log</code>.</li>
+<li>Save it to a file on disk so you can upload to the bug later.</li>
+<li>If the list in step 2 is empty or only contains outdated logs (you
+can tell by the dates), go to <code>about:config</code>, find the
+<code>services.sync.log.appender.file.logOnSuccess</code> preference, set it
+to true, and sync again. Then repeat these steps (although the
+filename will now be called something like
+<code>success-sync-1307991874508.log</code>).</li>
+</ol>
+<h3><a class="anchor" aria-hidden="true" id="get-detailed-sync-logs"></a><a href="#get-detailed-sync-logs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Get detailed Sync logs</h3>
+<p>Occasionally you may be asked to provide detailed logs (aka &quot;Trace
+logs&quot;).</p>
+<blockquote>
+<p><strong>Note that these logs may include personal information</strong>, such
+as the URLs of tabs you have open or that you have bookmarked. If this
+level of detail concerns you, please ask in the bug that it be changed
+to &quot;Mozilla Confidential&quot; <em>before</em> you upload the logs. This will ensure
+that only Mozilla employees have access to this data.</p>
+</blockquote>
+<p>The easiest way to get these logs is via the <a href="https://addons.mozilla.org/en-US/firefox/addon/about-sync/">About Sync
+addon</a>. You
+should:</p>
+<ul>
+<li>Install the above addon.</li>
+<li>Enter <code>about:sync</code> into your address bar.</li>
+<li>At the top of the <code>about:sync</code> page, change the
+<code>Level of messages written by Sync engines</code> setting to <code>Trace</code> and
+<code>Level of messages written to about:sync-logs log files</code> to <code>Trace</code>.</li>
+<li>Just below those settings, check the option
+<code>Create log files even on success?</code></li>
+<li>Reproduce your issue (e.g., force a new sync)</li>
+<li>Grab the log files - near the top of the <code>about:sync</code> page, use
+either the <code>download a combined summary</code> (preferred) or
+<code>download them as a zip file</code> links, which will download a file to
+your Downloads directory.</li>
+<li>Attach this file to a bug.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="file-a-bug"></a><a href="#file-a-bug" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>File a bug</h3>
+<ol>
+<li>Even if you’ve found an existing bug that may look like the one
+you’re experiencing, do not add your comments to it. Please always
+<a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Sync">file a new
+bug</a>,
+we will dupe it appropriately once we’ve determined the root issue.
+If you want, you can clone the existing bug or make a
+cross-reference to it in the summary.</li>
+<li>Attach the log file(s) you saved earlier to the bug by uploading an
+attachment. Do not copy &amp; paste the text into the comment field, it
+won’t hold enough text!</li>
+</ol>
+<p>We’re hoping to automate much of this in upcoming versions of Firefox,
+so that a Sync problem can automatically be reported to us, or at least
+with just a few clicks. In the meantime, the <a href="https://addons.mozilla.org/en-US/firefox/addon/about-sync/">About Sync
+addon</a>
+offers a facility for creating a .zip file with all your Sync logs which
+might be helpful.</p>
+<h3><a class="anchor" aria-hidden="true" id="other-advanced-information"></a><a href="#other-advanced-information" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Other/Advanced information</h3>
+<h4><a class="anchor" aria-hidden="true" id="capturing-logs-from-stdout"></a><a href="#capturing-logs-from-stdout" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Capturing logs from stdout</h4>
+<p>In unusual cases, such as Firefox crashing during a sync, Firefox may
+not manage to save the logs to a file, so it may be necessary to grab
+logs from stdout. This is a fairly advanced operation, so please don't
+feel bad if you are unable to grab these logs. The steps you should
+follow are:</p>
+<ol>
+<li><p>Use <code>about:config</code> to set the following properties:</p>
+<ul>
+<li><code>browser.dom.window.dump.enabled = true</code></li>
+<li><code>services.sync.log.appender.dump = Trace</code></li>
+<li><code>services.sync.log.logger.engine = Trace</code></li>
+<li><code>services.sync.log.logger = Trace</code></li>
+</ul>
+<blockquote>
+<p>Note that all the above preferences should already exist - they
+just have different default values.</p>
+</blockquote></li>
+<li><p>Quit Firefox and ensure no other Firefox instances are running.</p></li>
+<li><p>Determine where Firefox is installed on your system.</p>
+<blockquote>
+<ul>
+<li>On Windows, it's most likely in <code>C:\Program Files\Mozilla Firefox</code>.</li>
+<li>On macOS, it's probably in <code>/Applications/Firefox.app</code>.</li>
+<li>If you are running Linux, hopefully you already know how to locate this.</li>
+</ul>
+</blockquote></li>
+<li><p>Open a command line.</p>
+<blockquote>
+<ul>
+<li>On Windows, you should be able to find a <code>Command Prompt</code> icon in your
+start menu.</li>
+<li>On macOS, you can use <code>/Applications/Utilities/Terminal.app</code>.</li>
+</ul>
+</blockquote></li>
+<li><p>Execute the following command:</p>
+<blockquote>
+<ul>
+<li>On Windows:
+<code>&quot;c:\Program Files\Mozilla Firefox\Firefox.exe&quot; -console 2&gt;&amp;1 &gt; c:\temp\firefox-log.txt</code></li>
+<li>On Mac:
+<code>/Applications/Firefox.app/Contents/MacOS/firefox-bin 2&gt;&amp;1 &gt; /tmp/firefox-log.txt</code></li>
+<li>Note that in both cases you may need to adjust some paths
+accordingly - both the path to the binary and the path where you
+want the log file written.</li>
+</ul>
+</blockquote></li>
+<li><p>Reproduce your problem, then exit Firefox.</p></li>
+<li><p>The log file specified above (ie, <code>c:\temp\firefox-log.txt</code> or
+<code>/tmp/firefox-log.txt</code> in the above examples) should contain the log
+output.</p></li>
+</ol>
+<h3><a class="anchor" aria-hidden="true" id="credits"></a><a href="#credits" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Credits</h3>
+<p>Thanks to <a href="https://mozillians.org/en-US/u/philiKON/">philiKON</a> for his earlier
+work on Sync itself and for the initial version of this text.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/sync/welcome.html">← About Sync</a><a class="docs-next button" href="/application-services/docs/sync/faq.html">Frequently Asked Questions →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px;" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firdfox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>

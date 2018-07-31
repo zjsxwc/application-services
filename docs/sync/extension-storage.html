@@ -1,0 +1,193 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Extension Storage · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Extension Storage · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/application-services/index.html"/><meta property="og:description" content="Extension Storage Sync is available through the chrome.storage.sync"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Design Docs</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Firefox Sync</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/file-desktop-bug.html">Filing a Desktop bug</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/faq.html">FAQ</a></li></ul></div><div class="navGroup navGroupActive"><h3>Testing</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/tps.html">TPS</a></li></ul></div><div class="navGroup navGroupActive"><h3>Design Docs</h3><ul><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/application-services/docs/sync/extension-storage.html">Extension Storage</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/state-machines.html">State Machines</a></li></ul></div><div class="navGroup navGroupActive"><h3>Team</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/canned-bug-responses.html">Canned Bug Responses</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/redash.html">Redash</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>Extension Storage</h1></header><article><div><span><p>Extension Storage Sync is available through the chrome.storage.sync
+WebExtension API. It syncs as part of Firefox Sync, but using a
+different storage backend (<a href="https://wiki.mozilla.org/Firefox/Kinto">Kinto</a>).</p>
+<p>As much as possible, Extension Storage Sync is meant to seem like &quot;part
+of Sync&quot; from the user's perspective. This means that Extension Storage
+Sync takes a similar approach to its cryptography as the rest of Sync.</p>
+<h3><a class="anchor" aria-hidden="true" id="kinto-structure"></a><a href="#kinto-structure" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Kinto structure</h3>
+<p>Kinto is an object store with three levels -- buckets, which contain
+collections, which contain records. A given user just uses the &quot;default&quot;
+bucket, which is mapped to a different bucket for each user. Each
+extension gets its own collection. Each key/value pair that an extension
+stores becomes its own record.</p>
+<h3><a class="anchor" aria-hidden="true" id="crypto"></a><a href="#crypto" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Crypto</h3>
+<p>When a user does a sync, we want the user's data to be stored securely,
+so we encrypt it. This encryption happens using the Kinto &quot;remote
+transformer&quot; feature. This means that encryption happens on the client
+side before sending the data, or just after receiving the data. This
+also means that all data is stored unencrypted locally. Storing the data
+encrypted at rest on the user's machine seems hard, because it means you
+need to have access to any encryption keys or hash salts when you're
+offline or not logged in, as well as reencrypt everything if those keys
+change, and it doesn't seem like it provides much in the way of security
+because if an attacker has access to a user's machine, they can probably
+already get access to the same encryption keys that Firefox uses.</p>
+<p>Each collection (thus, extension) gets its own key. These keys are
+stored in a separate &quot;keyring&quot;, which is itself stored as a record in a
+special &quot;crypto&quot; collection. This record is encrypted using a key that
+is derived from a user's kB. This two-tier crypto system was inherited
+from Firefox Sync and it helps us to minimize data that we reupload when
+a user's kB changes. Each collection also gets its own &quot;salt&quot; which is
+used to hash IDs related to that collection.</p>
+<p>When we sync, we map the local collection name to an &quot;obfuscated&quot; remote
+collection name. This is done so that metadata doesn't leak information
+about what extensions a user has installed. The &quot;obfuscated&quot; name is
+computed by hashing the collection ID using the collection's salt.</p>
+<h3><a class="anchor" aria-hidden="true" id="encrypting-records"></a><a href="#encrypting-records" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Encrypting records</h3>
+<p>In chrome.storage.sync, each datum is a key-value pair. Keys can
+presumably be any string (for example, an extension might store a value
+[&quot;yes&quot;, &quot;I&quot;, &quot;do&quot;] under the key &quot;I ♥ <a href="moz://a">moz://a</a>&quot;). In Kinto, we represent
+this same datum as a JSON object like {&quot;id&quot;:
+&quot;key-I_20__2665__20_moz_3A__2F__2F_a&quot;, &quot;key&quot;: &quot;I ♥ <a href="moz://a">moz://a</a>&quot;,
+&quot;data&quot;: [&quot;yes&quot;, &quot;I&quot;, &quot;do&quot;], &quot;last_modified&quot;: 12345}. As stated above,
+this record is stored &quot;in the clear&quot; on the client. Note that we store
+the original key, as well as a Kinto-safe key that uses a reduced
+character set.</p>
+<p>When it's time to send this record to the server, it's encrypted using
+an EncryptionRemoteTransformer. The record is serialized to produce a
+plaintext. An IV is generated and is used in conjunction with the
+extension key (above) to produce a ciphertext. An HMAC is computed over
+the record ID, IV, and ciphertext. The ID and last_modified fields are
+copied over from the cleartext record so that syncing can work
+correctly. The encrypted record will then look like {&quot;id&quot;:
+&quot;key-I_20__2665__20_moz_3A__2F__2F_a&quot;, &quot;ciphertext&quot;: &quot;[some
+gibberish]&quot;, &quot;IV&quot;: &quot;[some gibberish]&quot;, &quot;hmac&quot;: &quot;[some gibberish]&quot;,
+&quot;last_modified&quot;: 12345}.</p>
+<p>Additionally, the record ID is hashed to try not to leak information
+about the record or the extension being used. The hashed record ID has
+to be consistent across clients so that syncing works correctly, so we
+hash the ID using the collection's salt. Note that in order for this to
+work, we have to always be able to go from a hashed record to its
+original ID. This is normally tricky because Kinto doesn't store any
+data with the &quot;tombstones&quot; that it stores for deleted records. However,
+if we store unencrypted tombstones, we would be leaking information
+about records being deleted, so before sending &quot;delete&quot; notifications to
+Kinto, we encrypt them the same way we do for normal records. (In the
+kinto.js documentation, this is described as &quot;local deletes become
+remote keeps&quot;.)</p>
+<p>When the server provides this record to a client, it decrypts it in the
+usual way -- verifying the HMAC first, and then using the IV and the
+extension key to decrypt the ciphertext, producing a serialized record,
+which is then used as the real record.</p>
+<h3><a class="anchor" aria-hidden="true" id="password-changes"></a><a href="#password-changes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Password changes</h3>
+<p>Because the &quot;keyring&quot; is encrypted using kB, and there is a relationship
+between kB and the user's password, there are a couple of wrinkles that
+we need to be aware of when a user's password changes.</p>
+<p>A user's password changes due to a &quot;change password&quot; event and due to a
+&quot;reset password&quot; event. These behave differently with regard to kB.</p>
+<p>During a &quot;change password&quot; event, kB doesn't change. kB is a random
+value that is &quot;wrapped&quot; with the user's password, but since a user who
+is performing a &quot;change password&quot; has access to the old password, they
+have access to the unwrapped kB. After the password is changed, FxA
+rewraps kB using the new password and uploads it. kB doesn't change, so
+our crypto is fine, and we don't have to do anything.</p>
+<p>During a &quot;reset password&quot; event, kB changes because the user no longer
+has access to the old kB. However, the desktop client will still have
+access to any data that it saved previously. Among other things, this
+means the keyring. Since the version of the keyring on the server is
+encrypted with the old kB, we will no longer be able to access it. We
+should therefore upload the same record encrypted with the new kB every
+time kB changes.</p>
+<p>We detect kB changing by storing the current kB (as a hash) in the
+keyring record itself. We &quot;update&quot; this keyring record with the current
+kB hash on every call to sync(). kinto.js tries to track the status of
+the keyring in a field called <code>_status</code> -- it should be <code>&quot;synced&quot;</code> when
+it is the same as the version that we expect on the server, and it
+should be <code>&quot;updated&quot;</code> if we've changed it and haven't pushed it to the
+server. So after possibly updating the kB hash (or just replacing it
+with what it already is), we check if the keyring is &quot;updated&quot; and if
+so, try to upload it to the server. Because encryption happens
+&quot;just-in-time&quot;, this causes the keyring to be reuploaded but encrypted
+by the new kB.</p>
+<h3><a class="anchor" aria-hidden="true" id="losing-access-to-the-keyring"></a><a href="#losing-access-to-the-keyring" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Losing access to the keyring</h3>
+<p>All of the above allows the keyring to be preserved across password
+resets, but it's possible that a user no longer has access to the device
+that had the old keyring. If this happens, the old keyring and any data
+encrypted using it is completely lost -- that's the point of encrypting
+it with kB, after all -- and we need a way to recover. When we try to
+sync our keyring, if we find that we can't decrypt the server version,
+we check if it was encrypted using a different kB. If it was, then we no
+longer have access to the keyring, so we delete the entire Kinto
+collection corresponding to our data and generate a new keyring.</p>
+<p>We identify the kB used to encrypt a keyring by storing a hash of that
+kB on the keyring itself.</p>
+<p>It's possible that another device still had access to the old keyring
+when it was thrown away. It got thrown away due to a password reset, so
+when it gets the new password (and the new kB), it will try to resync
+its keyring. When it does, it will see that the keyring was newly
+generated. From this it will know that the Kinto server was wiped, and
+it will reset its sync status for all data, and thereby try to reupload
+everything.</p>
+<p>We detect the &quot;generation&quot; of a keyring by storing a <code>uuid</code> field on the
+keyring. This is preserved across all keyring operations, but generating
+a new keyring generates a new uuid. Thus, if you sync your keyring and
+discover that the new version you got has a new uuid, you know you need
+to reset your sync status.</p>
+<h3><a class="anchor" aria-hidden="true" id="edge-cases"></a><a href="#edge-cases" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Edge Cases</h3>
+<ul>
+<li><p><strong>Can keys in the keyring ever change?</strong> Yes, during a password
+reset, the keyring can be thrown away, with all its keys replaced.
+However, in normal operation, keys are permanent.</p></li>
+<li><p><strong>What happens if I uninstall and reinstall an add-on?</strong> Keys are
+not discarded on uninstalling an add-on, so the old data will still
+be available to that extension, encrypted in the same way on the
+server.</p></li>
+<li><p><strong>What happens if a user simultaneously installs an add-on (and uses
+it) in two Firefoxes?</strong> Until one Firefox syncs the data for that
+add-on, no data is encrypted, so there can be no conflict in the
+keyring. Each Firefox will try to update its keyring to have a new
+key for this collection. One will &quot;win&quot;; the other will get a
+conflict, and pull down the new keyring (because syncing is done
+using &quot;server_wins&quot;). No Firefox will try to upload data for any
+add-on for which it doesn't have a key in a synced keyring, and two
+keyring syncs can't be interleaved, so it's impossible for data to
+be encrypted on the server with two keys.</p></li>
+<li><p><strong>What happens if a user uploads some data on one device and then
+resets the password on another?</strong> Assuming the second device had the
+old keyring, it will re-encrypt the keyring with the new kB and sync
+it. Because the other device didn't upload a new version of the
+keyring, the sync will succeed and no data will have to be
+reuploaded. The first device won't be able to sync until it gets the
+new password (and the new kB), but once it does, it will try to
+resync the keyring and accept whatever keyring is on the server.</p></li>
+<li><p><strong>What happens if a user adds a new extension and syncs some data on
+one device and then resets the password on another?</strong> Because the
+first device uploaded a new keyring, the second device will try to
+sync the keyring and fail. Because the kB is different on the two
+keyrings, it will assume that the old keyring is lost and wipe the
+Kinto server. When the first device reconnects, it will find that
+the keyring got replaced and reupload all its data.</p></li>
+<li><p><strong>What happens if a user resets their password on one device in the
+middle of an upload?</strong> We only consider a user's password state at
+the beginning of a sync. If we get as far as uploading extension
+data, then the keys for those extensions exist on the server,
+encrypted with the old kB. This is fine because next sync, we will
+discover that the keyring was encrypted with the old kB, update the
+kB on that keyring, and reupload it.</p></li>
+<li><p><strong>What happens if a user resets their password on one device when
+another is uploading?</strong> If the device that gets reset had access to
+the old keyring, it will reupload it. In this case, the keys for
+each extension don't change, so syncing of extension data will
+continue to work. If the device that gets reset didn't have access
+to the old keyring, it will wipe the entire server and start
+uploading from zero. However, it seems like it might be possible for
+the wipe to happen while the other device is in the middle of
+reuploading, in which case the other device could upload data
+encrypted with a key that just got deleted. In this case, the &quot;new&quot;
+device might try to sync this data and fail to decrypt it and throw
+forever. *I'm not sure how to handle this case.*</p></li>
+</ul>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/sync/tps.html">← TPS</a><a class="docs-next button" href="/application-services/docs/sync/state-machines.html">State Machines →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px;" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firdfox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
