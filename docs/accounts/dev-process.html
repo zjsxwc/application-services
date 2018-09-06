@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Development Process · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="We develop and deploy on a two-week iteration cycle.  Every two weeks we"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Development Process · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/application-services/index.html"/><meta property="og:description" content="We develop and deploy on a two-week iteration cycle.  Every two weeks we"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg" alt="Firefox Application Services"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Firefox Accounts</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Firefox Accounts</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/project-details.html">Project Details</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/application-services/docs/accounts/dev-process.html">Development Process</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Mobile SDKs</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/fxa-client-ios.html">iOS SDK</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/fxa-client-android.html">Android SDK</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Other Features</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/end-to-end-encryption.html">End-to-end encryption</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/50000-most-common-passwords.html">50,000 Most Common Passwords</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Development Process</h1></header><article><div><span><p>We develop and deploy on a two-week iteration cycle.  Every two weeks we
+cut a release &quot;train&quot; that goes through deployment to stage and into production.</p>
+<ul>
+<li><a href="#product-planning">Product planning</a></li>
+<li><a href="#issue-management">Issue management</a>
+<ul>
+<li><a href="#milestones">Milestones</a></li>
+<li><a href="#waffle-columns">Waffle columns</a></li>
+<li><a href="#other-labels">Other labels</a></li>
+<li><a href="#bug-triage">Bug triage</a></li>
+</ul></li>
+<li><a href="#checkin-meetings">Checkin meetings</a>
+<ul>
+<li><a href="#mondays-at-08-30">Mondays at 08:30</a></li>
+<li><a href="#mondays-at-12-30">Mondays at 12:30</a></li>
+<li><a href="#mondays-at-13-00">Mondays at 13:00</a></li>
+<li><a href="#tuesdays-at-13-30">Tuesdays at 13:30</a></li>
+</ul></li>
+<li><a href="#code-review">Code review</a>
+<ul>
+<li><a href="#review-checklist">Review Checklist</a></li>
+</ul></li>
+<li><a href="#tagging-releases">Tagging releases</a>
+<ul>
+<li><a href="#what-if-the-merge-messes-up-the-changelog">What if the merge messes up the changelog?</a></li>
+<li><a href="#what-if-i-already-pushed-a-fix-to-master-and-it-needs-to-be-uplifted-to-an-earlier-train">What if I already pushed a fix to <code>master</code> and it needs to be uplifted to an earlier train?</a></li>
+<li><a href="#what-if-there-are-two-separate-train-branches-containing-parallel-updates">What if there are two separate train branches containing parallel updates?</a></li>
+</ul></li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="product-planning"></a><a href="#product-planning" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Product Planning</h2>
+<p>Product-level feature planning is managed
+in an AirTable board
+alongside other work
+for the Application Services team:</p>
+<ul>
+<li><a href="https://airtable.com/tbl8uNZikl6DGUEUI/">The app-services airtable board</a></li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="issue-management"></a><a href="#issue-management" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Issue management</h2>
+<p>Most of our work takes place on <a href="https://github.com/mozilla/fxa">GitHub</a>.
+We use labels and milestones to keep things organised,
+and <a href="https://waffle.io">waffle.io</a> to provide
+an overview of bug status and activity:</p>
+<ul>
+<li><a href="https://waffle.io/mozilla/fxa">Active issues for Firefox Accounts</a></li>
+</ul>
+<p>Issue status is reflected by the following:</p>
+<ul>
+<li>The milestone indicates <em>why</em> we are working on this issue.</li>
+<li>The waffle column indicates <em>what</em> the next action is and <em>when</em>
+we expect to complete it.</li>
+<li>The assignee, if any, indicates <em>who</em> is responsible for that action.</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="milestones"></a><a href="#milestones" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Milestones</h3>
+<p>When we start working on a new feature,
+we create a corresponding
+<a href="https://github.com/mozilla/fxa/milestones">milestone in github</a>
+and break down the task
+into bugs associated with that milestone.
+There's also an ongoing
+<a href="https://waffle.io/mozilla/fxa?milestone=FxA-0:%20quality">&quot;quality&quot; milestone</a>
+for tracking work
+related to overall quality
+rather than a particular feature.</p>
+<p>If it's not obvious
+what milestone an issue should belong to,
+that's a strong signal
+that we're not ready to work on it yet.</p>
+<p>Milestones are synced across all our repos using the
+<a href="https://github.com/mozilla/fxa/blob/master/scripts/sync_milestones.js">sync_milestones.js</a>
+script.</p>
+<h3><a class="anchor" aria-hidden="true" id="waffle-columns"></a><a href="#waffle-columns" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Waffle Columns</h3>
+<p>Issues that are not being actively worked on are managed in the following columns:</p>
+<ul>
+<li><strong>triage</strong>:  all incoming issues start out in this column by default.</li>
+<li><strong>backlog</strong>: issues that we plan to work on someday, but not urgently.</li>
+<li><strong>next</strong>: issues that we plan to pick up in the next development cycle.</li>
+</ul>
+<p>Issues that are under active development are managed in the following columns:</p>
+<ul>
+<li><strong>active</strong>:  issues that someone is actively working on.</li>
+<li><strong>in review</strong>: issues that have a PR ready for review; the assignee is the.</li>
+<li><strong>blocked</strong>:  issues on which progress has stalled due to external factors.</li>
+</ul>
+<p>All issues in these four columns should have an assignee, who is the person
+responsible for taking the next action on that bug.</p>
+<h3><a class="anchor" aria-hidden="true" id="other-labels"></a><a href="#other-labels" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Other Labels</h3>
+<p>We use the following labels to add additional context on issues:</p>
+<p>current development cycle.</p>
+<ul>
+<li><strong>shipit</strong>: indicates items that need to be merged before cutting the current train.</li>
+<li><strong>good-first-bug</strong>: indicates well-scoped, approachable tasks that may be a good
+starting point for new contributors to the project.</li>
+<li><strong>i18n</strong>: indicates issues that affect internationalized strings, and so need special
+care when merging to avoid issues with translations.</li>
+<li><strong>ux</strong>: indicates issues that have a UX component, and thus should receive input and
+validation from the UX team.</li>
+</ul>
+<p>Labels are synced across all the repos using the
+<a href="https://github.com/mozilla/fxa/blob/master/scripts/sync_labels.js">sync_labels.js</a>
+script.</p>
+<h3><a class="anchor" aria-hidden="true" id="bug-triage"></a><a href="#bug-triage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bug Triage</h3>
+<p>Issues in the <strong>triage</strong> column should move into one of the other columns
+via these guidelines:</p>
+<ul>
+<li><p>If it's so important that we need to get to it in the next few days,
+put it in <strong>active</strong> and consider adding a <strong>❤❤❤</strong> label to
+increase visibility.</p></li>
+<li><p>If we should get to it in the next few weeks, put it in <strong>next</strong>.</p></li>
+<li><p>If we should get to it in the next few months, put it towards the top
+of <strong>backlog</strong> and add a <strong>❤</strong> label to increase visibility.</p></li>
+<li><p>If we should get to it eventually, put it further down in <strong>backlog</strong>.</p></li>
+<li><p>Otherwise, just close it.</p></li>
+</ul>
+<p>While we hold regular triage meetings, developers with sufficient context are
+welcome to deal with issues in the <strong>triage</strong> column at any time.</p>
+<h2><a class="anchor" aria-hidden="true" id="checkin-meetings"></a><a href="#checkin-meetings" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Checkin Meetings</h2>
+<p>The team meets regularly
+to stay in sync about development status
+and ensure nothing is falling through the cracks.
+During meetings we take notes in the
+<strong><a href="https://docs.google.com/document/d/1r_qfb-D1Yt5KAT8IIVPvjaeliFORbQk-xFE_tRNM4Rc/">coordination google-doc</a></strong>,
+and afterward we send a summary of each meeting
+to an appropriate mailing list.</p>
+<p>We hold the following meetings
+over the course of each two-week cycle,
+with meeting times pinned
+to Mozilla Standard Time (aka Pacific Time).</p>
+<h3><a class="anchor" aria-hidden="true" id="mondays-at-08-30"></a><a href="#mondays-at-08-30" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Mondays at 08:30</h3>
+<p>This is a 60 minute meeting slot that's convenient for Europe and US-East.
+The first 30 minutes are split between UX/PM and dev/ops discussions,
+the second 30 for triaging new bugs and pruning the backlog.</p>
+<p>Minutes are emailed to <a href="https://mail.mozilla.org/pipermail/dev-fxacct/">dev-fxacct@mozilla.org</a></p>
+<h3><a class="anchor" aria-hidden="true" id="mondays-at-12-30"></a><a href="#mondays-at-12-30" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Mondays at 12:30</h3>
+<h4><a class="anchor" aria-hidden="true" id="weekly-show-and-tell-and-share"></a><a href="#weekly-show-and-tell-and-share" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Weekly: Show and Tell and Share</h4>
+<p>We get together to demonstrate
+any new features that will be included on the next train,
+or any other interesting work
+that was completed in the previous cycle.</p>
+<p>Minutes are emailed to <a href="https://mail.mozilla.org/pipermail/dev-fxacct/">dev-fxacct@mozilla.org</a></p>
+<h3><a class="anchor" aria-hidden="true" id="mondays-at-13-00"></a><a href="#mondays-at-13-00" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Mondays at 13:00</h3>
+<p>This is the one time each week
+where all team members everywhere in the world
+get together in the same (virtual) room
+at the same time.</p>
+<h4><a class="anchor" aria-hidden="true" id="first-week-dev-planning-meeting"></a><a href="#first-week-dev-planning-meeting" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>First week: Dev Planning Meeting</h4>
+<p>We review any items remaining
+in <strong>blocked</strong>, <strong>review</strong> or <strong>active</strong>
+to determine whether they
+should carry over to the upcoming train,
+or be de-priotitized.
+We then work through the issues
+in <strong>next</strong> to decide what to commit to
+for the upcoming train.</p>
+<p>Minutes are not recorded from this meeting.</p>
+<h4><a class="anchor" aria-hidden="true" id="second-week-retrospective"></a><a href="#second-week-retrospective" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Second week: Retrospective</h4>
+<p>We take time every two weeks
+to explicitly reflect on our development process -
+what worked, what didn't, what new things we'd like to try.</p>
+<p>Minutes are private
+and are emailed to <a href="https://groups.google.com/a/mozilla.com/forum/#!forum/fxa-staff">fxa-staff@mozilla.com</a></p>
+<h3><a class="anchor" aria-hidden="true" id="tuesdays-at-13-30"></a><a href="#tuesdays-at-13-30" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tuesdays at 13:30</h3>
+<p>This is a 30 minute meeting slot
+that is convenient for US-West and Oceania.</p>
+<h4><a class="anchor" aria-hidden="true" id="weekly-devops-catchup"></a><a href="#weekly-devops-catchup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Weekly: DevOps Catchup</h4>
+<p>We dedicate some time to discuss backend operational issues.</p>
+<p>On weeks when we are cutting a new train,
+we review the status of any <strong>shipit</strong> items
+from the Monday meeting, and tag new releases
+of the relevant repos for the outbound train.</p>
+<p>Minutes are emailed to <a href="https://mail.mozilla.org/pipermail/dev-fxacct/">dev-fxacct@mozilla.org</a>,
+sans any confidential operational notes.</p>
+<h2><a class="anchor" aria-hidden="true" id="code-review"></a><a href="#code-review" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Code Review</h2>
+<p>This project is production Mozilla code and subject to our <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Committing_Rules_and_Responsibilities">engineering practices and quality standards</a>.  Every patch must be <a href="https://developer.mozilla.org/en-US/docs/Code_Review_FAQ">reviewed</a> by an owner or peer of the <a href="https://wiki.mozilla.org/Modules/Other#Firefox_Accounts">Firefox Accounts module</a>.</p>
+<h3><a class="anchor" aria-hidden="true" id="review-checklist"></a><a href="#review-checklist" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Review Checklist</h3>
+<p>Here are some handy questions and things to consider when reviewing code for Firefox Accounts:</p>
+<ul>
+<li>How will we tell if this change is successful?
+<ul>
+<li>If it's fixing a bug, have we introduced tests to ensure the bug stays fixed?</li>
+<li>If it's a feature, do we have metrics to tell whether it's providing value?</li>
+<li>Should it be A/B tested to check whether it's a good idea at all?</li>
+</ul></li>
+<li>Did test coverage increase, or at least stay the same?
+<ul>
+<li>We need a pretty good reason to merge code that decreases test coverage...</li>
+<li>If it's hard to answer this question, consider adding a test that tests the test coverage.</li>
+</ul></li>
+<li>Does it introduce new user-facing strings?
+<ul>
+<li>These strings will need to go through our localization process.  Check that the
+templates in which they're defined are covered by our string extraction scripts.</li>
+<li>The code must be merged before the string-extraction date for that development cycle.</li>
+</ul></li>
+<li>Does it store user-provided data?
+<ul>
+<li>The validation rules should be explicit, documented, and clearly enforced before storage.</li>
+</ul></li>
+<li>Does it display user-controlled data?
+<ul>
+<li>It must be appropriately escaped, e.g. htmlescaped before being inserted into web content.</li>
+</ul></li>
+<li>Does it involve a database schema migration?
+<ul>
+<li>The changes must be backwards-compatible with the previous deployed version.  This means
+that you can't do something like <code>ALTER TABLE CHANGE COLUMN</code> in a single deployment, but
+must split it into two: one to add the new column and start using it, and second to
+drop the now-unused old column.</li>
+<li>Does it contain any long-running statements that might lock tables during deployment?</li>
+<li>Can the changes be rolled back without data loss or a service outage?</li>
+<li>Has the canonical db schema been kept in sync with the patch files?</li>
+<li>Once merged, please file an Ops bug to track deployment in stage and production.</li>
+</ul></li>
+<li>Does it alter the public API of a service?
+<ul>
+<li>Ensure that the chage is backwards compatible.</li>
+<li>Ensure that it's documented appropriately in the API description.</li>
+<li>Note whether we should announce it on one or more developer mailing lists.</li>
+</ul></li>
+<li>Does it add new metrics or logging?
+<ul>
+<li>Make sure they're documented for future reference.</li>
+</ul></li>
+<li>Does it conform to the prevailing style of the codebase?
+<ul>
+<li>If it introduces new files, ensure they're covered by the linter.</li>
+<li>If you notice a stylistic issue that was <em>not</em> detected by the linter,
+consider updating the linter.</li>
+</ul></li>
+<li>For fixes that are patching a train,
+has the PR been opened against the correct train branch?
+<ul>
+<li>If the PR is against <code>master</code>,
+it is likely that it will mess up
+our change logs and the git history
+when merged.</li>
+<li>If no appropriate train branch exists,
+one can be created at the appropriate point in history
+and pushed.
+After the patch has been tagged (see below),
+the train branch can then be merged to <code>master</code>.
+Commits should not be cherry-picked
+between train branches and <code>master</code>.</li>
+</ul></li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="tagging-releases"></a><a href="#tagging-releases" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tagging releases</h2>
+<p>Each repo has a <code>grunt</code> script
+for tagging new releases.
+This script is responsible for:</p>
+<ul>
+<li><p>Updating the version strings
+in <code>package.json</code> and <code>npm-shrinkwrap.json</code>.</p></li>
+<li><p>Writing commit summaries
+to the change log.</p></li>
+<li><p>Committing these changes.</p></li>
+</ul>
+<p>The script will not push the tag,
+so you can always check what's changed
+before making the decision
+about whether the changes were correct
+and it's okay to push.</p>
+<p>To tag a major release, run:</p>
+<pre><code class="hljs">grunt <span class="hljs-built_in">version</span>
+</code></pre>
+<p>To tag a patch release, run:</p>
+<pre><code class="hljs">grunt <span class="hljs-built_in">version</span>:patch
+</code></pre>
+<p>Patch releases should normally be tagged
+in a specific <code>train-nnn</code> branch,
+which must then be merged back to <code>master</code>.</p>
+<p>It's important that:</p>
+<ol>
+<li><p>The merge happens;</p></li>
+<li><p>It really is just a vanilla <code>git merge</code>
+and not a <code>rebase</code>, <code>cherry-pick</code> or <code>merge --squash</code>.</p></li>
+</ol>
+<p>Doing it this way
+ensures that all releases show up in the changelog,
+with commits correctly listed under the appropriate version,
+and that future releases are never missing the details
+from earlier ones.
+Other approaches,
+like cherry-picking between branches
+or fixing in master then uplifting to a train branch,
+will break the history.</p>
+<h3><a class="anchor" aria-hidden="true" id="what-if-the-merge-messes-up-the-changelog"></a><a href="#what-if-the-merge-messes-up-the-changelog" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What if the merge messes up the changelog?</h3>
+<p>After merging but before pushing,
+you should check the changelog to make sure
+that the expected versions are listed
+and they're in the right order.
+If any are missing or the order is wrong,
+manually edit the changelog
+so that it makes sense,
+using the commit summaries from <code>git log --graph --oneline</code>
+to fill in any blanks as necessary.
+Then <code>git add</code> those changes
+and squash them into the preceding merge commit
+using <code>git commit --amend</code>.
+Now you can push
+and the merged changelog will make sense.</p>
+<h3><a class="anchor" aria-hidden="true" id="what-if-i-already-pushed-a-fix-to-master-and-it-needs-to-be-uplifted-to-an-earlier-train"></a><a href="#what-if-i-already-pushed-a-fix-to-master-and-it-needs-to-be-uplifted-to-an-earlier-train" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What if I already pushed a fix to <code>master</code> and it needs to be uplifted to an earlier train?</h3>
+<p>In this case,
+it's okay to use <code>git cherry-pick</code>
+because that's the only way to get the fix
+into the earlier train.
+However, after tagging and pushing the earlier release,
+you should still merge the train branch back to <code>master</code>
+so that future changelogs include the new release.</p>
+<h3><a class="anchor" aria-hidden="true" id="what-if-there-are-two-separate-train-branches-containing-parallel-updates"></a><a href="#what-if-there-are-two-separate-train-branches-containing-parallel-updates" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What if there are two separate train branches containing parallel updates?</h3>
+<p>In this case,
+the easiest way to keep the changelogs complete
+and in the appropriate version order,
+is to:</p>
+<ol>
+<li><p>Merge from the earlier train branch
+into the later one.
+<a href="#what-if-the-merge-messes-up-the-changelog">Fix up the changelog</a>
+if it needs it
+and then push the train branch.</p></li>
+<li><p>Now merge from the later train branch
+into <code>master</code>.
+Again,
+remember to fix up the changelog before pushing
+if required.</p></li>
+</ol>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/accounts/project-details.html">← Project Details</a><a class="docs-next button" href="/application-services/docs/accounts/fxa-client-ios.html">iOS SDK →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
