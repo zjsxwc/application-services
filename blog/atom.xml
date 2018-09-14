@@ -2,12 +2,40 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://mozilla.github.io/application-services/application-services/blog</id>
     <title>Firefox Application Services Blog</title>
-    <updated>2018-08-23T06:00:00Z</updated>
+    <updated>2018-09-14T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
     <link rel="alternate" href="https://mozilla.github.io/application-services/application-services/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Firefox Application Services news and events.</subtitle>
     <logo>https://mozilla.github.io/application-services/application-services/img/app-services.svg</logo>
     <rights>Copyright © 2018 Firefox Application Services</rights>
+    <entry>
+        <title type="html"><![CDATA[Firefox Accounts Train-120]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-120.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-120.html">
+        </link>
+        <updated>2018-09-14T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Hi All,</p>
+<p>On September 10th, we shipped FxA train-120 to production
+with the following highlights:</p>
+]]></summary>
+        <author>
+            <name>Shane Tomlinson</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Firefox Accounts Train-119]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-119.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-119.html">
+        </link>
+        <updated>2018-09-14T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Hi All,</p>
+<p>On August 30th, we shipped FxA train-119 to production
+with the following highlights:</p>
+]]></summary>
+        <author>
+            <name>Shane Tomlinson</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-118]]></title>
         <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/23/fxa-train-118.html</id>
@@ -24,13 +52,13 @@ with the following highlights:</p>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Firefox Accounts Train-116]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-116.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-116.html">
+        <title type="html"><![CDATA[Firefox Accounts Train-117]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-117.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-117.html">
         </link>
         <updated>2018-08-02T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
-<p>We shipped FxA train-116 to production on July 18th,
+<p>This week we shipped FxA train-117 to production,
 with the following highlights:</p>
 ]]></summary>
         <author>
@@ -39,13 +67,13 @@ with the following highlights:</p>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Firefox Accounts Train-117]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-117.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-117.html">
+        <title type="html"><![CDATA[Firefox Accounts Train-116]]></title>
+        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-116.html</id>
+        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-116.html">
         </link>
         <updated>2018-08-02T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
-<p>This week we shipped FxA train-117 to production,
+<p>We shipped FxA train-116 to production on July 18th,
 with the following highlights:</p>
 ]]></summary>
         <author>
