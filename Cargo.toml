@@ -3,6 +3,7 @@ members = [
     "fxa-client",
     "fxa-client/ffi",
     "sandvich/desktop",
+    "pairing-demo",
     "sync15-adapter",
     "logins-sql",
     "logins-sql/ffi"

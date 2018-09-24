@@ -296,6 +296,7 @@ impl FirefoxAccount {
 
     pub fn begin_pairing_flow(&mut self, pairing_url: &str, scopes: &[&str]) -> Result<String> {
         let mut url = self.state.config.content_url_path("/pair/supp")?;
+        url.query_pairs_mut().append_pair("response_type", "code");
         let pairing_url = Url::parse(pairing_url)?;
         if url.host_str() != pairing_url.host_str() {
             return Err(ErrorKind::OriginMismatch.into());
