@@ -1,27 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>TPS · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="TPS is an end to end test for Sync. Its name stands for Testing and"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="TPS · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/application-services/index.html"/><meta property="og:description" content="TPS is an end to end test for Sync. Its name stands for Testing and"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg" alt="Firefox Application Services"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Testing</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Firefox Sync</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/file-desktop-bug.html">Filing a Desktop bug</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/faq.html">FAQ</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Testing</h3><ul><li class="navListItem navListItemActive"><a class="navItem" href="/application-services/docs/sync/tps.html">TPS</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Design Docs</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/extension-storage.html">Extension Storage</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/state-machines.html">State Machines</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Team</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/canned-bug-responses.html">Canned Bug Responses</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/redash.html">Redash</a></li></ul></div></div></section></div><script>
-            document.addEventListener('DOMContentLoaded', function() {
-              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
-              createToggler('#tocToggler', 'body', 'tocActive');
-
-              const headings = document.querySelector('.toc-headings');
-              headings && headings.addEventListener('click', function(event) {
-                if (event.target.tagName === 'A') {
-                  document.body.classList.remove('tocActive');
-                }
-              }, false);
-
-              function createToggler(togglerSelector, targetSelector, className) {
-                var toggler = document.querySelector(togglerSelector);
-                var target = document.querySelector(targetSelector);
-
-                toggler.onclick = function(event) {
-                  event.preventDefault();
-
-                  target.classList.toggle(className);
-                };
-              }
-            });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">TPS</h1></header><article><div><span><p>TPS is an end to end test for Sync. Its name stands for Testing and
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>TPS · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="TPS · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/application-services/index.html"/><meta property="og:description" content="TPS is an end to end test for Sync. Its name stands for Testing and"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Testing</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Firefox Sync</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/file-desktop-bug.html">Filing a Desktop bug</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/faq.html">FAQ</a></li></ul></div><div class="navGroup navGroupActive"><h3>Testing</h3><ul><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/application-services/docs/sync/tps.html">TPS</a></li></ul></div><div class="navGroup navGroupActive"><h3>Design Docs</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/extension-storage.html">Extension Storage</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/state-machines.html">State Machines</a></li></ul></div><div class="navGroup navGroupActive"><h3>Team</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/canned-bug-responses.html">Canned Bug Responses</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/sync/redash.html">Redash</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>TPS</h1></header><article><div><span><p>TPS is an end to end test for Sync. Its name stands for Testing and
 Profiling tool for Sync (which is a misnomer, since it doesn't do any
 profiling), and it should not be confused with the <a href="https://wiki.mozilla.org/Buildbot/Talos/Tests#tps">similarly named
 tests in Talos</a>.</p>
@@ -37,7 +20,7 @@ syncing to the Sync server, making bookmark modifications, etc.</p>
 the same or different profiles, so that one test file may be used to
 test the effect of syncing and modifying a common set of data (from a
 single Sync account) over a series of different events and clients.</p>
-<h2><a class="anchor" aria-hidden="true" id="set-up-an-environment-and-run-a-test"></a><a href="#set-up-an-environment-and-run-a-test" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Set up an environment and run a test</h2>
+<h2><a class="anchor" aria-hidden="true" id="set-up-an-environment-and-run-a-test"></a><a href="#set-up-an-environment-and-run-a-test" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Set up an environment and run a test</h2>
 <p>To run TPS, you should <a href="https://accounts.firefox.com/">create a new Firefox
 Account</a> using a
 <a href="http://restmail.net/">restmail.net</a> email address (Strictly speaking,
@@ -51,31 +34,31 @@ mention the first run is very likely to fail, since it expects a clean start.</p
 <p>Note: Be prepared not to use your computer for 15 or so minutes after
 starting a full run of TPS, as it will open and close a fairly large
 number of Firefox windows. Headless mode makes this easier.</p>
-<h3><a class="anchor" aria-hidden="true" id="steps"></a><a href="#steps" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Steps</h3>
+<h3><a class="anchor" aria-hidden="true" id="steps"></a><a href="#steps" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Steps</h3>
 <ol>
 <li><p>Clone <code>mozilla-central</code> to get the source code.</p>
 <blockquote>
 <p>Choose your flavor:</p>
-<pre><code class="hljs css languages- bash">hg <span class="hljs-built_in">clone</span> hg.mozilla.org/mozilla-central
+<pre><code class="hljs css bash">hg <span class="hljs-built_in">clone</span> hg.mozilla.org/mozilla-central
 </code></pre>
 <p>or</p>
-<pre><code class="hljs css languages- bash">git <span class="hljs-built_in">clone</span> github.com/mozilla/gecko-dev
+<pre><code class="hljs css bash">git <span class="hljs-built_in">clone</span> github.com/mozilla/gecko-dev
 </code></pre>
 </blockquote></li>
 <li><p>cd into the TPS folder</p>
 <blockquote>
-<pre><code class="hljs css languages- bash"><span class="hljs-built_in">cd</span> testing/tps
+<pre><code class="hljs css bash"><span class="hljs-built_in">cd</span> testing/tps
 </code></pre>
 </blockquote></li>
 <li><p>Create the environment</p>
 <blockquote>
 <p>I suggest the path to be outside of the m-c source tree:</p>
-<pre><code class="hljs css languages- bash">Python create_venv.py --username=%EMAIL% --password=%PASSWORD% %PATH%
+<pre><code class="hljs css bash">Python create_venv.py --username=%EMAIL% --password=%PASSWORD% %PATH%
 </code></pre>
 </blockquote></li>
 <li><p>Activate the environment</p>
 <blockquote>
-<pre><code class="hljs css languages- bash"><span class="hljs-built_in">source</span> %PATH%/bin/activate
+<pre><code class="hljs css bash"><span class="hljs-built_in">source</span> %PATH%/bin/activate
 </code></pre>
 </blockquote></li>
 <li><p>Run some tests</p></li>
@@ -83,7 +66,7 @@ number of Firefox windows. Headless mode makes this easier.</p>
 <blockquote>
 <p>Note that the <code>testfile</code> option is <strong>not</strong> a path, it should only be the
 filename from <code>services/sync/tests/tps/</code>.</p>
-<pre><code class="hljs css languages- bash">runtps --debug --testfile %TEST_FILE_NAME% --binary %FIREFOX_BINARY_PATH%
+<pre><code class="hljs css bash">runtps --debug --testfile %TEST_FILE_NAME% --binary %FIREFOX_BINARY_PATH%
 </code></pre>
 <ol>
 <li>Additionally, omitting a <code>--testfile</code> parameter will cause TPS to
@@ -96,15 +79,15 @@ mode</a> (recommended)</li>
 <p>An example on macOS, for headlessly running just the <code>test_sync.js</code>
 testfile against a locally built Firefox (where the mozconfig set the
 objdir to <code>obj-ff-artifact</code>):</p>
-<pre><code class="hljs css languages- bash">MOZ_HEADLESS=1 runtps --debug --testfile test_sync.js --binary obj-ff-artifact/dist/Nightly.app/Contents/MacOS/firefox
+<pre><code class="hljs css bash">MOZ_HEADLESS=1 runtps --debug --testfile test_sync.js --binary obj-ff-artifact/dist/Nightly.app/Contents/MacOS/firefox
 </code></pre>
-<h2><a class="anchor" aria-hidden="true" id="running-tps-against-stage-or-dev-fxa"></a><a href="#running-tps-against-stage-or-dev-fxa" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running TPS against stage, or dev FxA</h2>
+<h2><a class="anchor" aria-hidden="true" id="running-tps-against-stage-or-dev-fxa"></a><a href="#running-tps-against-stage-or-dev-fxa" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running TPS against stage, or dev FxA</h2>
 <p>TPS can be configured using the <code>$TPS_VENV_PATH/config.json</code> file. In
 particular, it will set preferences from the <code>&quot;preferences&quot;</code> property,
 and so you can set the <code>&quot;identity.fxaccounts.autoconfig.uri&quot;</code> preference
 to point to any FxA server you want. For example, a (partial) TPS config
 for testing against stage might look like:</p>
-<pre><code class="hljs css languages- js">{
+<pre><code class="hljs css js">{
   <span class="hljs-comment">// ...</span>
   <span class="hljs-string">"fx_account"</span>: {
     <span class="hljs-string">"username"</span>: <span class="hljs-string">"foobar@restmail.net"</span>,
@@ -128,7 +111,7 @@ file must parse as valid JSON, and so you can't have comments in it
 (sorry, I know this is annoying). One alternative is to put underscores
 before the &quot;disabled&quot; preferences, e.g.
 <code>&quot;_identity.fxaccounts.autoconfig.uri&quot;: &quot;...&quot;</code>.</p>
-<h2><a class="anchor" aria-hidden="true" id="writing-tps-tests"></a><a href="#writing-tps-tests" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Writing TPS tests</h2>
+<h2><a class="anchor" aria-hidden="true" id="writing-tps-tests"></a><a href="#writing-tps-tests" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Writing TPS tests</h2>
 <p>Each TPS test is run as a series of &quot;phases&quot;. A phase runs in some
 Firefox profile, and contains some set of actions to perform or check on
 that profile. Phases have an N to M relationship with profiles, where N
@@ -153,10 +136,10 @@ them).</li>
 number off the end of the phase or profile to get to the next one, so
 try to stick to the convention established in the other tests. Yes, this
 is cludgey, but it's effective enough and nobody has changed it.</p>
-<h3><a class="anchor" aria-hidden="true" id="phase-declarations"></a><a href="#phase-declarations" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Phase Declarations</h3>
+<h3><a class="anchor" aria-hidden="true" id="phase-declarations"></a><a href="#phase-declarations" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Phase Declarations</h3>
 <p>These map the phases to profiles. Both Python and JavaScript read them
 in. They <strong><em>must</em></strong> look like:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> phases = { <span class="hljs-string">"phase1"</span>: <span class="hljs-string">"profile1"</span>, <span class="hljs-string">"phase2"</span>: <span class="hljs-string">"profile2"</span>, <span class="hljs-string">"phase3"</span>: <span class="hljs-string">"profile1"</span> };
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> phases = { <span class="hljs-string">"phase1"</span>: <span class="hljs-string">"profile1"</span>, <span class="hljs-string">"phase2"</span>: <span class="hljs-string">"profile2"</span>, <span class="hljs-string">"phase3"</span>: <span class="hljs-string">"profile1"</span> };
 </code></pre>
 <p>Between <code>{</code> and <code>}</code> it must be <strong><em>strict JSON</em></strong>. e.g. quoted keys, no
 trailing parentheses, etc. The Python test runner will be parsing it with
@@ -166,12 +149,12 @@ will fail.</p>
 define later must be declared here, or it will not be run by the Python
 test runner. Any phases declared here but not implemented later will
 cause the test to fail when it hits that phase.</p>
-<h3><a class="anchor" aria-hidden="true" id="asset-lists"></a><a href="#asset-lists" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Asset lists</h3>
+<h3><a class="anchor" aria-hidden="true" id="asset-lists"></a><a href="#asset-lists" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Asset lists</h3>
 <p>A test file will contain one or more asset lists, which are lists of
 bookmarks, passwords, or other types of browser data that are relevant
 to Sync. The format of these asset lists vary somwhat depending on asset
 type.</p>
-<h4><a class="anchor" aria-hidden="true" id="bookmarks"></a><a href="#bookmarks" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bookmarks</h4>
+<h4><a class="anchor" aria-hidden="true" id="bookmarks"></a><a href="#bookmarks" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bookmarks</h4>
 <p>A bookmark asset list is an object with one or more key-value pairs.
 Each key is the full path for the array of contents specified in the
 key's value. For example:</p>
@@ -203,10 +186,10 @@ and <code>mobile</code> are all children of this)</li>
 <p>Subfolders are preceded with forward slashes, so &quot;menu/folder1&quot; denotes
 that &quot;folder1&quot; is a subfolder of &quot;menu&quot;. TPS does not support forward
 slashes as part of a folder name.</p>
-<h5><a class="anchor" aria-hidden="true" id="folder-contents"></a><a href="#folder-contents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Folder contents</h5>
+<h5><a class="anchor" aria-hidden="true" id="folder-contents"></a><a href="#folder-contents" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Folder contents</h5>
 <p>The contents for a folder are given as an array of objects, representing
 various bookmark types, described below.</p>
-<h6><a class="anchor" aria-hidden="true" id="bookmark-objects"></a><a href="#bookmark-objects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bookmark objects</h6>
+<h6><a class="anchor" aria-hidden="true" id="bookmark-objects"></a><a href="#bookmark-objects" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bookmark objects</h6>
 <p>Valid properties are:</p>
 <ul>
 <li><code>uri</code>: the bookmark uri. Required.</li>
@@ -236,12 +219,12 @@ be positioned below the current one)</li>
 </ul></li>
 </ul>
 <p>Example:</p>
-<pre><code class="hljs css languages- js">{ <span class="hljs-attr">uri</span>: <span class="hljs-string">"http://www.google.com"</span>,
+<pre><code class="hljs css js">{ <span class="hljs-attr">uri</span>: <span class="hljs-string">"http://www.google.com"</span>,
   <span class="hljs-attr">title</span>: <span class="hljs-string">"Google"</span>,
   <span class="hljs-attr">tags</span>: [ <span class="hljs-string">"google"</span>, <span class="hljs-string">"computers"</span>, <span class="hljs-string">"misc"</span> ]
 }
 </code></pre>
-<h6><a class="anchor" aria-hidden="true" id="livemark-objects"></a><a href="#livemark-objects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Livemark objects</h6>
+<h6><a class="anchor" aria-hidden="true" id="livemark-objects"></a><a href="#livemark-objects" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Livemark objects</h6>
 <p>Valid properties are:</p>
 <ul>
 <li><code>livemark</code>: the livemark name. Required.</li>
@@ -269,12 +252,12 @@ be positioned below the current one)</li>
 </ul></li>
 </ul>
 <p>Example:</p>
-<pre><code class="hljs css languages- js">{ <span class="hljs-attr">livemark</span>: <span class="hljs-string">"LivemarkOne"</span>,
+<pre><code class="hljs css js">{ <span class="hljs-attr">livemark</span>: <span class="hljs-string">"LivemarkOne"</span>,
   <span class="hljs-attr">feedUri</span>: <span class="hljs-string">"http://rss.wunderground.com/blog/JeffMasters/rss.xml"</span>,
   <span class="hljs-attr">siteUri</span>: <span class="hljs-string">"http://www.wunderground.com/blog/JeffMasters/show.html"</span>
 }
 </code></pre>
-<h6><a class="anchor" aria-hidden="true" id="folder-objects"></a><a href="#folder-objects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Folder objects</h6>
+<h6><a class="anchor" aria-hidden="true" id="folder-objects"></a><a href="#folder-objects" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Folder objects</h6>
 <p>Valid properties are:</p>
 <ul>
 <li><code>folder</code>: the folder's name. Required.</li>
@@ -299,14 +282,14 @@ be positioned below this folder)</li>
 </ul></li>
 </ul>
 <p>Example:</p>
-<pre><code class="hljs css languages- js">{ <span class="hljs-attr">folder</span>: <span class="hljs-string">"folderb"</span>,
+<pre><code class="hljs css js">{ <span class="hljs-attr">folder</span>: <span class="hljs-string">"folderb"</span>,
   <span class="hljs-attr">changes</span>: {
     <span class="hljs-attr">location</span>: <span class="hljs-string">"menu/foldera"</span>,
     <span class="hljs-attr">folder</span>: <span class="hljs-string">"Folder B"</span>
   }
 }
 </code></pre>
-<h6><a class="anchor" aria-hidden="true" id="separator-objects"></a><a href="#separator-objects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Separator objects</h6>
+<h6><a class="anchor" aria-hidden="true" id="separator-objects"></a><a href="#separator-objects" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Separator objects</h6>
 <p>Valid properties are:</p>
 <ul>
 <li><code>separator: true</code>, always set for separators</li>
@@ -327,11 +310,11 @@ that bookmark to be positioned below this separator)</li>
 </ul></li>
 </ul>
 <p>Example:</p>
-<pre><code class="hljs css languages- js">{
+<pre><code class="hljs css js">{
   <span class="hljs-attr">separator</span>: <span class="hljs-literal">true</span>
 }
 </code></pre>
-<h5><a class="anchor" aria-hidden="true" id="bookmark-lists-and-phase-actions"></a><a href="#bookmark-lists-and-phase-actions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bookmark lists and phase actions</h5>
+<h5><a class="anchor" aria-hidden="true" id="bookmark-lists-and-phase-actions"></a><a href="#bookmark-lists-and-phase-actions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bookmark lists and phase actions</h5>
 <p>Following are the functions you can use in phase actions related to
 bookmarks:</p>
 <ul>
@@ -360,10 +343,10 @@ position within the current folder.</li>
 <li><code>Bookmarks.delete</code> - The bookmarks in this list are deleted from the
 browser.</li>
 </ul>
-<h4><a class="anchor" aria-hidden="true" id="passwords"></a><a href="#passwords" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Passwords</h4>
+<h4><a class="anchor" aria-hidden="true" id="passwords"></a><a href="#passwords" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Passwords</h4>
 <p>A password asset list is an array of objects, each representing a stored
 password. For example:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> password_list = [
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> password_list = [
   { <span class="hljs-attr">hostname</span>: <span class="hljs-string">"http://www.example.com"</span>,
     <span class="hljs-attr">submitURL</span>: <span class="hljs-string">"http://login.example.com"</span>,
     <span class="hljs-attr">username</span>: <span class="hljs-string">"joe"</span>,
@@ -398,7 +381,7 @@ password. Optional.</li>
 properties, which are applied during a <code>modify</code>
 action. Optional.</li>
 </ul>
-<h5><a class="anchor" aria-hidden="true" id="password-lists-and-phase-actions"></a><a href="#password-lists-and-phase-actions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Password lists and phase actions</h5>
+<h5><a class="anchor" aria-hidden="true" id="password-lists-and-phase-actions"></a><a href="#password-lists-and-phase-actions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Password lists and phase actions</h5>
 <p>Following are the functions that can be used in phase actions related to
 passwords:</p>
 <ul>
@@ -408,7 +391,7 @@ passwords:</p>
 <li><code>Passwords.verify</code></li>
 <li><code>Passwords.verifyNot</code></li>
 </ul>
-<h4><a class="anchor" aria-hidden="true" id="history"></a><a href="#history" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>History</h4>
+<h4><a class="anchor" aria-hidden="true" id="history"></a><a href="#history" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>History</h4>
 <p>There are two types of history asset lists, one used for
 adding/modiyfing/verifying history, and the other for deleting history.</p>
 <p>The history list used for operations other than delete has the following
@@ -427,7 +410,7 @@ example, 0 is now, -24 is 24 hours in the past.</li>
 </ul></li>
 </ul>
 <p>For example:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> history_initial = [
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> history_initial = [
   { <span class="hljs-attr">uri</span>: <span class="hljs-string">"http://www.google.com/"</span>,
     <span class="hljs-attr">title</span>: <span class="hljs-string">"Google"</span>,
     <span class="hljs-attr">visits</span>: [
@@ -458,14 +441,14 @@ should have integer values that express time since the present in
 hours (see <code>date</code> above)</li>
 </ul>
 <p>For example:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> history_to_delete = [
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> history_to_delete = [
   { <span class="hljs-attr">uri</span>: <span class="hljs-string">"http://www.cnn.com/"</span> },
   { <span class="hljs-attr">begin</span>: <span class="hljs-number">-24</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">-1</span> },
   { <span class="hljs-attr">host</span>: <span class="hljs-string">"www.google.com"</span> }
 ];
 </code></pre>
-<h5><a class="anchor" aria-hidden="true" id="history-lists-and-phase-actions"></a><a href="#history-lists-and-phase-actions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>History lists and phase actions</h5>
+<h5><a class="anchor" aria-hidden="true" id="history-lists-and-phase-actions"></a><a href="#history-lists-and-phase-actions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>History lists and phase actions</h5>
 <p>History lists cannot be modified, they can only be added, deleted, and
 verified, using the following functions:</p>
 <ul>
@@ -474,7 +457,7 @@ verified, using the following functions:</p>
 <li><code>History.verify</code></li>
 <li><code>History.verifyNot</code></li>
 </ul>
-<h4><a class="anchor" aria-hidden="true" id="tabs"></a><a href="#tabs" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tabs</h4>
+<h4><a class="anchor" aria-hidden="true" id="tabs"></a><a href="#tabs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tabs</h4>
 <p>A tabs asset list is an array of objects with the following keys:</p>
 <ul>
 <li><code>uri</code>: the uri of the tab, required.</li>
@@ -482,7 +465,7 @@ verified, using the following functions:</p>
 <li><code>profile</code>: the name of the profile the tab belongs to. Required for <code>verify</code> actions.</li>
 </ul>
 <p>For example:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> tabs1 = [  
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> tabs1 = [  
   { <span class="hljs-attr">uri</span>: <span class="hljs-string">"http://hg.mozilla.org/automation/crossweave/raw-file/2d9aca9585b6/pages/page1.html"</span>,
     <span class="hljs-attr">title</span>: <span class="hljs-string">"Crossweave Test Page 1"</span>,
     <span class="hljs-attr">profile</span>: <span class="hljs-string">"profile1"</span>
@@ -493,7 +476,7 @@ verified, using the following functions:</p>
   }
 ];
 </code></pre>
-<h5><a class="anchor" aria-hidden="true" id="tab-lists-and-phase-actions"></a><a href="#tab-lists-and-phase-actions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tab lists and phase actions</h5>
+<h5><a class="anchor" aria-hidden="true" id="tab-lists-and-phase-actions"></a><a href="#tab-lists-and-phase-actions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Tab lists and phase actions</h5>
 <p>Tabs cannot be modified or deleted, only added or verified with the
 following functions:</p>
 <ul>
@@ -503,7 +486,7 @@ following functions:</p>
 </ul>
 <p>There are a <a href="https://dxr.mozilla.org/mozilla-central/source/testing/tps/pages">handful of static pages in the tree</a> which can be used for tab testing, and <code>data:</code> URLs can be used as well.</p>
 <p>See <a href="https://dxr.mozilla.org/mozilla-central/rev/681eb7dfa324dd50403c382888929ea8b8b11b00/services/sync/tests/tps/test_tabs.js"><code>test_tabs.js</code></a> for an example.</p>
-<h4><a class="anchor" aria-hidden="true" id="form-data"></a><a href="#form-data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Form Data</h4>
+<h4><a class="anchor" aria-hidden="true" id="form-data"></a><a href="#form-data" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Form Data</h4>
 <p>A form data asset list is an array of objects, each with the following
 properties:</p>
 <ul>
@@ -514,7 +497,7 @@ hours from the present, so 0 means now, and -24 means 24 hours ago.
 Optional, defaults to 0.</li>
 </ul>
 <p>For example:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> formdata1 = [
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> formdata1 = [
   { <span class="hljs-attr">fieldname</span>: <span class="hljs-string">"testing"</span>,
     <span class="hljs-attr">value</span>: <span class="hljs-string">"success"</span>,
     <span class="hljs-attr">date</span>: <span class="hljs-number">-1</span>
@@ -528,7 +511,7 @@ Optional, defaults to 0.</li>
   }
 ];
 </code></pre>
-<h5><a class="anchor" aria-hidden="true" id="form-data-lists-and-phase-actions"></a><a href="#form-data-lists-and-phase-actions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Form Data lists and phase actions</h5>
+<h5><a class="anchor" aria-hidden="true" id="form-data-lists-and-phase-actions"></a><a href="#form-data-lists-and-phase-actions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Form Data lists and phase actions</h5>
 <p>You can use the following functions in phase actions for formdata lists:</p>
 <ul>
 <li><code>Formdata.add</code></li>
@@ -537,15 +520,15 @@ Optional, defaults to 0.</li>
 <li><code>Formdata.verifyNot</code></li>
 </ul>
 <p>See <a href="https://dxr.mozilla.org/mozilla-central/rev/681eb7dfa324dd50403c382888929ea8b8b11b00/services/sync/tests/tps/test_formdata.js"><code>test_formdata.js</code></a> for an example.</p>
-<h5><a class="anchor" aria-hidden="true" id="notes"></a><a href="#notes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notes</h5>
+<h5><a class="anchor" aria-hidden="true" id="notes"></a><a href="#notes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notes</h5>
 <ul>
 <li>Sync currently does not sync form data dates, so the <code>date</code> field is ignored when performing
 <code>verify</code> and <code>verify-not</code> actions. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=552531">bug 552531</a>.</li>
 </ul>
-<h4><a class="anchor" aria-hidden="true" id="prefs"></a><a href="#prefs" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Prefs</h4>
+<h4><a class="anchor" aria-hidden="true" id="prefs"></a><a href="#prefs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Prefs</h4>
 <p>A prefs asset list is an array of objects with name and value keys,
 representing browser preferences. For example:</p>
-<pre><code class="hljs css languages- js"><span class="hljs-keyword">var</span> prefs1 = [
+<pre><code class="hljs css js"><span class="hljs-keyword">var</span> prefs1 = [
   { <span class="hljs-attr">name</span>: <span class="hljs-string">"browser.startup.homepage"</span>,
     <span class="hljs-attr">value</span>: <span class="hljs-string">"http://www.getfirefox.com"</span>
   },
@@ -557,7 +540,7 @@ representing browser preferences. For example:</p>
   }
 ];
 </code></pre>
-<h5><a class="anchor" aria-hidden="true" id="pref-lists-and-phase-actions"></a><a href="#pref-lists-and-phase-actions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pref lists and phase actions</h5>
+<h5><a class="anchor" aria-hidden="true" id="pref-lists-and-phase-actions"></a><a href="#pref-lists-and-phase-actions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pref lists and phase actions</h5>
 <p>The only actions supported for preference asset lists are
 <code>modify</code> and <code>verify</code>:</p>
 <ul>
@@ -568,7 +551,7 @@ representing browser preferences. For example:</p>
 preferences, open <code>about:config</code>, and search for the
 <code>services.sync.prefs.sync.</code> prefix.</p>
 <p>For a more detailed test example, see <a href="https://dxr.mozilla.org/mozilla-central/rev/681eb7dfa324dd50403c382888929ea8b8b11b00/services/sync/tests/tps/test_prefs.js]"><code>test_prefs.js</code></a>.</p>
-<h3><a class="anchor" aria-hidden="true" id="test-phases"></a><a href="#test-phases" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test Phases</h3>
+<h3><a class="anchor" aria-hidden="true" id="test-phases"></a><a href="#test-phases" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test Phases</h3>
 <p>The phase blocks are where the action happens! They tell TPS what to do.
 Each phase block contains the name of a phase, and a list of actions.
 TPS iterates through the phase blocks in alphanumeric order, and for
@@ -582,7 +565,7 @@ to the next phase block and repeats the process.</li>
 </ol>
 <p>A phase is defined by calling the <code>Phase</code> function with the name of the
 phase and a list of actions to perform:</p>
-<pre><code class="hljs css languages- js">Phase(<span class="hljs-string">'phase1'</span>, [
+<pre><code class="hljs css js">Phase(<span class="hljs-string">'phase1'</span>, [
   [Bookmarks.add, bookmarks_initial],
   [Passwords.add, passwords_initial],
   [History.add, history_initial],
@@ -594,7 +577,7 @@ reference to call, the other members of which are parameters to pass to
 the function.  Each type of asset list has a number of built-in
 functions you can call, described in the asset lists above; there
 are also some additional built-in functions.</p>
-<h3><a class="anchor" aria-hidden="true" id="built-in-functions"></a><a href="#built-in-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Built-in functions</h3>
+<h3><a class="anchor" aria-hidden="true" id="built-in-functions"></a><a href="#built-in-functions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Built-in functions</h3>
 <p><strong><code>Sync(options)</code></strong></p>
 <p>Initiates a Sync operation.  If no options are passed, a default sync
 operation is performed.  Otherwise, a special sync can be performed if
@@ -610,14 +593,14 @@ test fails.</p>
 <p><strong><code>Logger.AssertEqual(val1, val2, msg)</code></strong></p>
 <p>Asserts that <code>val1</code> is equal to <code>val2</code>, otherwise an exception is thrown and
 the test fails.</p>
-<h3><a class="anchor" aria-hidden="true" id="custom-functions"></a><a href="#custom-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Custom functions</h3>
+<h3><a class="anchor" aria-hidden="true" id="custom-functions"></a><a href="#custom-functions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Custom functions</h3>
 <p>You can also write your own functions to be called as actions.  For
 example, consider the first action in the phase above:</p>
-<pre><code class="hljs css languages- js">[Bookmarks.add, bookmarks_initial]
+<pre><code class="hljs css js">[Bookmarks.add, bookmarks_initial]
 </code></pre>
 <p>You could rewrite this as a custom function so as to add some custom
 logging:</p>
-<pre><code class="hljs css languages- js">[<span class="hljs-keyword">async</span> () =&gt; {
+<pre><code class="hljs css js">[<span class="hljs-keyword">async</span> () =&gt; {
   Logger.logInfo(<span class="hljs-string">"adding bookmarks_initial"</span>);
   <span class="hljs-keyword">await</span> Bookmarks.add(bookmarks_initial);
 }]
@@ -625,9 +608,9 @@ logging:</p>
 <p>Note that this is probably best used for debugging, and new tests that
 want custom behavior should add it to the TPS add-on so that other tests
 can use it.</p>
-<h3><a class="anchor" aria-hidden="true" id="example-test"></a><a href="#example-test" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example Test</h3>
+<h3><a class="anchor" aria-hidden="true" id="example-test"></a><a href="#example-test" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example Test</h3>
 <p>Here's an example TPS test to tie it all together.</p>
-<pre><code class="hljs css languages- js"><span class="hljs-comment">// Phase declarations</span>
+<pre><code class="hljs css js"><span class="hljs-comment">// Phase declarations</span>
 <span class="hljs-keyword">var</span> phases = { <span class="hljs-string">"phase1"</span>: <span class="hljs-string">"profile1"</span>,
                <span class="hljs-string">"phase2"</span>: <span class="hljs-string">"profile2"</span>,
                <span class="hljs-string">"phase3"</span>: <span class="hljs-string">"profile1"</span> };
@@ -718,7 +701,7 @@ changes performed in <code>profile2</code> have successfully been synced to
 <li>(Implementation detail) Two final cleanup phases are run to wipe the
 server state and unregister devices.</li>
 </ol>
-<h2><a class="anchor" aria-hidden="true" id="troubleshooting-and-debugging-tips-for-writing-and-running-tps-tests"></a><a href="#troubleshooting-and-debugging-tips-for-writing-and-running-tps-tests" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Troubleshooting and debugging tips for writing and running TPS tests</h2>
+<h2><a class="anchor" aria-hidden="true" id="troubleshooting-and-debugging-tips-for-writing-and-running-tps-tests"></a><a href="#troubleshooting-and-debugging-tips-for-writing-and-running-tps-tests" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Troubleshooting and debugging tips for writing and running TPS tests</h2>
 <ol>
 <li><p>TPS evaluates the whole file in every phase, so any syntax error(s)
 in the file will get reported in phase 1, even though the error may
@@ -772,7 +755,7 @@ garbage.</li>
 <li><p>Feel free to ask for help with setting up and running TPS in the
 <code>#sync</code> IRC channel!</p></li>
 </ol>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/sync/faq.html">← Frequently Asked Questions</a><a class="docs-next button" href="/application-services/docs/sync/extension-storage.html">Extension Storage →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/sync/faq.html">← Frequently Asked Questions</a><a class="docs-next button" href="/application-services/docs/sync/extension-storage.html">Extension Storage →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px;" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
               var search = docsearch({
                 
                 apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
