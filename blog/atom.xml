@@ -46,7 +46,12 @@ with the following highlights:</p>
 <p>The Firefox Accounts (FxA) team is in the process of releasing a
 new feature called Account Recovery. This feature is aimed at
 solving one of the most frustrating issues for our users. When
-a user resets t</p>
+a user resets their account password, they risk losing data such
+as synced bookmarks, passwords and browsing history. FxA encrypts
+synced browser data with the user’s account password in order to
+protect their privacy. Resetting the password destroys the
+encryption key and leaves the data inaccessible which
+eventually is deleted.</p>
 ]]></summary>
         <author>
             <name>Vijay Budhram</name>
