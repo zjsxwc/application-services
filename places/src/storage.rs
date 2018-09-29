@@ -147,6 +147,68 @@ fn fetch_page_info(db: &impl ConnectionUtil, page_id: &PageId) -> Result<Option<
     }
 }
 
+pub struct ManyVisitObservations<'conn> {
+    conn: &'conn mut PlacesDb,
+    pending_observations: Vec<VisitObservation>,
+    limit: Option<usize>,
+}
+
+impl<'conn> ManyVisitObservations<'conn> {
+    pub fn new(conn: &'conn mut PlacesDb) -> ManyVisitObservations<'conn> {
+        ManyVisitObservations { conn, pending_observations: Vec::new(), limit: None }
+    }
+
+    pub fn with_limit(conn: &'conn mut PlacesDb, limit: usize) -> ManyVisitObservations<'conn> {
+        ManyVisitObservations { conn, pending_observations: Vec::new(), limit: Some(limit) }
+    }
+
+    pub fn add(&mut self, visits: Vec<VisitObservation>) -> Result<()> {
+        if let Some(limit) = self.limit {
+            self.pending_observations.extend(visits);
+            if self.pending_observations.len() < limit {
+                return Ok(())
+            }
+            return apply_observations(&mut self.conn, &self.pending_observations[..limit]);
+        }
+        apply_observations(&mut self.conn, &self.pending_observations)
+    }
+
+    pub fn flush(mut self) -> Result<()> {
+        apply_observations(&mut self.conn, &self.pending_observations)
+    }
+}
+
+/// Inserts many new visits into the database. This should be used by Sync,
+/// profile migration,
+pub fn apply_observations<'v>(db: &mut PlacesDb, visit_obs: &'v [VisitObservation]) -> Result<()> {
+    for observations in visit_obs.chunks(999 / 2) {
+        let values = observations.iter().map(|visit|
+            format!("(?, {has_title}, ?, {visit_type}, {hidden}, {was_typed}, {is_local}, {last_visit_date})",
+                has_title=visit.get_title().map_or(0, |_| 1),
+                visit_type=visit.get_visit_type().map_or("NULL".to_string(), |typ| (typ as u8).to_string()),
+                hidden=visit.get_is_hidden() as u8,
+                was_typed=visit.get_was_typed() as u8,
+                is_local=!(visit.get_is_remote()) as u8,
+                last_visit_date=visit.get_at().map_or("NULL".to_string(), |at| at.to_string()),
+            )
+        ).collect::<Vec<String>>().join(",");
+        let query = format!("
+            INSERT INTO observations_to_apply(url, has_title, title, visit_type, hidden,
+                                              was_typed, is_local, last_visit_date)
+            VALUES {}
+        ", values);
+        let mut params: Vec<Option<String>> = Vec::with_capacity(observations.len() * 2);
+        for visit in observations {
+            params.push(visit.get_url().map(|url| url.as_str().to_owned()));
+            params.push(visit.get_title().map(|title| title.as_str().to_owned()));
+        }
+        // TODO: This isn't supported yet; see
+        // https://github.com/jgallagher/rusqlite/issues/312
+        // db.db.execute(&query, &params)?;
+    }
+    Ok(())
+}
+
 pub fn apply_observation(db: &mut PlacesDb, visit_ob: VisitObservation) -> Result<()> {
     let tx = db.db.transaction()?;
     apply_observation_direct(tx.conn(), visit_ob)?;

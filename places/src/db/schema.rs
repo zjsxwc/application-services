@@ -160,6 +160,62 @@ const CREATE_IDX_MOZ_HISTORYVISITS_VISITDATE: &str = "CREATE INDEX dateindex ON 
 
 const CREATE_IDX_MOZ_HISTORYVISITS_ISLOCAL: &str = "CREATE INDEX islocalindex ON moz_historyvisits(is_local)";
 
+/// The `pending_observations` table, and its `AFTER DELETE` trigger, is used
+/// to efficiently insert many visits at once.
+const CREATE_TABLE_PENDING_OBSERVATIONS: &str = "
+    CREATE TEMP TABLE pending_observations(
+        url TEXT NOT NULL,
+        has_title BOOLEAN NOT NULL DEFAULT 0,
+        title TEXT,
+        visit_type INTEGER,
+        is_hidden BOOLEAN,
+        was_typed BOOLEAN,
+        is_local BOOLEAN,
+        last_visit_date INTEGER,
+    )
+";
+
+const CREATE_TRIGGER_AFTER_DELETE_ON_PENDING_OBSERVATIONS: &str = "
+    CREATE TEMP TRIGGER observations_to_apply_afterdelete_trigger
+    AFTER DELETE ON observations_to_apply
+    BEGIN
+        INSERT INTO moz_places(id, guid, url, url_hash)
+        VALUES((SELECT id FROM moz_places
+                WHERE url_hash = hash(OLD.url) AND
+                      url = OLD.url),
+               GENERATE_GUID(), OLD.url, hash(OLD.url))
+        ON CONFLICT DO UPDATE SET
+            title = CASE WHEN OLD.has_title
+                    THEN excluded.title
+                    ELSE title,
+            hidden = CASE WHEN OLD.visit_type NOT NULL AND NOT OLD.is_hidden
+                     THEN 0
+                     ELSE hidden,
+            typed = CASE WHEN OLD.visit_type NOT NULL AND OLD.was_typed
+                    THEN typed + 1
+                    ELSE typed,
+            visit_count_remote = CASE WHEN OLD.visit_type NOT NULL AND NOT OLD.is_local
+                                 THEN visit_count_remote + 1
+                                 ELSE visit_count_remote,
+            last_visit_date_remote = CASE WHEN OLD.visit_type NOT NULL AND NOT OLD.is_local
+                                     THEN MAX(last_visit_date_remote, OLD.last_visit_date)
+                                     ELSE last_visit_date_remote,
+            visit_count_local = CASE WHEN OLD.visit_type NOT NULL AND OLD.is_local
+                                THEN visit_count_local + 1
+                                ELSE visit_count_local,
+            last_visit_date_local = CASE WHEN OLD.visit_type NOT NULL AND OLD.is_local
+                                    THEN MAX(last_visit_date_local, OLD.last_visit_date)
+                                    ELSE last_visit_date_local;
+
+        INSERT INTO moz_historyvisits(from_visit, place_id, visit_date, visit_type, is_local)
+        SELECT NULL, (SELECT id FROM moz_places
+                      WHERE url_hash = hash(OLD.url) AND
+                            url = OLD.url),
+               OLD.visit_date, OLD.visit_type, OLD.is_local)
+        WHERE OLD.visit_type NOT NULL;
+    END
+";
+
 
 // Keys in the moz_meta table.
 // pub(crate) static MOZ_META_KEY_ORIGIN_FRECENCY_COUNT: &'static str = "origin_frecency_count";
