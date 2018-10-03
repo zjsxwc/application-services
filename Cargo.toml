@@ -10,6 +10,7 @@ members = [
     "components/places/ffi",
     "components/support/sql",
     "components/support/ffi",
+    "components/support/guid",
 ]
 
 [profile.release]
