@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://mozilla.github.io/application-services/application-services/blog</id>
+    <id>https://mozilla.github.io/application-services/blog</id>
     <title>Firefox Application Services Blog</title>
     <updated>2018-10-02T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
-    <link rel="alternate" href="https://mozilla.github.io/application-services/application-services/blog"/>
+    <link rel="alternate" href="https://mozilla.github.io/application-services/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Firefox Application Services news and events.</subtitle>
-    <logo>https://mozilla.github.io/application-services/application-services/img/app-services.svg</logo>
+    <logo>https://mozilla.github.io/application-services/img/app-services.svg</logo>
     <rights>Copyright © 2018 Firefox Application Services</rights>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-121]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/10/02/train-121.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/10/02/train-121.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/10/02/train-121.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/10/02/train-121.html">
         </link>
         <updated>2018-10-02T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -24,8 +24,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-119]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-119.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-119.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html">
         </link>
         <updated>2018-09-14T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -38,8 +38,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-120]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-120.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/09/14/train-120.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/09/14/train-120.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/09/14/train-120.html">
         </link>
         <updated>2018-09-14T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -52,8 +52,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Account recovery keys in Firefox Accounts]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/09/10/account-recovery-in-firefox-accounts.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/09/10/account-recovery-in-firefox-accounts.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/09/10/account-recovery-in-firefox-accounts.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/09/10/account-recovery-in-firefox-accounts.html">
         </link>
         <updated>2018-09-10T06:00:00Z</updated>
         <summary type="html"><![CDATA[<h2><a class="anchor" aria-hidden="true" id="account-recovery-keys-in-firefox-account"></a><a href="#account-recovery-keys-in-firefox-account" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Account recovery keys in Firefox Account</h2>
@@ -74,8 +74,8 @@ eventually is deleted.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-118]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/23/fxa-train-118.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/23/fxa-train-118.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/08/23/fxa-train-118.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/08/23/fxa-train-118.html">
         </link>
         <updated>2018-08-23T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -89,8 +89,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-117]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-117.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-117.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/08/02/fxa-train-117.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/08/02/fxa-train-117.html">
         </link>
         <updated>2018-08-02T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -104,8 +104,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-116]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-116.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/08/02/fxa-train-116.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/08/02/fxa-train-116.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/08/02/fxa-train-116.html">
         </link>
         <updated>2018-08-02T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -119,8 +119,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Android Component]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/07/11/android-component.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/07/11/android-component.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/07/11/android-component.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/07/11/android-component.html">
         </link>
         <updated>2018-07-11T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>The initial version of the Firefox Accounts Android component has been released as part of <a href="https://github.com/mozilla-mobile/android-components/releases">android-components 0.12</a> several weeks ago.</p>
@@ -132,8 +132,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-113]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/06/20/fxa-train-113.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/06/20/fxa-train-113.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/06/20/fxa-train-113.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/06/20/fxa-train-113.html">
         </link>
         <updated>2018-06-20T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>A couple weeks ago we shipped FxA train-113 to production. Below are
@@ -146,8 +146,8 @@ some highlights.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-112]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/06/04/fxa-train-112.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/06/04/fxa-train-112.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/06/04/fxa-train-112.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/06/04/fxa-train-112.html">
         </link>
         <updated>2018-06-04T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
@@ -161,8 +161,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Two-step authentication in Firefox Accounts]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/05/24/two-step-authentication-in-firefox-accounts.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/05/24/two-step-authentication-in-firefox-accounts.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/05/24/two-step-authentication-in-firefox-accounts.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/05/24/two-step-authentication-in-firefox-accounts.html">
         </link>
         <updated>2018-05-24T06:00:00Z</updated>
         <summary type="html"><![CDATA[<h2><a class="anchor" aria-hidden="true" id="two-step-authentication-in-firefox-accounts"></a><a href="#two-step-authentication-in-firefox-accounts" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Two-step authentication in Firefox Accounts</h2>
@@ -178,8 +178,8 @@ required to log in.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-111 🦔]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/05/15/fxa-train-111.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/05/15/fxa-train-111.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/05/15/fxa-train-111.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/05/15/fxa-train-111.html">
         </link>
         <updated>2018-05-15T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>This week we shipped FxA train-111 to production,
@@ -192,8 +192,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-110]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/05/03/fxa-train-110.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/05/03/fxa-train-110.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/05/03/fxa-train-110.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/05/03/fxa-train-110.html">
         </link>
         <updated>2018-05-03T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>This week we shipped FxA train-110 to production,
@@ -206,8 +206,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-109]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/04/18/fxa-train-109.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/04/18/fxa-train-109.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/04/18/fxa-train-109.html">
         </link>
         <updated>2018-04-18T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>This week we shipped FxA train-109 to production,
@@ -220,8 +220,8 @@ with the following highlights:</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Changing your primary email in Firefox Accounts]]></title>
-        <id>https://mozilla.github.io/application-services/application-services/blog/2018/03/08/fxa-primary-email.html</id>
-        <link href="https://mozilla.github.io/application-services/application-services/blog/2018/03/08/fxa-primary-email.html">
+        <id>https://mozilla.github.io/application-services/blog/2018/03/08/fxa-primary-email.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/03/08/fxa-primary-email.html">
         </link>
         <updated>2018-03-08T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>The Firefox Accounts team recently introduced the ability for a user to change their primary email address. Being one of the main developers to work this feature, I wanted to share my experience and give a summary on what it took to get this feature to our users.</p>
