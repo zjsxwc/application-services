@@ -69,8 +69,14 @@ pub enum ErrorKind {
     #[fail(display = "No cached token for scope {}", _0)]
     NoCachedToken(String),
 
+    #[fail(display = "No stored refresh token")]
+    NoRefreshToken,
+
     #[fail(display = "Could not find a refresh token in the server response")]
     RefreshTokenNotPresent,
+
+    #[fail(display = "Action requires a prior device registration")]
+    DeviceUnregistered,
 
     #[fail(display = "Unrecoverable server error {}", _0)]
     UnrecoverableServerError(&'static str),

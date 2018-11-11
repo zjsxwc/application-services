@@ -2,10 +2,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-pub use crate::{config::Config, http_client::ProfileResponse as Profile};
+pub use crate::{config::Config, http_client::{ProfileResponse as Profile, DeviceType}};
 use crate::{
     errors::*,
-    http_client::Client,
+    http_client::{
+        Client, DeviceCreateRequest, DeviceCreateRequestBuilder, DeviceResponse,
+        DeviceUpdateRequest, DeviceUpdateRequestBuilder, PendingCommandsResponse, PushSubscription,
+    },
     scoped_keys::ScopedKeysFlow,
     util::{now, random_base64_url_string},
 };
@@ -61,6 +64,7 @@ pub(crate) struct StateV2 {
     login_state: LoginState,
     refresh_token: Option<RefreshToken>,
     scoped_keys: HashMap<String, ScopedKey>,
+    device_id: Option<String>,
 }
 
 #[cfg(feature = "browserid")]
@@ -137,6 +141,7 @@ impl FirefoxAccount {
             login_state: Unknown,
             refresh_token: None,
             scoped_keys: HashMap::new(),
+            device_id: None,
         })
     }
 
@@ -176,6 +181,7 @@ impl FirefoxAccount {
             login_state,
             refresh_token: None,
             scoped_keys: HashMap::new(),
+            device_id: None,
         }))
     }
 
@@ -461,24 +467,109 @@ impl FirefoxAccount {
         Ok(url)
     }
 
-    pub fn handle_push_message(&self) {
-        panic!("Not implemented yet!")
+    pub fn get_devices(&mut self) -> Result<Vec<DeviceResponse>> {
+        let access_token = self.get_access_token(scopes::DEVICES_READ)?.token;
+        let client = Client::new(&self.state.config);
+        client.devices(&access_token)
     }
 
-    pub fn register_device(&self) {
-        panic!("Not implemented yet!")
+    pub fn fetch_pending_commands(
+        &self,
+        index: i64,
+        limit: Option<i64>,
+    ) -> Result<PendingCommandsResponse> {
+        let refresh_token = self.get_refresh_token()?;
+        let client = Client::new(&self.state.config);
+        client.pending_commands(refresh_token, index, limit)
     }
 
-    pub fn get_devices_list(&self) {
-        panic!("Not implemented yet!")
+    pub fn invoke_command(
+        &mut self,
+        command: &str,
+        target_device_id: &str,
+        payload: &serde_json::Value,
+    ) -> Result<()> {
+        let access_token = self.get_access_token(scopes::DEVICES_WRITE)?.token;
+        let client = Client::new(&self.state.config);
+        client.invoke_command(&access_token, command, target_device_id, payload)
     }
 
-    pub fn send_message(&self) {
-        panic!("Not implemented yet!")
+    pub fn replace_device(&self, info: DeviceCreateInfo) -> Result<()> {
+        let refresh_token = self.get_refresh_token()?;
+        let client = Client::new(&self.state.config);
+        client.create_device(refresh_token, info.into())
     }
 
-    pub fn retrieve_messages(&self) {
-        panic!("Not implemented yet!")
+    pub fn set_push_subscription(&self, push_subscription: PushSubscription) -> Result<()> {
+        let update = self
+            .make_update_builder()?
+            .push_subscription(push_subscription)
+            .build();
+        self.update_device(update)
+    }
+
+    pub fn set_display_name(&self, name: &str) -> Result<()> {
+        let update = self.make_update_builder()?.display_name(name).build();
+        self.update_device(update)
+    }
+
+    pub fn clear_display_name(&self) -> Result<()> {
+        let update = self.make_update_builder()?.clear_display_name().build();
+        self.update_device(update)
+    }
+
+    // TODO: use the PATCH endpoint instead of overwritting everything.
+    pub fn register_command(&self, command: &str, value: &str) -> Result<()> {
+        let mut commands = HashMap::new();
+        commands.insert(command.to_owned(), value.to_owned());
+        let update = self
+            .make_update_builder()?
+            .available_commands(commands)
+            .build();
+        self.update_device(update)
+    }
+
+    // TODO: this currently deletes every command registered.
+    pub fn unregister_command(&self, _: &str) -> Result<()> {
+        let commands = HashMap::new();
+        let update = self
+            .make_update_builder()?
+            .available_commands(commands)
+            .build();
+        self.update_device(update)
+    }
+
+    pub fn clear_commands(&self) -> Result<()> {
+        let update = self
+            .make_update_builder()?
+            .clear_available_commands()
+            .build();
+        self.update_device(update)
+    }
+
+    fn make_update_builder(&self) -> Result<DeviceUpdateRequestBuilder> {
+        // let device_id = self.ensure_device_id()?;
+        Ok(DeviceUpdateRequestBuilder::new(/*device_id*/))
+    }
+
+    fn update_device(&self, update: DeviceUpdateRequest) -> Result<()> {
+        let refresh_token = self.get_refresh_token()?;
+        let client = Client::new(&self.state.config);
+        client.update_device(refresh_token, update)
+    }
+
+    fn get_refresh_token(&self) -> Result<&str> {
+        match self.state.refresh_token {
+            Some(ref token_info) => Ok(&token_info.token),
+            None => Err(ErrorKind::NoRefreshToken.into()),
+        }
+    }
+
+    fn ensure_device_id(&self) -> Result<&str> {
+        match self.state.device_id {
+            Some(ref id) => Ok(id),
+            None => Err(ErrorKind::DeviceUnregistered.into()),
+        }
     }
 
     pub fn register_persist_callback(&mut self, persist_callback: PersistCallback) {
@@ -544,6 +635,26 @@ pub struct AccessTokenInfo {
     pub expires_at: u64, // seconds since epoch
 }
 
+pub struct DeviceCreateInfo {
+    pub device_type: DeviceType,
+    pub display_name: String,
+    pub push_subscription: Option<PushSubscription>,
+    pub available_commands: Option<HashMap<String, String>>,
+}
+
+impl From<DeviceCreateInfo> for DeviceCreateRequest {
+    fn from(info: DeviceCreateInfo) -> Self {
+        let mut builder = DeviceCreateRequestBuilder::new(&info.display_name, info.device_type);
+        if let Some(push_subscription) = info.push_subscription {
+            builder = builder.push_subscription(push_subscription)
+        }
+        if let Some(available_commands) = info.available_commands {
+            builder = builder.available_commands(available_commands)
+        }
+        builder.build()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -573,7 +684,7 @@ mod tests {
             "12345678",
             "https://foo.bar",
         );
-        let url = fxa.begin_oauth_flow(&["profile"], false).unwrap();
+        let url = fxa.begin_oauth_flow(&[scopes::PROFILE], false).unwrap();
         let flow_url = Url::parse(&url).unwrap();
 
         assert_eq!(flow_url.host_str(), Some("accounts.firefox.com"));
@@ -602,7 +713,7 @@ mod tests {
         );
         assert_eq!(
             pairs.next(),
-            Some((Cow::Borrowed("scope"), Cow::Borrowed("profile")))
+            Some((Cow::Borrowed("scope"), Cow::Borrowed(scopes::PROFILE)))
         );
         let state_param = pairs.next().unwrap();
         assert_eq!(state_param.0, Cow::Borrowed("state"));
@@ -630,7 +741,7 @@ mod tests {
             "12345678",
             "https://foo.bar",
         );
-        let url = fxa.begin_oauth_flow(&["profile"], true).unwrap();
+        let url = fxa.begin_oauth_flow(&[scopes::PROFILE], true).unwrap();
         let flow_url = Url::parse(&url).unwrap();
 
         assert_eq!(flow_url.host_str(), Some("accounts.firefox.com"));
@@ -659,7 +770,7 @@ mod tests {
         );
         assert_eq!(
             pairs.next(),
-            Some((Cow::Borrowed("scope"), Cow::Borrowed("profile")))
+            Some((Cow::Borrowed("scope"), Cow::Borrowed(scopes::PROFILE)))
         );
         let state_param = pairs.next().unwrap();
         assert_eq!(state_param.0, Cow::Borrowed("state"));

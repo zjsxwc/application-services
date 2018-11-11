@@ -3,3 +3,5 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 pub const PROFILE: &'static str = "profile";
+pub const DEVICES_READ: &'static str = "devices:read";
+pub const DEVICES_WRITE: &'static str = "devices:write";

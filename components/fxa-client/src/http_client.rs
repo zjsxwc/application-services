@@ -6,6 +6,7 @@ use crate::{config::Config, errors::*};
 use reqwest::{self, header, Client as ReqwestClient, Method, Request, Response, StatusCode};
 use serde_derive::*;
 use serde_json::json;
+use std::collections::HashMap;
 #[cfg(feature = "browserid")]
 use {
     self::{
@@ -151,15 +152,14 @@ impl<'a> Client<'a> {
 
     pub fn profile(
         &self,
-        profile_access_token: &str,
+        access_token: &str,
         etag: Option<String>,
     ) -> Result<Option<ResponseAndETag<ProfileResponse>>> {
         let url = self.config.userinfo_endpoint()?;
         let client = ReqwestClient::new();
-        let mut builder = client.request(Method::GET, url).header(
-            header::AUTHORIZATION,
-            format!("Bearer {}", profile_access_token),
-        );
+        let mut builder = client
+            .request(Method::GET, url)
+            .header(header::AUTHORIZATION, Self::bearer_token(access_token));
         if let Some(etag) = etag {
             builder = builder.header(header::IF_NONE_MATCH, format!("\"{}\"", etag));
         }
@@ -256,6 +256,80 @@ impl<'a> Client<'a> {
         Ok(())
     }
 
+    pub fn pending_commands(
+        &self,
+        refresh_token: &str,
+        index: i64,
+        limit: Option<i64>,
+    ) -> Result<PendingCommandsResponse> {
+        let url = self.config.auth_url_path("v1/account/device/commands")?;
+        let client = ReqwestClient::new();
+        let mut builder = client
+            .request(Method::GET, url)
+            .header(header::AUTHORIZATION, Self::bearer_token(refresh_token))
+            .query(&[("index", index)]);
+        if let Some(limit) = limit {
+            builder = builder.query(&[("limit", limit)])
+        }
+        let request = builder.build()?;
+        Self::make_request(request)?.json().map_err(|e| e.into())
+    }
+
+    pub fn invoke_command(
+        &self,
+        access_token: &str,
+        command: &str,
+        target: &str,
+        payload: &serde_json::Value,
+    ) -> Result<()> {
+        let body = json!({
+            "command": command,
+            "target": target,
+            "payload": payload
+        });
+        let url = self.config.auth_url_path("v1/devices/invoke_command")?;
+        let client = ReqwestClient::new();
+        let request = client
+            .request(Method::POST, url)
+            .header(header::AUTHORIZATION, Self::bearer_token(access_token))
+            .header(header::CONTENT_TYPE, "application/json")
+            .body(body.to_string())
+            .build()?;
+        Self::make_request(request)?;
+        Ok(())
+    }
+
+    pub fn devices(&self, access_token: &str) -> Result<Vec<DeviceResponse>> {
+        let url = self.config.auth_url_path("v1/account/devices")?;
+        let client = ReqwestClient::new();
+        let request = client
+            .request(Method::GET, url)
+            .header(header::AUTHORIZATION, Self::bearer_token(access_token))
+            .build()?;
+        Self::make_request(request)?.json().map_err(|e| e.into())
+    }
+
+    pub fn create_device(&self, refresh_token: &str, device: DeviceCreateRequest) -> Result<()> {
+        self.make_device_request(refresh_token, serde_json::to_value(device)?)
+    }
+
+    pub fn update_device(&self, refresh_token: &str, update: DeviceUpdateRequest) -> Result<()> {
+        self.make_device_request(refresh_token, serde_json::to_value(update)?)
+    }
+
+    fn make_device_request(&self, refresh_token: &str, body: serde_json::Value) -> Result<()> {
+        let url = self.config.auth_url_path("v1/account/device")?;
+        let client = ReqwestClient::new();
+        let request = client
+            .request(Method::POST, url)
+            .header(header::AUTHORIZATION, Self::bearer_token(refresh_token))
+            .header(header::CONTENT_TYPE, "application/json")
+            .body(body.to_string())
+            .build()?;
+        Self::make_request(request)?;
+        Ok(())
+    }
+
     #[cfg(feature = "browserid")]
     pub fn sign(&self, session_token: &[u8], key_pair: &BrowserIDKeyPair) -> Result<SignResponse> {
         let public_key_json = key_pair.to_json(false)?;
@@ -302,6 +376,10 @@ impl<'a> Client<'a> {
         out.to_vec()
     }
 
+    fn bearer_token(token: &str) -> String {
+        format!("Bearer {}", token)
+    }
+
     fn make_request(request: Request) -> Result<Response> {
         let client = ReqwestClient::new();
         let mut resp = client.execute(request)?;
@@ -329,6 +407,214 @@ impl<'a> Client<'a> {
 pub struct ResponseAndETag<T> {
     pub response: T,
     pub etag: Option<String>,
+}
+
+#[derive(Deserialize)]
+pub struct PendingCommandsResponse {
+    pub index: u64,
+    pub last: Option<bool>,
+    pub messages: Vec<PendingCommand>,
+}
+
+#[derive(Deserialize)]
+pub struct PendingCommand {
+    pub index: u64,
+    pub data: CommandData,
+}
+
+#[derive(Deserialize)]
+pub struct CommandData {
+    pub command: String, // In the future try to make it an enum.
+    pub payload: serde_json::Value,
+    pub sender: Option<String>,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct PushSubscription {
+    #[serde(rename = "pushCallback")]
+    pub endpoint: String,
+    #[serde(rename = "pushPublicKey")]
+    pub public_key: String,
+    #[serde(rename = "pushAuthKey")]
+    pub auth_key: String,
+}
+
+#[derive(Serialize)]
+pub struct DeviceCreateRequest {
+    #[serde(flatten)]
+    device_info: DeviceRequestCommon,
+}
+
+#[derive(Serialize)]
+pub struct DeviceUpdateRequest {
+    // id: String,
+    #[serde(flatten)]
+    device_info: DeviceRequestCommon,
+}
+
+/// We use the double Option pattern in this struct.
+/// The outer option represents the existence of the field
+/// and the inner option its value or null.
+/// TL;DR:
+/// `None`: the field will not be present in the JSON body.
+/// `Some(None)`: the field will have a `null` value.
+/// `Some(Some(T))`: the field will have the serialized value of T.
+#[derive(Serialize)]
+pub struct DeviceRequestCommon {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "name")]
+    display_name: Option<Option<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "type")]
+    device_type: Option<Option<String>>, // TODO: maybe use DeviceType here?
+    #[serde(flatten)]
+    push_subscription: Option<PushSubscription>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "availableCommands")]
+    available_commands: Option<Option<HashMap<String, String>>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub enum DeviceType {
+    #[serde(rename = "desktop")]
+    Desktop,
+    #[serde(rename = "mobile")]
+    Mobile,
+    #[serde(other)]
+    Unknown,
+}
+
+impl std::string::ToString for DeviceType {
+    fn to_string(&self) -> String {
+        // Match with `Self::` once https://github.com/rust-lang/rust/issues/49683 is resolved.
+        use DeviceType::*;
+        match *self {
+            Desktop => "desktop".to_string(),
+            Mobile => "mobile".to_string(),
+            Unknown => panic!("Trying to serialize Unknown variant"),
+        }
+    }
+}
+
+// TODO: move all this into own module.
+pub struct DeviceCreateRequestBuilder {
+    device_type: String,
+    display_name: String,
+    push_subscription: Option<PushSubscription>,
+    available_commands: Option<HashMap<String, String>>,
+}
+
+impl DeviceCreateRequestBuilder {
+    pub fn new(display_name: &str, device_type: DeviceType) -> Self {
+        Self {
+            display_name: display_name.to_string(),
+            device_type: device_type.to_string(),
+            push_subscription: None,
+            available_commands: None,
+        }
+    }
+
+    pub fn push_subscription(mut self, push_subscription: PushSubscription) -> Self {
+        self.push_subscription = Some(push_subscription);
+        self
+    }
+
+    pub fn available_commands(mut self, available_commands: HashMap<String, String>) -> Self {
+        self.available_commands = Some(available_commands);
+        self
+    }
+
+    pub fn build(self) -> DeviceCreateRequest {
+        DeviceCreateRequest {
+            device_info: DeviceRequestCommon {
+                display_name: Some(Some(self.display_name)),
+                device_type: Some(Some(self.device_type.to_string())),
+                push_subscription: self.push_subscription,
+                available_commands: Some(self.available_commands),
+            },
+        }
+    }
+}
+
+pub struct DeviceUpdateRequestBuilder {
+    // id: String,
+    device_type: Option<Option<String>>,
+    display_name: Option<Option<String>>,
+    push_subscription: Option<PushSubscription>,
+    available_commands: Option<Option<HashMap<String, String>>>,
+}
+
+impl DeviceUpdateRequestBuilder {
+    pub fn new(/*id: &str*/) -> Self {
+        Self {
+            // id: id.to_owned(),
+            device_type: None,
+            display_name: None,
+            push_subscription: None,
+            available_commands: None,
+        }
+    }
+
+    pub fn push_subscription(mut self, push_subscription: PushSubscription) -> Self {
+        self.push_subscription = Some(push_subscription);
+        self
+    }
+
+    pub fn available_commands(mut self, available_commands: HashMap<String, String>) -> Self {
+        self.available_commands = Some(Some(available_commands));
+        self
+    }
+
+    pub fn clear_available_commands(mut self) -> Self {
+        self.available_commands = Some(None);
+        self
+    }
+
+    pub fn display_name(mut self, display_name: &str) -> Self {
+        self.display_name = Some(Some(display_name.to_string()));
+        self
+    }
+
+    pub fn clear_display_name(mut self) -> Self {
+        self.display_name = Some(None);
+        self
+    }
+
+    pub fn device_type(mut self, device_type: DeviceType) -> Self {
+        self.device_type = Some(Some(device_type.to_string()));
+        self
+    }
+
+    pub fn build(self) -> DeviceUpdateRequest {
+        DeviceUpdateRequest {
+            // id: self.id,
+            device_info: DeviceRequestCommon {
+                display_name: self.display_name,
+                device_type: self.device_type,
+                push_subscription: self.push_subscription,
+                available_commands: self.available_commands,
+            },
+        }
+    }
+}
+
+// TODO: not quite true, but ok for now
+// (e.g. isCurrentDevice is not always returned).
+pub type DeviceResponse = DeviceResponseCommon;
+
+#[derive(Deserialize)]
+pub struct DeviceResponseCommon {
+    pub id: String,
+    #[serde(rename = "name")]
+    pub display_name: String,
+    #[serde(rename = "type")]
+    pub device_type: DeviceType,
+    #[serde(flatten)]
+    push_subscription: Option<PushSubscription>,
+    #[serde(rename = "availableCommands")]
+    available_commands: HashMap<String, String>,
+    #[serde(rename = "pushEndpointExpired")]
+    push_endpoint_expired: bool,
 }
 
 #[derive(Deserialize)]
@@ -367,7 +653,6 @@ pub struct SignResponse {
 
 #[derive(Deserialize)]
 pub struct KeysResponse {
-    // ka: Vec<u8>,
     pub wrap_kb: Vec<u8>,
 }
 
