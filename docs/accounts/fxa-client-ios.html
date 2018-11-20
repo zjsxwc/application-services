@@ -1,27 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>iOS SDK · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="The **Firefox Accounts iOS SDK** provides a way for iOS applications to do the following:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="iOS SDK · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/index.html"/><meta property="og:description" content="The **Firefox Accounts iOS SDK** provides a way for iOS applications to do the following:"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg" alt="Firefox Application Services"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Mobile SDKs</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Firefox Accounts</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/project-details.html">Project Details</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/dev-process.html">Development Process</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/metrics.html">Metrics for Reliers</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Mobile SDKs</h3><ul><li class="navListItem navListItemActive"><a class="navItem" href="/application-services/docs/accounts/fxa-client-ios.html">iOS SDK</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/fxa-client-android.html">Android SDK</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Other Features</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/end-to-end-encryption.html">End-to-end encryption</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/50000-most-common-passwords.html">50,000 Most Common Passwords</a></li></ul></div></div></section></div><script>
-            document.addEventListener('DOMContentLoaded', function() {
-              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
-              createToggler('#tocToggler', 'body', 'tocActive');
-
-              const headings = document.querySelector('.toc-headings');
-              headings && headings.addEventListener('click', function(event) {
-                if (event.target.tagName === 'A') {
-                  document.body.classList.remove('tocActive');
-                }
-              }, false);
-
-              function createToggler(togglerSelector, targetSelector, className) {
-                var toggler = document.querySelector(togglerSelector);
-                var target = document.querySelector(targetSelector);
-
-                toggler.onclick = function(event) {
-                  event.preventDefault();
-
-                  target.classList.toggle(className);
-                };
-              }
-            });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">iOS SDK</h1></header><article><div><span><p>The <strong>Firefox Accounts iOS SDK</strong> provides a way for iOS applications to do the following:</p>
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>iOS SDK · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="iOS SDK · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/index.html"/><meta property="og:description" content="The **Firefox Accounts iOS SDK** provides a way for iOS applications to do the following:"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Mobile SDKs</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Firefox Accounts</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/welcome.html">Welcome</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/project-details.html">Project Details</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/dev-process.html">Development Process</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/metrics.html">Metrics for Reliers</a></li></ul></div><div class="navGroup navGroupActive"><h3>Mobile SDKs</h3><ul><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/application-services/docs/accounts/fxa-client-ios.html">iOS SDK</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/fxa-client-android.html">Android SDK</a></li></ul></div><div class="navGroup navGroupActive"><h3>Other Features</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/end-to-end-encryption.html">End-to-end encryption</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/accounts/50000-most-common-passwords.html">50,000 Most Common Passwords</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>iOS SDK</h1></header><article><div><span><p>The <strong>Firefox Accounts iOS SDK</strong> provides a way for iOS applications to do the following:</p>
 <ul>
 <li>Fetch scoped keys to provide a key for end-to-end encryption.</li>
 <li>Get access to Firefox Sync keys to fetch the sync data.</li>
@@ -29,11 +12,11 @@
 </ul>
 <p>Please see the <a href="https://github.com/mozilla/application-services/tree/master/fxa-client/sdks/swift/FxAClient">FxA iOS SDK documentation</a>
 to integrate this component into your application.</p>
-<h2><a class="anchor" aria-hidden="true" id="implementing-the-oauth-flow-in-ios"></a><a href="#implementing-the-oauth-flow-in-ios" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Implementing the OAuth flow in iOS</h2>
+<h2><a class="anchor" aria-hidden="true" id="implementing-the-oauth-flow-in-ios"></a><a href="#implementing-the-oauth-flow-in-ios" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Implementing the OAuth flow in iOS</h2>
 <blockquote>
 <p>This tutorial is for FxAClient iOS 0.2.0.</p>
 </blockquote>
-<h3><a class="anchor" aria-hidden="true" id="setup-environment"></a><a href="#setup-environment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setup Environment</h3>
+<h3><a class="anchor" aria-hidden="true" id="setup-environment"></a><a href="#setup-environment" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setup Environment</h3>
 <p>First you need some OAuth information. Generate a <code>client_id</code>, <code>redirectUrl</code> and find out the scopes for your application.
 See Firefox Account documentation for that.</p>
 <p>Once you have the OAuth info, you can start adding <code>FxAClient</code> to your iOS project.
@@ -47,20 +30,20 @@ Currently the SDK does not provide the Web view, you have to write it yourself.<
 <p>If you do not use Carthage then you will have to build the library from source. This is
 not recommended.</p>
 </blockquote>
-<h3><a class="anchor" aria-hidden="true" id="start-coding"></a><a href="#start-coding" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Start coding</h3>
+<h3><a class="anchor" aria-hidden="true" id="start-coding"></a><a href="#start-coding" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Start coding</h3>
 <p>Importing the <code>FxAClient</code>:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-keyword">import</span> FxAClient
+<pre><code class="hljs css swift"><span class="hljs-keyword">import</span> FxAClient
 </code></pre>
 <p>Create a global <code>fxa</code> object:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-keyword">var</span> fxa: <span class="hljs-type">FirefoxAccount</span>?
+<pre><code class="hljs css swift"><span class="hljs-keyword">var</span> fxa: <span class="hljs-type">FirefoxAccount</span>?
 </code></pre>
 <p>You will need to save state for FxA in your app, this example just uses <code>UserDefaults</code>. We suggest using the iOS key store for this data.
 Define <code>self</code> variables to help save state for FxA:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-keyword">self</span>.stateKey = <span class="hljs-string">"fxaState"</span>
+<pre><code class="hljs css swift"><span class="hljs-keyword">self</span>.stateKey = <span class="hljs-string">"fxaState"</span>
 <span class="hljs-keyword">self</span>.redirectUrl = <span class="hljs-string">"https://mozilla-lockbox.github.io/fxa/ios-redirect.html"</span>
 </code></pre>
 <p>Then you can write the following:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> state_json = <span class="hljs-type">UserDefaults</span>.standard.string(forKey: <span class="hljs-keyword">self</span>.stateKey) {
+<pre><code class="hljs css swift"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> state_json = <span class="hljs-type">UserDefaults</span>.standard.string(forKey: <span class="hljs-keyword">self</span>.stateKey) {
     fxa = <span class="hljs-keyword">try</span>! <span class="hljs-type">FirefoxAccount</span>.fromJSON(state: state_json)
 } <span class="hljs-keyword">else</span> {
     <span class="hljs-type">FxAConfig</span>.custom(content_base: <span class="hljs-string">"https://accounts.firefox.com"</span>) { result, error <span class="hljs-keyword">in</span>
@@ -73,7 +56,7 @@ Define <code>self</code> variables to help save state for FxA:</p>
 <p>You can now attempt to fetch the FxA profile. The first time the application starts it won't have any state, so
 <code>fxa.getProfile()</code> will fail and proceed to the <code>fxa.beginOAuthFlow</code> branch and it will open the FxA OAuth login
 in the web view.</p>
-<pre><code class="hljs css languages- swift">fxa.getProfile() { result, error <span class="hljs-keyword">in</span>
+<pre><code class="hljs css swift">fxa.getProfile() { result, error <span class="hljs-keyword">in</span>
     <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> error = error <span class="hljs-keyword">as</span>? <span class="hljs-type">FxAError</span>, <span class="hljs-keyword">case</span> <span class="hljs-type">FxAError</span>.<span class="hljs-type">Unauthorized</span> = error {
         fxa.beginOAuthFlow(scopes: [<span class="hljs-string">"profile"</span>, <span class="hljs-string">"https://identity.mozilla.com/apps/oldsync"</span>], wantsKeys: <span class="hljs-literal">true</span>) { result, error <span class="hljs-keyword">in</span>
             <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> authUrl = result <span class="hljs-keyword">else</span> { <span class="hljs-keyword">return</span> }
@@ -90,16 +73,16 @@ in the web view.</p>
     }
 }
 </code></pre>
-<pre><code class="hljs css languages- swift"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">matchingRedirectURLReceived</span><span class="hljs-params">(components: URLComponents)</span></span> {
+<pre><code class="hljs css swift"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">matchingRedirectURLReceived</span><span class="hljs-params">(components: URLComponents)</span></span> {
     <span class="hljs-keyword">var</span> dic = [<span class="hljs-type">String</span>: <span class="hljs-type">String</span>]()
     components.queryItems?.forEach { dic[$<span class="hljs-number">0</span>.name] = $<span class="hljs-number">0</span>.value }
     <span class="hljs-keyword">self</span>.fxa!.completeOAuthFlow(code: dic[<span class="hljs-string">"code"</span>]!, state: dic[<span class="hljs-string">"state"</span>]!) { result, error <span class="hljs-keyword">in</span>
-        <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> oauthInfo = result <span class="hljs-keyword">else</span> { <span class="hljs-keyword">return</span> }
-        <span class="hljs-built_in">print</span>(<span class="hljs-string">"access_token: "</span> + oauthInfo.accessToken)
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> keys = oauthInfo.keys {
+        <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> tokenInfo = result <span class="hljs-keyword">else</span> { <span class="hljs-keyword">return</span> }
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"access_token: "</span> + tokenInfo.token)
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> keys = tokenInfo.keys {
             <span class="hljs-built_in">print</span>(<span class="hljs-string">"keysJWE: "</span> + keys)
         }
-        <span class="hljs-built_in">print</span>(<span class="hljs-string">"obtained scopes: "</span> + oauthInfo.scopes.joined(separator: <span class="hljs-string">" "</span>))
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"obtained scope: "</span> + tokenInfo.scope)
         <span class="hljs-keyword">self</span>.fxa!.getProfile() { result, error <span class="hljs-keyword">in</span>
             <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> profile = result <span class="hljs-keyword">else</span> {
                 <span class="hljs-built_in">assert</span>(<span class="hljs-literal">false</span>, <span class="hljs-string">"ok something's really wrong there"</span>)
@@ -112,32 +95,32 @@ in the web view.</p>
     }
 }
 </code></pre>
-<h2><a class="anchor" aria-hidden="true" id="key-sdk-concepts"></a><a href="#key-sdk-concepts" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Key SDK concepts</h2>
+<h2><a class="anchor" aria-hidden="true" id="key-sdk-concepts"></a><a href="#key-sdk-concepts" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Key SDK concepts</h2>
 <p>The iOS SDK makes use of a few main concepts:</p>
 <ul>
 <li>Usage of callbacks for potentially long-running tasks</li>
 <li>Persisting changes to the <code>FirefoxAccount</code> object</li>
 </ul>
-<h3><a class="anchor" aria-hidden="true" id="asynchronous-methods"></a><a href="#asynchronous-methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Asynchronous methods</h3>
+<h3><a class="anchor" aria-hidden="true" id="asynchronous-methods"></a><a href="#asynchronous-methods" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Asynchronous methods</h3>
 <p>For long-running tasks such as network calls, the library opts to run all tasks on a separate, serial queue to
 protect access to the Rust library and avoid blocking the UI thread in the client application.</p>
 <p>True async methods are implemented using callbacks that take exactly two parameters: a result of a specific
 type (eg. <code>FxAConfig</code>, <code>Profile</code>) and an error. To avoid deadlocks on the serial queue when chaining multiple
 calls to the backing Rust library, callbacks will be run on the main thread.</p>
-<h3><a class="anchor" aria-hidden="true" id="persisting-firefoxaccount-changes"></a><a href="#persisting-firefoxaccount-changes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Persisting <code>FirefoxAccount</code> changes</h3>
+<h3><a class="anchor" aria-hidden="true" id="persisting-firefoxaccount-changes"></a><a href="#persisting-firefoxaccount-changes" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Persisting <code>FirefoxAccount</code> changes</h3>
 <p>As the <code>FirefoxAccount</code> object maintains a &quot;cache&quot; of sorts for user profile information and authentication
 credentials, a client application can save a user's auth state by persisting a JSON string containing their
 information to a secure location (eg. using the <a href="https://developer.apple.com/documentation/security/keychain_services">iOS Keychain API</a>).</p>
 <p>For example, <code>getProfile()</code> will cause the user's profile information to be cached in the <code>FirefoxAccount</code>
 object, so on the second run, it won't have to make a network call. In that case, you would want to save the
 account state, as it has been mutated:</p>
-<pre><code class="hljs css languages- swift">fxa.getProfile() <span class="hljs-comment">// Saves profile information</span>
+<pre><code class="hljs css swift">fxa.getProfile() <span class="hljs-comment">// Saves profile information</span>
 <span class="hljs-type">UserDefaults</span>.standard.<span class="hljs-keyword">set</span>(fxa?.toJSON(), forKey: stateKey)
 </code></pre>
 <p>Since there are many methods in the library that may affect the state of the <code>FirefoxAccount</code> object, it may
 be difficult to keep track of all those operations. To minimize the change of error, the SDK provides a method
 to register a callback that will be invoked whenever a state-mutating function is called:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EzPersistor</span>: <span class="hljs-title">PersistCallback</span> </span>{
+<pre><code class="hljs css swift"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EzPersistor</span>: <span class="hljs-title">PersistCallback</span> </span>{
     <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">persist</span><span class="hljs-params">(json: String)</span></span> {
         <span class="hljs-type">UserDefaults</span>.standard.<span class="hljs-keyword">set</span>(json, forKey: stateKey)
     }
@@ -148,7 +131,7 @@ fxa!.registerPersistCallback(persistor)
 
 fxa.getProfile() <span class="hljs-comment">// Saves profile information</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/accounts/metrics.html">← Metrics for Reliers</a><a class="docs-next button" href="/application-services/docs/accounts/fxa-client-android.html">Android SDK →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/accounts/metrics.html">← Metrics for Reliers</a><a class="docs-next button" href="/application-services/docs/accounts/fxa-client-android.html">Android SDK →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px;" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
               var search = docsearch({
                 
                 apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
