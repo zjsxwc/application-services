@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Building the Android Components · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## Doing a local build of the Android Components:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Building the Android Components · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/index.html"/><meta property="og:description" content="## Doing a local build of the Android Components:"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg" alt="Firefox Application Services"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Applications</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Applications</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/welcome.html">Intro</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/signing-android-apps.html">Signing Android Applications</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/application-services/docs/applications/android-components.html">Building the Android Components</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/working-with-reference-browser.html">Development with the Reference Browser</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Building the Android Components</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="doing-a-local-build-of-the-android-components"></a><a href="#doing-a-local-build-of-the-android-components" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Doing a local build of the Android Components:</h2>
+<p>This document describes how to make local builds of the Android components in
+this repository. Most consumers of these components <em>do not</em> need to follow
+this process, but will instead use pre-built components [todo: link to this]</p>
+<p>This document, and the build process itself, is a work-in-progress - please file issues (or just update the wiki!) if you notice errors or omissions.</p>
+<h2><a class="anchor" aria-hidden="true" id="prepare-your-build-environment"></a><a href="#prepare-your-build-environment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Prepare your build environment</h2>
+<p><em>NOTE: This section is almost certainly incomplete - given it is typically
+only done once, things have probably been forgotten or over-simplified.
+Please file PRs if you notice errors or omissions here</em></p>
+<p>This process should work OK on Mac and Linux. It also works on <a href="#using-windows">Windows via WSL by following these instructions</a>.</p>
+<p>Typically, this process only needs to be run once, although periodically you
+may need to repeat some steps (eg, rust updates should be done periodically)</p>
+<p>At the end of this process you should have the following environment variables set up.</p>
+<ul>
+<li><code>NDK_HOME</code></li>
+<li><code>ANDROID_NDK_TOOLCHAIN_DIR</code></li>
+<li><code>ANDROID_NDK_API_VERSION</code></li>
+<li><code>ANDROID_HOME</code></li>
+<li><code>JAVA_HOME</code></li>
+</ul>
+<p>These variables are required every time you build, so you should add them to
+a rc file or similar so they persist between reboots etc.</p>
+<ol>
+<li><p>Install NDK r15c from <a href="https://developer.android.com/ndk/downloads/older_releases">https://developer.android.com/ndk/downloads/older_releases</a>
+(yes, this sucks, but newer versions don't understand the <code>--deprecated-headers</code>
+argument required to build OpenSSL against a v21 toolchain).</p>
+<ul>
+<li>Extract it, put it somewhere (<code>$HOME/.android-ndk-r15c</code> is a reasonable
+choice, but it doesn't matter), and set <code>NDK_HOME</code> to this location.</li>
+</ul></li>
+<li><p>Install <code>rustup</code> from <a href="https://rustup.rs">https://rustup.rs</a>:</p>
+<ul>
+<li>If you already have it, run <code>rustup update</code></li>
+<li>Run <code>rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android</code></li>
+<li>Run <code>rustup toolchain add beta</code> (TODO: this no longer appears necessary).</li>
+</ul></li>
+<li><p>Ensure your clone of <code>mozilla/application-services</code> is up to date.</p></li>
+<li><p>Setup your NDK toolchains.</p>
+<ul>
+<li>Create a directory where we'll install the standalone toolchains.
+<ul>
+<li><code>mkdir -p ~/.ndk-standalone-toolchains</code></li>
+<li><code>export ANDROID_NDK_TOOLCHAIN_DIR=$HOME/.ndk-standalone-toolchains</code></li>
+</ul></li>
+<li><code>cd path/to/application-services/libs</code></li>
+<li><code>./setup_toolchains_local.sh $NDK_HOME</code>
+<ul>
+<li>Say yes if/when prompted.</li>
+<li>When this is done, it should have set <code>$ANDROID_NDK_API_VERSION</code> (to 21),
+but you should add this to an rcfile as above.</li>
+</ul></li>
+</ul></li>
+<li><p>Install or locate Java</p>
+<ul>
+<li>Either install Java, or, if Android Studio is installed, you can probably find one
+installed in a <code>jre</code> directory under the Android Studio directory.</li>
+<li>Set <code>JAVA_HOME</code> to this location and add it to your rc file.</li>
+</ul></li>
+<li><p>Install or locate the Android SDKs</p>
+<ul>
+<li>Install the Android SDKs. If Android Studio is involved, it may have already installed
+them somewhere - use the &quot;SDK Manager&quot; to identify this location.</li>
+<li>Set <code>ANDROID_HOME</code> to this location and add it to your rc file.</li>
+</ul></li>
+<li><p>Build openssl and sqlcipher</p>
+<ul>
+<li><code>cd path/to/application-services/libs</code> (Same dir you were just in for step 4)</li>
+<li><code>./build-all.sh android</code> (Go make some coffee or something, this will take
+some time as it has to compile sqlcipher and openssl for x86, arm, and arm64).</li>
+<li>Note that if something goes wrong here
+<ul>
+<li>Check all environment variables mentions above are set and correct.</li>
+<li>The following directories should exist, and point to standalone NDK
+toolchains <code>$ANDROID_NDK_TOOLCHAIN_DIR/{x86,arm,arm64}-$ANDROID_NDK_API_VERSION</code>.</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="building"></a><a href="#building" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Building</h2>
+<p>Having done the above, the build process is the easy part! Again, ensure all
+environment variables mentioned above are in place.</p>
+<ol>
+<li><p>Ensure your clone of application-services is up-to-date.</p></li>
+<li><p>Ensure rust is up-to-date by running <code>rustup</code></p></li>
+<li><p>The builds are all performed by <code>./gradlew</code> and the general syntax used is
+<code>./gradlew project:task</code></p>
+<p>You can see a list of projects by executing <code>./gradlew projects</code> and a list
+of tasks by executing <code>./gradlew tasks</code>.</p></li>
+</ol>
+<h3><a class="anchor" aria-hidden="true" id="publishing-the-components-to-your-local-maven-repository"></a><a href="#publishing-the-components-to-your-local-maven-repository" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Publishing the components to your local maven repository.</h3>
+<p>The easiest way to use the build is to have your Android project reference the component from your local maven repository - this is done by the <code>publishToMavenLocal</code> task - so:</p>
+<pre><code class="hljs">./gradlew publishToMavenLocal
+</code></pre>
+<p>should work. Check your <code>~/.m2</code> directory (which is your local maven repo) for the components.</p>
+<p>You can also publish single projects - eg:</p>
+<pre><code class="hljs">./gradlew service-sync-places:publishToMavenLocal
+</code></pre>
+<p>For more information about using the local maven repo, see this <a href="https://mozilla-mobile.github.io/android-components/contributing/testing-components-inside-app">android components guide</a></p>
+<h3><a class="anchor" aria-hidden="true" id="other-build-types"></a><a href="#other-build-types" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Other build types</h3>
+<p>If you just want the build artifacts, you probably want one of the <code>assemble</code> tasks - either
+<code>assembleDebug</code> or <code>assembleRelease</code>.</p>
+<p>For example, to build a debug version of the places library, the command you
+want is <code>./gradlew places-library:assembleDebug</code></p>
+<p>After building, you should find the built artifact under the <code>target</code> directory,
+with sub-directories for each Android architecture. For example, after executing:</p>
+<pre><code class="hljs">% ./gradlew places-library:assembleDebug
+</code></pre>
+<p>you will find:</p>
+<pre><code class="hljs">target/aarch64-linux-android/release/libplaces_ffi.so
+target/i686-linux-android/release/libplaces_ffi.so
+target/armv7-linux-androideabi/release/libplaces_ffi.so
+</code></pre>
+<p>(You will probably notice that even though as used <code>assembleDebug</code>, the directory names are <code>release</code> - this may change in the future)</p>
+<p>You should also find the .kt files for the project somewhere there and in the right directory structure if that turns out to be useful.</p>
+<h1><a class="anchor" aria-hidden="true" id="using-windows"></a><a href="#using-windows" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Windows</h1>
+<p>It's currently tricky to get some of these builds working on Windows, primarily due to our use of <code>sqlcipher</code> and <code>openssl</code>. However, by using the Windows Subsystem for Linux, it is possible to get builds working, but still have them published to your &quot;native&quot; local maven cache so it's available for use by a &quot;native&quot; Android Studio.</p>
+<p>As above, this document may be incomplete, so please edit or open PRs where necessary.</p>
+<p>In general, you will follow the exact same process outlined above, with one or 2 unique twists.</p>
+<h2><a class="anchor" aria-hidden="true" id="setting-up-the-build-environment"></a><a href="#setting-up-the-build-environment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up the build environment</h2>
+<p>You need to install most of the build tools in WSL. This means you end up with many tools installed twice - once in WSL and once in &quot;native&quot; Windows - but the only cost of that is disk-space.</p>
+<p>You will need the following tools in WSL:</p>
+<ul>
+<li><p>unzip - <code>sudo apt install unzip</code></p></li>
+<li><p>python - <code>sudo apt install python</code></p></li>
+<li><p>java - you may already have it? try <code>java -version</code>. Java ended up causing me grief (stuck at 100% CPU doing nothing), but google pointed at one popular way of installing java:</p>
+<pre><code class="hljs"><span class="hljs-string">sudo </span><span class="hljs-string">add-apt-</span><span class="hljs-string">repository </span><span class="hljs-string">ppa:webupd8team/</span><span class="hljs-string">java
+</span><span class="hljs-string">sudo </span><span class="hljs-string">apt-get </span><span class="hljs-string">update
+</span><span class="hljs-string">sudo </span><span class="hljs-string">apt-get </span><span class="hljs-string">install </span><span class="hljs-string">oracle-java8-</span><span class="hljs-string">installer
+</span><span class="hljs-string">sudo </span><span class="hljs-string">apt </span><span class="hljs-string">install </span><span class="hljs-string">oracle-java8-</span><span class="hljs-built_in">set-default</span>
+</code></pre></li>
+<li><p>tcl, used for sqlcipher builds - <code>sudo apt install tcl-dev</code></p></li>
+<li><p>Android SDKs - this process is much the same as for normal Linux - roughly</p>
+<ul>
+<li><p>visit <a href="https://developer.android.com/studio/">https://developer.android.com/studio/</a>, at the bottom of the page locate the current SDKs for linux
+at time of writing, this is <a href="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip">https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip</a></p>
+<pre><code class="hljs">cd ~
+mkdir android-sdk
+cd android-sdk
+<span class="hljs-keyword">unzip</span> {<span class="hljs-built_in">path</span>-to.zip}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">ANDROID_HOME</span>=<span class="hljs-variable">$HOME</span>/android-sdk
+<span class="hljs-variable">$ANDROID_HOME</span>/tools/bin/sdkmanager <span class="hljs-string">"platforms;android-26"</span>
+<span class="hljs-variable">$ANDROID_HOME</span>/tools/bin/sdkmanager --licenses
+</code></pre></li>
+</ul></li>
+</ul>
+<p>(Note - it may be necessary to execute <code>$ANDROID_HOME/tools/bin/sdkmanager &quot;build-tools;26.0.2&quot; &quot;platform-tools&quot; &quot;platforms;android-26&quot; &quot;tools&quot;</code>, but may not! See also <a href="https://gist.github.com/fdmnio/fd42caec2e5a7e93e12943376373b7d0">this gist</a> which google found for me and might have useful info.</p>
+<ul>
+<li>Follow all the other steps above - eg, you still need the NDK setup in WSL and all environment variables above set.</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="configure-maven"></a><a href="#configure-maven" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configure Maven</h2>
+<p>We now want to configure maven to use the native windows maven repository - then, when doing <code>./gradlew install</code> from WSL, it ends up in the Windows maven repo.</p>
+<ul>
+<li><p>Execute <code>sudo apt install maven</code> - this should have created a <code>~/.m2</code> folder as the WSL maven repository. In this directory, create a file <code>~/.m2/settings.xml</code> with the content:</p>
+<pre><code class="hljs"><span class="hljs-params">&lt;settings&gt;</span>
+  <span class="hljs-params">&lt;localRepository&gt;</span><span class="hljs-meta-keyword">/mnt/</span>c/Users<span class="hljs-class">/{username}/.m2/repository<span class="hljs-params">&lt;/localRepository&gt;</span>
+<span class="hljs-params">&lt;/settings&gt;</span>
+</span></code></pre>
+<p>(obviously with {username} adjusted appropriately)</p></li>
+<li><p>Now you should be ready to roll - <code>./gradlew install</code> should complete and publish the components to your native maven repo!</p></li>
+</ul>
+<p>\o/</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/applications/signing-android-apps.html">← Signing Android Applications</a><a class="docs-next button" href="/application-services/docs/applications/working-with-reference-browser.html">Development with the Reference Browser →</a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
