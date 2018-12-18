@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Consuming megazord libraries on Android · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;h1&gt;&lt;a class=&quot;anchor&quot; aria-hidden=&quot;true&quot; id=&quot;megazord-libraries&quot;&gt;&lt;/a&gt;&lt;a href=&quot;#megazord-libraries&quot; aria-hidden=&quot;true&quot; class=&quot;hash-link&quot;&gt;&lt;svg class=&quot;hash-link-icon&quot; aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Megazord libraries&lt;/h1&gt;
+"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Consuming megazord libraries on Android · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/index.html"/><meta property="og:description" content="&lt;h1&gt;&lt;a class=&quot;anchor&quot; aria-hidden=&quot;true&quot; id=&quot;megazord-libraries&quot;&gt;&lt;/a&gt;&lt;a href=&quot;#megazord-libraries&quot; aria-hidden=&quot;true&quot; class=&quot;hash-link&quot;&gt;&lt;svg class=&quot;hash-link-icon&quot; aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Megazord libraries&lt;/h1&gt;
+"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg" alt="Firefox Application Services"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Applications</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Applications</h3><ul><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/welcome.html">Intro</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/signing-android-apps.html">Signing Android Applications</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/android-components.html">Building the Android Components</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/application-services/docs/applications/consuming-megazord-libraries.html">Consuming megazord libraries</a></li><li class="navListItem"><a class="navItem" href="/application-services/docs/applications/working-with-reference-browser.html">Development with the Reference Browser</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Consuming megazord libraries on Android</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="megazord-libraries"></a><a href="#megazord-libraries" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Megazord libraries</h1>
+<p>The Rust component libraries that Application Services publishes stand alone: each published Android
+ARchive (AAR) contains managed code (<code>classes.jar</code>) and multiple <code>.so</code> library files (one for each
+supported architecture).  That means consuming multiple such libraries entails at least two <code>.so</code>
+libraries, and each of those libraries includes the entire Rust standard library as well as
+(potentially many) duplicated dependencies.  To save space and allow cross-component native-code
+Link Time Optimization (LTO, i.e., inlining, dead code elimination, etc) Application Services also
+publishes aggregate libraries -- so called <em>megazord libraries</em> -- that compose multiple Rust
+components into a single optimized <code>.so</code> library file.  The managed code can be easily configured to
+use such a megazord without significant changes.</p>
+<p>There are two tasks we want to arrange.  First, we want to substitute component modules for the
+single aggregate megazord module (a process that we call &quot;megazording&quot;); second, we want to arrange
+for native Rust code to be available to JVM unit tests.  (They're related because the unit test
+changes depend on the megazord used.)</p>
+<p>Both tasks are handled by the
+<a href="https://github.com/mozilla/application-services/gradle-plugin/README.md">org.mozilla.appservices</a>
+Gradle plugin.</p>
+<h1><a class="anchor" aria-hidden="true" id="consuming-megazords"></a><a href="#consuming-megazords" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Consuming megazords</h1>
+<p>You'll need to:</p>
+<ol>
+<li>Choose a megazord from the <a href="#megazords">list of megazords</a> that Application Services produces in automation.</li>
+<li><a href="#apply-the-gradle-plugin">Apply</a> the <code>org.mozilla.appservices</code> Gradle plugin.</li>
+<li><a href="#configure-the-gradle-plugin">Configure</a> the Gradle plugin.</li>
+<li><a href="#configuring-the-consuming-application">Call <code>.init()</code></a> in your <code>Application.onCreate()</code>.</li>
+<li><a href="#verify-that-your-apk-is-megazorded">Verify</a> that your APK is megazorded.</li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="megazords"></a><a href="#megazords" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Megazords</h2>
+<table>
+<thead>
+<tr><th>Name</th><th>Components</th><th>Maven publication</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lockbox</code></td><td><code>fxaclient</code>, <code>logins</code></td><td><code>org.mozilla.appservices:lockbox-megazord</code></td></tr>
+<tr><td><code>reference-browser</code></td><td><code>fxaclient</code>, <code>logins</code>, <code>places</code></td><td><code>org.mozilla.appservices:reference-browser-megazord</code></td></tr>
+</tbody>
+</table>
+<p>If your project needs an additional megazord, talk to #rust-components on Slack.</p>
+<h2><a class="anchor" aria-hidden="true" id="apply-the-gradle-plugin"></a><a href="#apply-the-gradle-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Apply the Gradle plugin</h2>
+<p><a alt="Version badge" href="https://plugins.gradle.org/plugin/org.mozilla.appservices.gradle-plugin">
+<img align="left" src="https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/org/mozilla/appservices/org.mozilla.appservices.gradle.plugin/maven-metadata.xml.svg?label=org.mozilla.appservices&colorB=brightgreen" />
+</a>
+<br/></p>
+<p>Build script snippet for plugins DSL for Gradle 2.1 and later:</p>
+<pre><code class="hljs css language-groovy">plugins {
+  id <span class="hljs-string">'org.mozilla.appservices'</span> version <span class="hljs-string">'0.1.0'</span>
+}
+</code></pre>
+<p>Build script snippet for use in older Gradle versions or where dynamic configuration is required:</p>
+<pre><code class="hljs css language-groovy">buildscript {
+  repositories {
+    maven {
+      url 'https://plugins.gradle.org/m2/'
+    }
+  }
+  dependencies {
+    classpath 'gradle.plugin.org.mozilla.appservices:gradle-plugin:0.1.0"
+  }
+}
+
+apply plugin: 'org.mozilla.appservices'
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="configure-the-gradle-plugin"></a><a href="#configure-the-gradle-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configure the Gradle plugin</h2>
+<p>To consume a specific megazord module, use something like:</p>
+<pre><code class="hljs css language-groovy">appservices {
+    defaultConfig {
+        <span class="hljs-comment">// Megazord in all Android variants.  The default is to not megazord.</span>
+        megazord = <span class="hljs-string">'lockbox'</span> <span class="hljs-comment">// Or 'reference-browser', etc.</span>
+        enableUnitTests = <span class="hljs-literal">false</span> <span class="hljs-comment">// Defaults to true.</span>
+    }
+</code></pre>
+<p>If you need, you can configure per Android variant: see the
+<a href="https://github.com/mozilla/application-services/gradle-plugin/README.md">plugin docs</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="configuring-the-consuming-application"></a><a href="#configuring-the-consuming-application" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configuring the consuming application</h2>
+<p>The megazord modules expose a single additional JVM class, like
+<code>org.mozilla.appservices.{Lockbox,ReferenceBrowser}Megazord</code>.  That class has a single static
+<code>init()</code> method that consuming applications should invoke in their <code>Application.onCreate()</code> method,
+like:</p>
+<pre><code class="hljs css language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">application</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">".Application"</span> <span class="hljs-attr">...</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">application</span>&gt;</span>
+    ...
+<span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span>
+</code></pre>
+<p>and:</p>
+<pre><code class="hljs css language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Application</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">android</span>.<span class="hljs-title">app</span>.<span class="hljs-title">Application</span> </span>{
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">super</span>.onCreate();
+
+        org.mozilla.appservices.LockboxMegazord.init();
+    }
+
+    ...
+}
+</code></pre>
+<p>The <code>init()</code> method sets some Java system properties that tell the component modules which megazord
+native code library contains the underlying component native code.</p>
+<h2><a class="anchor" aria-hidden="true" id="verify-that-your-apk-is-megazorded"></a><a href="#verify-that-your-apk-is-megazorded" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Verify that your APK is megazorded</h2>
+<p>After <code>./gradlew app:assembleDebug</code>, list the contents of the APK produced.  For the Reference
+Browser, this might be like:</p>
+<pre><code class="hljs">./gradlew <span class="hljs-symbol">app:</span>assembleGeckoNightlyArmDebug
+unzip -l app/build/outputs/apk/geckoNightlyArm/debug/app-geckoNightly-arm-armeabi-v7a-debug.apk | grep <span class="hljs-class"><span class="hljs-keyword">lib</span>/</span>
+</code></pre>
+<p>You should see a single megazord <code>.so</code> library, like:</p>
+<pre><code class="hljs">  <span class="hljs-number">5172812</span>  <span class="hljs-number">00</span>-<span class="hljs-number">00</span>-<span class="hljs-number">1980</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>   <span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">armeabi</span>-<span class="hljs-title">v7a</span>/<span class="hljs-title">libreference_browser</span>.<span class="hljs-title">so</span></span>
+</code></pre>
+<p>and no additional <em>component</em> <code>.so</code> libraries (like <code>libfxaclient_ffi.so</code>).  You will see additional
+<code>.so</code> libraries -- just not component libraries, which are generally suffixed <code>_ffi.so</code>.</p>
+<p>Then exercise your functionality on device and don't think about megazording again!</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/application-services/docs/applications/android-components.html"><span class="arrow-prev">← </span><span>Building the Android Components</span></a><a class="docs-next button" href="/application-services/docs/applications/working-with-reference-browser.html"><span>Development with the Reference Browser</span><span class="arrow-next"> →</span></a></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
