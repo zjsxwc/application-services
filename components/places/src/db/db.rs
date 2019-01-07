@@ -120,7 +120,7 @@ impl Deref for PlacesDb {
     }
 }
 
-fn define_functions(c: &Connection) -> Result<()> {
+pub fn define_functions(c: &Connection) -> Result<()> {
     c.create_scalar_function("get_prefix", 1, true, move |ctx| {
         let href = ctx.get::<String>(0)?;
         let (prefix, _) = split_after_prefix(&href);

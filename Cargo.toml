@@ -6,6 +6,7 @@ members = [
     "components/logins/ffi",
     "components/places",
     "components/places/ffi",
+    "components/places/sqlite-ext",
     "components/support/sql",
     "components/support/ffi",
     "components/sync15",
@@ -17,3 +18,7 @@ members = [
 opt-level = "z"
 debug = true
 lto = true
+
+[patch.crates-io]
+rusqlite = { git = "https://github.com/gwenn/rusqlite", branch = "from_handle" }
+libsqlite3-sys = { git = "https://github.com/gwenn/rusqlite", branch = "from_handle" }
