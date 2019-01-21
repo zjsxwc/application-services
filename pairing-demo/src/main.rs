@@ -6,9 +6,12 @@ use fxa_client::{Config, FirefoxAccount};
 use std::collections::HashMap;
 use url::Url;
 
-static CONTENT_SERVER: &'static str = "https://pairsona.dev.lcip.org";
-static CLIENT_ID: &'static str = "7f368c6886429f19";
-static REDIRECT_URI: &'static str = "https://mozilla.github.io/notes/fxa/android-redirect.html";
+static CONTENT_SERVER: &'static str = "http://127.0.0.1:3030";
+//static CONTENT_SERVER: &'static str = "https://pairsona2.dev.lcip.org";
+//static CLIENT_ID: &'static str = "7f368c6886429f19";
+//static REDIRECT_URI: &'static str = "https://mozilla.github.io/notes/fxa/android-redirect.html";
+static CLIENT_ID: &'static str = "3c49430b43dfba77";
+static REDIRECT_URI: &'static str = "https://accounts.firefox.com/oauth/success/3c49430b43dfba77";
 static SCOPES: &'static [&'static str] = &["https://identity.mozilla.com/apps/oldsync"];
 
 fn main() {
