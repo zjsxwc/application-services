@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>release-process · Firefox Application Services</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;h1&gt;&lt;a class=&quot;anchor&quot; aria-hidden=&quot;true&quot; id=&quot;application-services-release-process&quot;&gt;&lt;/a&gt;&lt;a href=&quot;#application-services-release-process&quot; aria-hidden=&quot;true&quot; class=&quot;hash-link&quot;&gt;&lt;svg class=&quot;hash-link-icon&quot; aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Application Services Release Process&lt;/h1&gt;
+"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="release-process · Firefox Application Services"/><meta property="og:type" content="website"/><meta property="og:url" content="https://mozilla.github.io/application-services/index.html"/><meta property="og:description" content="&lt;h1&gt;&lt;a class=&quot;anchor&quot; aria-hidden=&quot;true&quot; id=&quot;application-services-release-process&quot;&gt;&lt;/a&gt;&lt;a href=&quot;#application-services-release-process&quot; aria-hidden=&quot;true&quot; class=&quot;hash-link&quot;&gt;&lt;svg class=&quot;hash-link-icon&quot; aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Application Services Release Process&lt;/h1&gt;
+"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/application-services/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://mozilla.github.io/application-services/blog/atom.xml" title="Firefox Application Services Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://mozilla.github.io/application-services/blog/feed.xml" title="Firefox Application Services Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/application-services/css/main.css"/></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/application-services/"><img class="logo" src="/application-services/img/app-services.svg" alt="Firefox Application Services"/></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/application-services/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/mozilla/application-services" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">release-process</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="application-services-release-process"></a><a href="#application-services-release-process" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Application Services Release Process</h1>
+<p>These are the steps needed to cut a new release.</p>
+<ol>
+<li><p>Update the changelog.</p>
+<ol>
+<li><p>Add a new header between the &quot;Full Changelog&quot; and &quot;See the release process docs...&quot; lines with the version number and date of the next release.</p></li>
+<li><p>Replace <code>master</code> in the Full Changelog link to be <code>v&lt;new-version-number&gt;</code>. E.g. if you are releasing 0.13.2, the link should be</p>
+<pre><code class="hljs">[<span class="hljs-string">Full Changelog</span>](<span class="hljs-link">https://github.com/mozilla/application-services/compare/v0.13.1...v0.13.2</span>)
+</code></pre>
+<p>Note that this needs three dots (<code>...</code>) between the two tags (two dots is different). Yes, the second tag doesn't exist yet, you'll make it later.</p></li>
+<li><p>Add a new &quot;Full Changelog&quot; link that starts at your new version and continues to master. E.g. for 0.13.2 this would be</p>
+<pre><code class="hljs">[<span class="hljs-string">Full Changelog</span>](<span class="hljs-link">https://github.com/mozilla/application-services/compare/v0.13.2...master</span>)
+</code></pre>
+<p>Again, this needs 3 dots.</p></li>
+<li><p>Optionally, go over the commits between the past release and this one and see if anything is worth including.</p></li>
+<li><p>Make sure the changelog follows the format of the other changelog entries. If you have access, <a href="https://docs.google.com/document/d/1oxdGm7OQcsy78NzXjMQKTbfzn21tl9Nopmvo8NCMWmU">this document</a> is fairly comprehensive. For a concrete example, at the time of this writing, see the <a href="https://github.com/mozilla/application-services/blob/master/CHANGELOG.md#0130-2019-01-09">0.13.0</a> release notes.</p>
+<ul>
+<li>Note that we try to provide PR or issue numbers (and links) for each change. Please add these if they are missing.</li>
+</ul></li>
+</ol></li>
+<li><p>Bump the version number in the top-level <a href="https://github.com/mozilla/application-services/blob/master/build.gradle">build.gradle</a> file. Be sure you're following semver, and if in doubt, ask.</p></li>
+<li><p>Land the commits that perform the steps above. This takes a PR, typically.</p></li>
+<li><p>Cut the actual release.</p>
+<ol>
+<li>Click &quot;Releases&quot;, and then &quot;Draft a New Release&quot; in the github UI.</li>
+<li>Enter <code>v&lt;myversion&gt;</code> as the tag. In the example above it would be <code>v0.13.2</code>. It's important this is the same as the tags you put in the links in the changelog.</li>
+<li>Under the description, paste the contents of the release notes from CHANGELOG.md.</li>
+<li>Note that the release is not avaliable until the taskcluster build completes for that tag.
+<ul>
+<li>Finding out that this takes a little navigation in the github UI. It's available at <code>https://github.com/mozilla/application-services/commits/v&lt;VERSION NUMBER&gt;</code> in the build status info (the emoji) next to the last commit.</li>
+<li>If the taskcluster tag and/or release tasks fail, ping someone in slack and we'll figure out what to do.</li>
+</ul></li>
+</ol></li>
+<li><p>In order for consumers to have access, we need to update in <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.</p>
+<ol>
+<li><p>If the changes expose new functionality, or otherwise require changes to code or documentation in <a href="https://github.com/mozilla-mobile/android-components">https://github.com/mozilla-mobile/android-components</a>, perform those. This part is often done at the same time as the changes in application-services, to avoid being blocked on steps 3-4 of this document.</p></li>
+<li><p>Change the versions of our dependencies in <a href="https://github.com/mozilla-mobile/android-components/blob/master/buildSrc/src/main/java/Dependencies.kt">buildSrc/src/main/java/Dependencies.kt</a>.</p></li>
+<li><p>Note the relevant changes in their <a href="https://github.com/mozilla-mobile/android-components/blob/master/docs/changelog.md">docs/changelog.md</a>, and update the application-services version there as well in their list of dependency versions.</p></li>
+<li><p><strong><em>Important: Manually test the changes versus the samples in android-components.</em></strong></p>
+<ul>
+<li>We do not have automated test coverage for much of the network functionality at this point, so this is crucial.</li>
+<li>You can do this before the release has been cut by adding <code>substitutions.application-services.dir=/path/to/application-services</code> in your <code>local.properties</code> file in android-components. Remember that you have done this, however, as it overrides changes in <code>Dependencies.kt</code>.</li>
+</ul></li>
+<li><p>Get it PRed and landed.</p></li>
+</ol></li>
+</ol>
+</span></div></article></div><div class="docs-prevnext"></div></div></div></div><footer class="productShowcaseSection nav-footer" id="footer"><section class="sitemap"><div><a href="https://mozilla.org"><img src="/application-services/img/mozilla.svg" style="height:50px" alt="Mozilla"/></a></div><div><h5>Links</h5><a href="/application-services/blog">Blog</a><a href="/application-services/docs/accounts/welcome.html">Firefox Accounts Docs</a><a href="/application-services/docs/applications/welcome.html">Firefox Applications Docs</a><a href="/application-services/docs/sync/welcome.html">Firefox Sync Docs</a></div><div><h5>More</h5><a href="https://github.com/mozilla/application-services">mozilla/application-services</a><a href="https://github.com/mozilla/fxa">mozilla/fxa</a><a href="https://github.com/mozilla">github/mozilla</a><a href="https://github.com/mozilla-services">github/mozilla-services</a></div></section><section class="copyright">Firefox Application Services</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: 'ebf54a0a9357f70ba426ce54714676d4',
+                indexName: 'application_services',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
