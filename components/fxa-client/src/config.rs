@@ -120,6 +120,7 @@ impl Config {
 
         let remote_config = RemoteConfig {
             auth_url: format!("{}/", resp.auth_server_base_url),
+            auth_token_endpoint: format!("{}/v1/oauth/token", resp.auth_server_base_url),
             oauth_url: format!("{}/", resp.oauth_server_base_url),
             profile_url: format!("{}/", resp.profile_server_base_url),
             token_server_endpoint_url: format!("{}/1.0/sync/1.5", resp.sync_tokenserver_base_url),

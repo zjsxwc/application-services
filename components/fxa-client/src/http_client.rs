@@ -231,7 +231,7 @@ impl<'a> Client<'a> {
     }
 
     fn make_oauth_token_request(&self, body: serde_json::Value) -> Result<OAuthTokenResponse> {
-        let url = self.config.token_endpoint()?;
+        let url = self.config.auth_token_endpoint()?;
         let client = ReqwestClient::new();
         let request = client
             .request(Method::POST, url)
