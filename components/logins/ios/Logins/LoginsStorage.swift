@@ -29,6 +29,7 @@ open class LoginsStorage {
     
     public init(databasePath: String) {
         self.dbPath = databasePath
+        sync15_passwords_enable_logcat_logging();
     }
     
     deinit {

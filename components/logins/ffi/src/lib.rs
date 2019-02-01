@@ -38,6 +38,31 @@ pub extern "C" fn sync15_passwords_enable_logcat_logging() {
             log::debug!("Android logging should be hooked up!")
         });
     }
+    #[cfg(target_os = "ios")]
+    {
+        /// XXX hack
+        struct SimpleLogger;
+
+        impl log::Log for SimpleLogger {
+            fn enabled(&self, metadata: &log::Metadata) -> bool {
+                metadata.level() <= log::Level::Info
+            }
+
+            fn log(&self, record: &log::Record) {
+                if self.enabled(record.metadata()) {
+                    println!("{} - {}", record.level(), record.args());
+                }
+            }
+
+            fn flush(&self) {}
+        }
+
+        static LOG_INIT: std::sync::Once = std::sync::ONCE_INIT;
+        static LOGGER: SimpleLogger = SimpleLogger;
+        LOG_INIT.call_once(|| {
+            let _ = log::set_logger(&LOGGER).map(|_| log::set_max_level(log::LevelFilter::Trace));
+        });
+    }
 }
 
 #[no_mangle]

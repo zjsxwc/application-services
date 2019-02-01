@@ -76,3 +76,6 @@ void sync15_passwords_update(Sync15PasswordEngineHandle handle,
                              Sync15PasswordsError *_Nonnull error);
 
 char *sync15_passwords_destroy_string(char const *_Nonnull str);
+
+// This is named poorly if we're going to expose it globally (we shouldn't...)
+void sync15_passwords_enable_logcat_logging(void);
