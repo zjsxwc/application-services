@@ -14,9 +14,9 @@ for i in "${!LIBS_ARCHS[@]}"; do
     OPENSSL_DIR="$SRCROOT"/../../../libs/ios/$LIB_ARCH/openssl \
     SQLCIPHER_LIB_DIR="$SRCROOT"/../../../libs/ios/$LIB_ARCH/sqlcipher/lib \
     SQLCIPHER_INCLUDE_DIR="$SRCROOT"/../../../libs/ios/$LIB_ARCH/sqlcipher/include \
-    "$HOME"/.cargo/bin/cargo build --lib --release  --target ${IOS_TRIPLES[$i]}
+    "$HOME"/.cargo/bin/cargo build --lib --target ${IOS_TRIPLES[$i]}
 done
-mkdir -p "$SRCROOT"/../../../target/universal/release
-lipo -create -output "$SRCROOT"/../../../target/universal/release/liblogins_ffi.a \
-"$SRCROOT"/../../../target/x86_64-apple-ios/release/liblogins_ffi.a \
-"$SRCROOT"/../../../target/aarch64-apple-ios/release/liblogins_ffi.a \
+mkdir -p "$SRCROOT"/../../../target/universal/debug
+lipo -create -output "$SRCROOT"/../../../target/universal/debug/liblogins_ffi.a \
+"$SRCROOT"/../../../target/x86_64-apple-ios/debug/liblogins_ffi.a \
+"$SRCROOT"/../../../target/aarch64-apple-ios/debug/liblogins_ffi.a \
