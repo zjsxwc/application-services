@@ -1,0 +1,21 @@
+[package]
+name = "sync_guid"
+version = "0.1.0"
+authors = ["application-services <application-services@mozilla.com>"]
+edition = "2018"
+
+
+[dependencies]
+rand = "0.6.5"
+base64 = "0.10.1"
+rusqlite = { version = "0.16.0", optional = true }
+serde = { version = "1.0.87", optional = true }
+
+[features]
+rusqlite_support = ["rusqlite"]
+serde_support = ["serde"]
+# By default we support serde, but not rusqlite.
+default = ["serde_support"]
+
+[dev-dependencies]
+serde_test = "1.0.87"

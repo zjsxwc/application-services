@@ -8,6 +8,7 @@ members = [
     "components/places/ffi",
     "components/support/sql",
     "components/support/ffi",
+    "components/support/guid",
     "components/sync15",
     "components/rc_log",
     "megazords/fenix",
