@@ -299,7 +299,7 @@ operators on the date which is required for the date picker.</p>
     ) <span class="hljs-keyword">AS</span> volume
   <span class="hljs-keyword">FROM</span> syncs
   <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">day</span>
-  <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+  <span class="hljs-keyword">UNION</span> ALL
   <span class="hljs-keyword">SELECT</span>
     <span class="hljs-keyword">day</span>,
     <span class="hljs-string">'failed'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">status</span>,
