@@ -1,0 +1,8 @@
+[package]
+name = "zeroing_allocator"
+version = "0.1.0"
+authors = ["Thom Chiovoloni <tchiovoloni@mozilla.com>"]
+edition = "2018"
+
+[dependencies]
+libc = "0.2.48"

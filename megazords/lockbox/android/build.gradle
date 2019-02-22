@@ -85,6 +85,8 @@ dependencies {
     api project(path: ':logins-library', configuration: 'withoutLib')
     api project(path: ':rustlog-library', configuration: 'withoutLib')
 
+    implementation 'net.java.dev.jna:jna:4.5.2@aar'
+
     jnaForTest 'net.java.dev.jna:jna:4.5.2@jar'
 }
 

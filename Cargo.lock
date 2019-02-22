@@ -844,6 +844,7 @@ dependencies = [
  "fxaclient_ffi 0.1.0",
  "logins_ffi 0.1.0",
  "rc_log_ffi 0.1.0",
+ "zeroing_allocator 0.1.0",
 ]
 
 [[package]]
@@ -2277,6 +2278,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "zeroing_allocator"
+version = "0.1.0"
+dependencies = [
+ "libc 0.2.48 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [metadata]

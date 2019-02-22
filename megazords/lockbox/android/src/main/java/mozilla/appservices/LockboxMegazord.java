@@ -9,5 +9,12 @@ public class LockboxMegazord {
         System.setProperty("mozilla.appservices.fxaclient_ffi_lib_name", "lockbox");
         System.setProperty("mozilla.appservices.logins_ffi_lib_name", "lockbox");
         System.setProperty("mozilla.appservices.rc_log_ffi_lib_name", "lockbox");
+        LibZeroingAllocator.zeroing_allocator_enable();
+    }
+
+    @SuppressWarnings("JniMissingFunction")
+    static class LibZeroingAllocator {
+        static { com.sun.jna.Native.register(LibZeroingAllocator.class, "lockbox"); }
+        static native void zeroing_allocator_enable();
     }
 }
