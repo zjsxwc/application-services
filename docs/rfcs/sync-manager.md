@@ -34,32 +34,46 @@ The primary responsibilities of the engine are:
 * Query info/collections and pass this information to engines.
 
 * Manage interaction with the token server to obtain a token. As part of this,
-  the manager needs to detect when an engine fails to use the token, generally
-  due to a node reassignment mid sync. In this scenario, the manager will
-  abort any pending syncs and reset itself, starting a new sync flow. Note
-  also that this means the containing application will generally not need to
-  see authentication errors from engines, only from the manager.
+  the manager needs to detect when an engine fails to use the token, either
+  due to token expiry, or due to a node reassignment mid sync. The manager will
+  attempt to fetch a new token, and if successful, re-start the sync of the
+  failing engine. If that succeeds but the node has changed, the manager will
+  perform a full reset and restart a sync flow for all engines. If obtaining
+  the new token fails due to auth issues, it will signal to the containing
+  app that it should take some auth action before it can continue.
+  (Note that the manager can help reduce instances of token expiry by ensuring
+  the token is valid for some reasonable time before handing it to an engine)
 
 * Manage the "clients" collection - we probably can't ignore this any longer,
   especially for bookmarks (as desktop will send a wipe command on bookmark
   restore). This involves both communicating with the engine regarding
   commands targetting it, and accepting commands to be send to other devices.
-  Note however that it's not yet clear where these commands will originate
-  from - eg, consider a bookmark restore - which point in this process will
-  queue the wipe commands for other clients?). Exactly how to manage this (eg,
+  Note however that outgoing commands are likely to not originate from a sync,
+  but instead from other actions, such as "restore bookmarks". While the
+  store *may* be involved in that (and thus able to queue the outgoing command),
+  we should not assume that's always the case. Exactly how to manage this (eg,
   when we can assume the engine has processed the command?) are TBD.
 
 * Perform, or coordinate, the actual sync of the engines - from the containing
   app's POV, there's a single "sync now" entry-point. Exactly how the manager
-  binds to engines is TBD. For example, a possible implementation is that a
-  callback is registered with the sync manager. It's also likely that we will
-  expose a way to sync a specific engine rather than "sync all".
+  binds to engines is TBD. It's also likely that we will expose a way to sync
+  a specific engine rather than "sync all".
 
 * Manage the fact that there may not be a 1:1 relationship between collections
-  and sync engines. For example, it may be true in the future that a single
-  engine uses multiple collections. A possible example is when we come to
-  syncing "containers" - the history engine may then use 2 collections as part
-  of a sync.
+  and sync engines. For example, it may be true in the future that when we come to
+  syncing "containers", the history engine might require 2 collections to
+  sync. Note that this is subtly different from engines which happen to be
+  closely related - while history and bookmarks, or addresses and credit-cards
+  are related, each can be synced independently so are *not* examples of
+  engines which would leverage this.
+
+  XXX - do we actually need this now? Should we ignore it and wait for
+  a concrete use-case? If we support this in the future, we can probably still
+  have sugar so that the common case of a 1:1 relationship doesn't need to
+  deal with this.
+
+* It will manage the collection of telemetry from the engines and pass this
+  info back to the app for submission.
 
 ## What the sync manager will not do
 
@@ -67,6 +81,18 @@ For completeness, this section lists things which the sync manager will not do:
 
 * It is not a sync scheduler. The containing app will be responsible for
   knowing when to sync (but as above, the scheduler does know *what* to sync.
+
+* It will not perform authentication - it's role is to signal to the app when
+  an auth problem exists and the app is expected to resolve that.
+
+* It will not directly talk to the token server, although it *will* coordinate
+  use of a token-server client to manage that communication.
+
+* It will not submit telemetry.
+
+* It does not track any changes or validate any collections - these remain the
+  responsibility of the engines.
+
 
 (anything else?)
 
@@ -106,9 +132,9 @@ the engines. We must define this in a way so that the manager can be
 implemented anywhere - we should not assume the manager is implemented in
 rust.
 
-We also need to consider the "clients" engine in this state - we will need to
-communicate commands sent by other devices and commands that we wish to send
-to other devices.
+The individual rust components will not manage the "clients" engine - that will
+be done by the manager - it need to communicate commands sent by other devices
+and commands need to be sent to other devices.
 
 We will rely on the consuming app to ensure that the sync manager is
 initialized correctly before syncing any engines.
@@ -124,6 +150,16 @@ need for one engine to know what info/collections returns for other engines.
   version, considering the state to be "new" if it differs, and failing
   fatally if the version isn't acceptable. Engines never need to see these
   values.
+
+* The sync manager is responsible for managing info/collections, downloading
+  it and uploading it when it needs to be changed. While it is an implementation
+  detail how this is done exactly, important requirements are that it:
+
+  * Must use if-modified-since to ensure that another client hasn't raced to
+    update it.
+
+  * Ensure that entries for collections which we don't understand are managed
+    correctly (ie, not discarded or otherwise changed)
 
 * The sync manager is responsible for persisting and populating the "declined"
   engine list. If an engine is declined, the manager should not ask it to
@@ -147,6 +183,16 @@ need for one engine to know what info/collections returns for other engines.
   and version string for the engine itself, so it can take the necessary
   action when these change.
 
+* The sync manager will call a special "prepare" function on the engine,
+  passing the current global version and the engine's current syncID and
+  version. This function will return an enum of actions the manager should
+  take. Initial supported actions will include only "can't sync due to version",
+  but we forsee a requirement in the future which indicates "please abandon
+  this syncID and generate a new one" to support the use-case described in
+  [this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1199077#c23).
+  Note that this function could fail (eg, storage might be corrupt), in which
+  case the engine will not be asked to sync.
+
 * The sync manager will manage keys and pass the relevant key into the engine.
   Keys for engines should not be exposed to engines other than the key it is
   for (although currently, in practice, all engines share the same key, but
@@ -156,13 +202,47 @@ need for one engine to know what info/collections returns for other engines.
   engine and a token which can be used to access storage. Specific engines
   never talk to the token server.
 
+## Rust implementation plan
+
+We will implement a sync manager in Rust. In the first instance, the Rust
+implemented manager will only support Rust implemented engines - there are
+no current requirements for this implementation to support "external" engines.
+
+Further, this Rust implementation will only support engines implemented in the
+same library as the manager. This should ease the registration and calling of
+engines by the rust code and avoid requiring the FFI to pass object or
+function references around. It also means that there remains a single function
+in our library to perform the sync of whatever engines are in the library.
+
+## External implementation plans
+
+We have identified that iOS will, at least in the short term, want the
+sync manager to be implemented in Swift. This will be responsible for
+syncing both the Swift and Rust implemented engines.
+
+At some point in the future, Desktop may do the same - we will have both
+Rust and JS implemented engines which need to be coordinated. We ignore this
+requirement for now.
+
+This approach still has a fairly easy time coordinating with the Rust
+implemented engines - the FFI will need to expose the relevant sync
+entry-points to be called by Swift, but the Swift code can hard-code the
+Rust engines it has and make explicit calls to these entry-points.
+
+This Swift code will need to create the structures identified below, but this
+shouldn't be too much of a burden as it already has the information necessary
+to do so (ie, it already has info/collections etc)
+
+TODO: dig into the Swift code and make sure this is sane.
+
 # Details
 ## Structure definitions
 
 While we use rust struct definitions here, it's important to keep in mind that
 as mentioned above, we'll need to support the manager being written in
-something other than rust. As the data is relatively small, it may (or may
-not) be desirable to use JSON as the serialization format.
+something other than rust. The definitions below are designed to be easy to
+serialize and used across the FFI - probably using protobufs, although JSON
+would also be an option if there was a good reason to prefer that.
 
 ```rust
 // The main structure passed to a sync implementation. This needs to carry
@@ -173,8 +253,8 @@ struct GlobalEngineState {
     // the result of info/configuration.
     config: GlobalConfig,
 
-    // The token server token.
-    storage_token: Vec[u8] (??), // not clear on the type here, but whatever.
+    // The token server token, used for authenticating with the storage servers.
+    storage_token: Vec<u8>, // (??) not clear on the type here, but whatever.
 
     // Info about the collections managed by this engine. In most cases there
     // will be exactly 1.
@@ -194,6 +274,14 @@ struct CollectionState {
     // differs from last time.
     sync_id: SyncGuid,
 
+    // The current version for the engine, as read from meta/global.
+    // Not clear that "u32" is the best option here - I guess it's OK so
+    // long as we treat an invalid u32 representation sanely.
+    // Note that persisting this may not be required if there's only one
+    // version supported, as the value can be compared against a hard-coded
+    // value in the engine.
+    version: u32,
+
     // The keys to be used for this collection. This may be the default key (ie,
     // used for all collections) or one specific to the collection, but the
     // engine doesn't need to know that.
@@ -203,7 +291,10 @@ struct CollectionState {
     commands: Vec<Command>
 }
 
- struct Command {
+// Used to support commands. Will either be a strongly typed enum, or a
+// weakly typed thing (such as {command: String, args: Vec<String>})
+// TBD.
+struct Command {
     ...
 }
 ```
@@ -212,9 +303,6 @@ struct CollectionState {
 ## Sync Manager
 
 ```rust
-// Register an engine.
-fn register_engine(name: String, collections: Vec<String>, sync_callback: Fn<...>)
-
 // Get the list of engines which are declined. There's a bit of confusion here
 // between an "engine" and a "collection" - eg, assuming history ends up using
 // 2 collections, the UI will want 1 entry.
@@ -222,10 +310,10 @@ fn register_engine(name: String, collections: Vec<String>, sync_callback: Fn<...
 // it doesn't understand?
 // Will return None if we haven't yet done a first sync so don't know. Will
 // return an empty vec if we have synced but no engines are declined.
-fn get_declined() -> Option<Vec<String>>
+fn get_declined() -> Option<Vec<String>>;
 
 // Ditto here - a bit of confusion between "collection" and "engine" here.
-fn enable_engine(String, bool)
+fn enable_engine(String, bool) -> Result<()>;
 
 // TODO: let's think a little more about how desktop uses a single "addons"
 // pref which controls addons *and* storage.sync, and how a single "Forms"
@@ -234,13 +322,11 @@ fn enable_engine(String, bool)
 // Do a sync now. There's a special error code to indicate that something
 // seems to have gone wrong with auth, which is surfaced to the app, so
 // it can call on FxA to do magic.
-fn sync_now(engines: Option<Vec<String>>) -> Result<()>
+fn sync_now(engines: Option<Vec<String>>) -> Result<()>;
 
-// Stop syncing ASAP. Called as the app is shutting down, and possibly
-// in other circumstances, such as when wifi is lost but the user has
-// opted in to syncing only on wifi
-// TBD - does this make sense? If so, how long is the app expected to wait?
-fn stop()
+// Stop syncing ASAP. This might be called as the app is shutting down or when
+// the app has lost wifi, for example.
+fn stop();
 
 // others?
 ```
@@ -248,9 +334,28 @@ fn stop()
 ## Engines
 
 ```rust
-    // Perform the sync of the engine. When asked to sync, the manager will
-    // create a GlobalEngineState specific to the engine and pass it in.
-    fn sync(state: GlobalEngineState) -> ???
+#[repr(u8)]
+pub enum PrepareAction {
+    // No special action is required.
+    NoAction = 0,
+    // This engine can not sync because the version already on the server is
+    // greater than this engine supports.
+    VersionLockout = 1,
+    // The sync engine is attempting to recover from an unusual state and the
+    // existing syncID should be discarded.
+    NewSyncId = 2,
+}
+
+// Prepare for a sync. Passed whatever values are in info/collections
+// before the sync manager has generated new GUIDs or versions (ie, on
+// the very first sync to a new storage node, we'd expect all to be None).
+// Result is the action the manager should take before calling the sync
+// method.
+fn prepare(global_version: Option<u32>, engine_syncid: Option<SyncGuid>, engine_version: Option<u32>) -> Result<PrepareAction>;
+
+// Perform the sync of the engine. When asked to sync, the manager will
+// create a GlobalEngineState specific to the engine and pass it in.
+fn sync(state: GlobalEngineState) -> Result<SomeTelemetryObject>;
 ```
 
 ### Notes
