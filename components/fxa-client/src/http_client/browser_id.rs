@@ -18,6 +18,7 @@ use serde_json::json;
 mod hawk_request;
 pub(crate) mod jwt_utils;
 pub(crate) mod rsa;
+pub(crate) mod dsa;
 
 const HKDF_SALT: [u8; 32] = [0b0; 32];
 const KEY_LENGTH: usize = 32;
