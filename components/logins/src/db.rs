@@ -33,17 +33,12 @@ impl LoginDb {
         {
             util::init_test_logging();
         }
-
         let encryption_pragmas = if let Some(key) = encryption_key {
-            // TODO: We probably should support providing a key that doesn't go
-            // through PBKDF2 (e.g. pass it in as hex, or use sqlite3_key
-            // directly. See https://www.zetetic.net/sqlcipher/sqlcipher-api/#key
-            // "Raw Key Data" example. Note that this would be required to open
-            // existing iOS sqlcipher databases).
+            if !cfg!(feature = "sqlcipher") {
+                panic!("Attempt to specify encryption key when compiled without SQLcipher support");
+            }
             format!(
-                "
-                PRAGMA key = '{}';
-
+                "PRAGMA key = '{}';
                 -- SQLcipher pre-4.0.0 compatibility. Using SHA1 still
                 -- is less than ideal, but should be fine. Real uses of
                 -- this (lockbox, etc) use a real random string for the
@@ -52,9 +47,8 @@ impl LoginDb {
                 PRAGMA cipher_page_size = 1024;
                 PRAGMA kdf_iter = 64000;
                 PRAGMA cipher_hmac_algorithm = HMAC_SHA1;
-                PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1;
-            ",
-                sql_support::escape_string_for_pragma(key)
+                PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1;",
+                key = sql_support::escape_string_for_pragma(key),
             )
         } else {
             "".to_owned()

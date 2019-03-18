@@ -46,6 +46,9 @@ impl PlacesDb {
         // help ensure good performance on autocomplete-style queries. The default value is 1024,
         // which the SQLcipher docs themselves say is too small and should be changed.
         let encryption_pragmas = if let Some(key) = encryption_key {
+            if !cfg!(feature = "sqlcipher") {
+                panic!("Attempt to specify encryption key when compiled without SQLcipher support");
+            }
             format!(
                 "PRAGMA key = '{key}';
                  PRAGMA cipher_page_size = {page_size};",
@@ -54,12 +57,16 @@ impl PlacesDb {
             )
         } else {
             format!(
-                "PRAGMA page_size = {};
-                 -- Disable calling mlock/munlock for every malloc/free.
-                 -- In practice this results in a massive speedup, especially
-                 -- for insert-heavy workloads.
-                 PRAGMA cipher_memory_security = false;",
-                PAGE_SIZE
+                "PRAGMA page_size = {}; {}",
+                PAGE_SIZE,
+                if cfg!(feature = "sqlcipher") {
+                    // Disable calling mlock/munlock for every malloc/free. In
+                    // practice this results in a massive speedup, especially
+                    // for insert-heavy workloads.
+                    "PRAGMA cipher_memory_security = false;"
+                } else {
+                    ""
+                }
             )
         };
 

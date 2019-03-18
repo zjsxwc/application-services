@@ -8,6 +8,7 @@ authors = ["Thom Chiovoloni <tchiovoloni@mozilla.com>"]
 ffi = ["ffi-support"]
 log_query_plans = ["sql-support/log_query_plans"]
 default = []
+sqlcipher = ["rusqlite/sqlcipher"]
 
 [dependencies]
 sync15 = { path = "../sync15" }
@@ -23,7 +24,7 @@ ffi-support = { path = "../support/ffi", optional = true }
 
 [dependencies.rusqlite]
 version = "0.16.0"
-features = ["sqlcipher", "limits"]
+features = ["limits"]
 
 [dev-dependencies]
 more-asserts = "0.2.1"

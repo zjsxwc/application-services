@@ -10,5 +10,5 @@ crate-type = ["staticlib"]
 [dependencies]
 fxaclient_ffi = { path = "../../../components/fxa-client/ffi" }
 logins_ffi = { path = "../../../components/logins/ffi" }
-places-ffi = { path = "../../../components/places/ffi" }
+places-ffi = { path = "../../../components/places/ffi", features = ["sqlcipher"] }
 rc_log_ffi = { path = "../../../components/rc_log" }

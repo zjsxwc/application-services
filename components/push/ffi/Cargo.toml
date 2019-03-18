@@ -26,7 +26,7 @@ communications = { path = "../communications" }
 
 [dependencies.rusqlite]
 version = "0.16.0"
-features = ["sqlcipher", "limits", "functions"]
+features = ["limits", "functions"]
 
 [dependencies.sync15]
 path = "../../sync15"
