@@ -23,20 +23,6 @@ with the following highlights:</p>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Firefox Accounts Train-119]]></title>
-        <id>https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html</id>
-        <link href="https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html">
-        </link>
-        <updated>2018-09-14T06:00:00Z</updated>
-        <summary type="html"><![CDATA[<p>Hi All,</p>
-<p>On August 30th, we shipped FxA train-119 to production
-with the following highlights:</p>
-]]></summary>
-        <author>
-            <name>Shane Tomlinson</name>
-        </author>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Firefox Accounts Train-120]]></title>
         <id>https://mozilla.github.io/application-services/blog/2018/09/14/train-120.html</id>
         <link href="https://mozilla.github.io/application-services/blog/2018/09/14/train-120.html">
@@ -44,6 +30,20 @@ with the following highlights:</p>
         <updated>2018-09-14T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Hi All,</p>
 <p>On September 10th, we shipped FxA train-120 to production
+with the following highlights:</p>
+]]></summary>
+        <author>
+            <name>Shane Tomlinson</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Firefox Accounts Train-119]]></title>
+        <id>https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html</id>
+        <link href="https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html">
+        </link>
+        <updated>2018-09-14T06:00:00Z</updated>
+        <summary type="html"><![CDATA[<p>Hi All,</p>
+<p>On August 30th, we shipped FxA train-119 to production
 with the following highlights:</p>
 ]]></summary>
         <author>
