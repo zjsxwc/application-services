@@ -3,12 +3,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 use crate::bso_record::{EncryptedBso, Payload};
-use crate::client::{Sync15ClientResponse, Sync15StorageClient};
+use crate::client::Sync15StorageClient;
 use crate::error::{self, ErrorKind, Result};
 use crate::key_bundle::KeyBundle;
 use crate::request::{CollectionRequest, NormalResponseHandler, UploadInfo};
+use crate::state::GlobalState;
 use crate::util::ServerTimestamp;
-use crate::CollState;
 
 #[derive(Debug, Clone)]
 pub struct RecordChangeset<Payload> {
@@ -51,7 +51,7 @@ impl OutgoingChangeset {
     pub fn post(
         self,
         client: &Sync15StorageClient,
-        state: &CollState,
+        state: &GlobalState,
         fully_atomic: bool,
     ) -> Result<UploadInfo> {
         Ok(CollectionUpdate::new_from_changeset(client, state, self, fully_atomic)?.upload()?)
@@ -61,29 +61,18 @@ impl OutgoingChangeset {
 impl IncomingChangeset {
     pub fn fetch(
         client: &Sync15StorageClient,
-        state: &mut CollState,
+        state: &GlobalState,
         collection: String,
         collection_request: &CollectionRequest,
     ) -> Result<IncomingChangeset> {
-        let (records, timestamp) = match client.get_encrypted_records(collection_request)? {
-            Sync15ClientResponse::Success {
-                record,
-                last_modified,
-                ..
-            } => (record, last_modified),
-            other => return Err(other.create_storage_error().into()),
-        };
-        // xxx - duplication below of `timestamp` smells wrong
-        state.last_modified = timestamp;
+        let records = client.get_encrypted_records(collection_request)?;
+        let timestamp = state.last_modified_or_zero(&collection);
         let mut result = IncomingChangeset::new(collection, timestamp);
         result.changes.reserve(records.len());
+        let key = state.key_for_collection(&result.collection)?;
         for record in records {
-            // if we see a HMAC error, we've made an explicit decision to
-            // NOT handle it here, but restart the global state machine.
-            // That should cause us to re-read crypto/keys and things should
-            // work (although if for some reason crypto/keys was updated but
-            // not all storage was wiped we are probably screwed.)
-            let decrypted = record.decrypt(&state.key)?;
+            // TODO: if we see a HMAC error, may need to update crypto/keys?
+            let decrypted = record.decrypt(&key)?;
             result.changes.push(decrypted.into_timestamped_payload());
         }
         Ok(result)
@@ -91,24 +80,24 @@ impl IncomingChangeset {
 }
 
 #[derive(Debug, Clone)]
-pub struct CollectionUpdate<'a> {
+pub struct CollectionUpdate<'a, 'b> {
     client: &'a Sync15StorageClient,
-    state: &'a CollState,
+    state: &'b GlobalState,
     collection: String,
     xius: ServerTimestamp,
     to_update: Vec<EncryptedBso>,
     fully_atomic: bool,
 }
 
-impl<'a> CollectionUpdate<'a> {
+impl<'a, 'b> CollectionUpdate<'a, 'b> {
     pub fn new(
         client: &'a Sync15StorageClient,
-        state: &'a CollState,
+        state: &'b GlobalState,
         collection: String,
         xius: ServerTimestamp,
         records: Vec<EncryptedBso>,
         fully_atomic: bool,
-    ) -> CollectionUpdate<'a> {
+    ) -> CollectionUpdate<'a, 'b> {
         CollectionUpdate {
             client,
             state,
@@ -121,17 +110,18 @@ impl<'a> CollectionUpdate<'a> {
 
     pub fn new_from_changeset(
         client: &'a Sync15StorageClient,
-        state: &'a CollState,
+        state: &'b GlobalState,
         changeset: OutgoingChangeset,
         fully_atomic: bool,
-    ) -> Result<CollectionUpdate<'a>> {
+    ) -> Result<CollectionUpdate<'a, 'b>> {
         let collection = changeset.collection.clone();
+        let key_bundle = state.key_for_collection(&collection)?;
         let xius = changeset.timestamp;
-        if xius < state.last_modified {
+        if xius < state.last_modified_or_zero(&collection) {
             // Not actually interrupted, but we know we'd fail the XIUS check.
             return Err(ErrorKind::BatchInterrupted.into());
         }
-        let to_update = changeset.encrypt(&state.key)?;
+        let to_update = changeset.encrypt(&key_bundle)?;
         Ok(CollectionUpdate::new(
             client,
             state,

@@ -4,7 +4,6 @@
 
 use crate::changeset::{CollectionUpdate, IncomingChangeset, OutgoingChangeset};
 use crate::client::Sync15StorageClient;
-use crate::coll_state::{LocalCollStateMachine, StoreSyncAssociation};
 use crate::error::Error;
 use crate::request::CollectionRequest;
 use crate::state::GlobalState;
@@ -37,66 +36,38 @@ pub trait Store {
     /// to handle "backfills" etc
     fn get_collection_request(&self) -> Result<CollectionRequest, failure::Error>;
 
-    /// Get persisted sync IDs. If they don't match the global state we'll be
-    /// `reset()` with the new IDs.
-    fn get_sync_assoc(&self) -> Result<StoreSyncAssociation, failure::Error>;
-
-    /// Reset the store without wiping local data, ready for a "first sync".
-    /// `assoc` defines how this store is to be associated with sync.
-    fn reset(&self, assoc: &StoreSyncAssociation) -> Result<(), failure::Error>;
+    fn reset(&self) -> Result<(), failure::Error>;
 
     fn wipe(&self) -> Result<(), failure::Error>;
 }
 
 pub fn synchronize(
     client: &Sync15StorageClient,
-    global_state: &GlobalState,
+    state: &GlobalState,
     store: &Store,
     fully_atomic: bool,
     telem_engine: &mut telemetry::Engine,
 ) -> Result<(), Error> {
     let collection = store.collection_name();
     log::info!("Syncing collection {}", collection);
-
-    // our global state machine is ready - get the collection machine going.
-    let mut coll_state = match LocalCollStateMachine::get_state(store, global_state)? {
-        Some(coll_state) => coll_state,
-        None => {
-            // XXX - this is either "error" or "declined".
-            log::warn!(
-                "can't setup for the {} collection - hopefully it works later",
-                collection
-            );
-            return Ok(());
-        }
-    };
-
     let collection_request = store.get_collection_request()?;
-    let incoming_changes = IncomingChangeset::fetch(
-        client,
-        &mut coll_state,
-        collection.into(),
-        &collection_request,
-    )?;
-    assert_eq!(incoming_changes.timestamp, coll_state.last_modified);
+    let incoming_changes =
+        IncomingChangeset::fetch(client, state, collection.into(), &collection_request)?;
+    let last_changed_remote = incoming_changes.timestamp;
 
     log::info!(
         "Downloaded {} remote changes",
         incoming_changes.changes.len()
     );
-    let new_timestamp = incoming_changes.timestamp;
     let mut telem_incoming = telemetry::EngineIncoming::new();
     let mut outgoing = store.apply_incoming(incoming_changes, &mut telem_incoming)?;
     telem_engine.incoming(telem_incoming);
 
-    // xxx - duplication below smells wrong
-    outgoing.timestamp = new_timestamp;
-    coll_state.last_modified = new_timestamp;
+    outgoing.timestamp = last_changed_remote;
 
     log::info!("Uploading {} outgoing changes", outgoing.changes.len());
     let upload_info =
-        CollectionUpdate::new_from_changeset(client, &coll_state, outgoing, fully_atomic)?
-            .upload()?;
+        CollectionUpdate::new_from_changeset(client, state, outgoing, fully_atomic)?.upload()?;
 
     log::info!(
         "Upload success ({} records success, {} records failed)",

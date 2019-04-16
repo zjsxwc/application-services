@@ -5,7 +5,6 @@
 use crate::db::db::PlacesDb;
 use crate::error::*;
 use crate::history_sync::store::HistoryStore;
-use crate::storage::{delete_meta, get_meta, put_meta};
 use crate::util::normalize_path;
 use lazy_static::lazy_static;
 use rusqlite::OpenFlags;
@@ -18,14 +17,7 @@ use std::sync::{
     atomic::{AtomicBool, AtomicUsize, Ordering},
     Arc, Mutex, Weak,
 };
-use sync15::{telemetry, MemoryCachedState};
-
-// Not clear if this should be here, but this is the "global sync state"
-// which is persisted to disk and reused for all engines.
-// Note that this is only ever round-tripped, and never changed by, or impacted
-// by a store or collection, so it's safe to storage globally rather than
-// per collection.
-pub const GLOBAL_STATE_META_KEY: &str = "global_sync_state_v2";
+use sync15::{telemetry, ClientInfo};
 
 #[repr(u8)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -69,8 +61,7 @@ lazy_static! {
 static ID_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
 struct SyncState {
-    mem_cached_state: Cell<MemoryCachedState>,
-    disk_cached_state: Cell<Option<String>>,
+    client_info: Cell<Option<ClientInfo>>,
 }
 
 /// The entry-point to the places API. This object gives access to database
@@ -224,19 +215,6 @@ impl PlacesApi {
         Ok(())
     }
 
-    fn get_disk_persisted_state(&self) -> Result<Option<String>> {
-        let conn = self.open_connection(ConnectionType::Sync)?;
-        Ok(get_meta::<String>(&conn, GLOBAL_STATE_META_KEY)?)
-    }
-
-    fn set_disk_persisted_state(&self, state: &Option<String>) -> Result<()> {
-        let conn = self.open_connection(ConnectionType::Sync)?;
-        match state {
-            Some(ref s) => put_meta(&conn, GLOBAL_STATE_META_KEY, s),
-            None => delete_meta(&conn, GLOBAL_STATE_META_KEY),
-        }
-    }
-
     // TODO: We need a better result here so we can return telemetry.
     // We possibly want more than just a `SyncTelemetryPing` so we can
     // return additional "custom" telemetry if the app wants it.
@@ -249,35 +227,13 @@ impl PlacesApi {
         let conn = self.open_sync_connection()?;
         if guard.is_none() {
             *guard = Some(SyncState {
-                mem_cached_state: Cell::default(),
-                disk_cached_state: Cell::new(self.get_disk_persisted_state()?),
+                client_info: Cell::new(None),
             });
         }
-
         let sync_state = guard.as_ref().unwrap();
-        // Note that counter-intuitively, this must be called before we do a
-        // bookmark sync too, to ensure the shared global state is correct.
-        HistoryStore::migrate_v1_global_state(&conn)?;
-
-        let store = HistoryStore::new(&conn);
-        let mut mem_cached_state = sync_state.mem_cached_state.take();
-        let mut disk_cached_state = sync_state.disk_cached_state.take();
+        let store = HistoryStore::new(&conn, &sync_state.client_info);
         let mut sync_ping = telemetry::SyncTelemetryPing::new();
-        let result = store.sync(
-            &client_init,
-            &key_bundle,
-            &mut mem_cached_state,
-            &mut disk_cached_state,
-            &mut sync_ping,
-        );
-        // even on failure we set the persisted state - sync itself takes care
-        // to ensure this has been None'd out if necessary.
-        self.set_disk_persisted_state(&disk_cached_state)?;
-        sync_state.mem_cached_state.replace(mem_cached_state);
-        sync_state.disk_cached_state.replace(disk_cached_state);
-
-        result?;
-
+        store.sync(&client_init, &key_bundle, &mut sync_ping)?;
         Ok(sync_ping)
     }
 }

@@ -235,11 +235,16 @@ impl TestClient {
         Ok((client_init, root_sync_key))
     }
 
-    pub fn fully_wipe_server(&mut self) -> Result<(), failure::Error> {
-        use sync15::{SetupStorageClient, Sync15StorageClient};
-        let client_init = self.data_for_sync()?.0;
-        Sync15StorageClient::new(client_init)?.wipe_all_remote()?;
-        Ok(())
+    pub fn fully_wipe_server(&mut self) -> Result<bool, failure::Error> {
+        use sync15::SetupStorageClient;
+        // XXX cludgey to use logins_engine here...
+        let info = self.logins_engine.client_info.replace(None);
+        let res = match &info {
+            Some(info) => info.test_only_get_client().wipe_all_remote().map(|_| true),
+            None => Ok(false),
+        };
+        self.logins_engine.client_info.replace(info);
+        Ok(res?)
     }
 
     pub fn fully_reset_local_db(&mut self) -> Result<(), failure::Error> {
@@ -257,11 +262,12 @@ pub fn cleanup_server(clients: Vec<&mut TestClient>) -> Result<(), failure::Erro
     log::info!("Cleaning up server after tests...");
     for c in clients {
         match c.fully_wipe_server() {
-            Ok(()) => return Ok(()),
+            Ok(true) => return Ok(()),
+            Ok(false) => {
+                log::info!("Can't wipe server (no client state). Hopefully this is intentional");
+            }
             Err(e) => {
                 log::warn!("Error when wiping server: {:?}", e);
-                // and I guess we try again, even though there's no reason
-                // the next client should succeed here.
             }
         }
     }
