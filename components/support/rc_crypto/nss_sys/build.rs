@@ -149,11 +149,22 @@ fn fix_include_dirs(mut builder: Builder) -> Builder {
             if toolchain == "aarch64" {
                 toolchain = "arm64";
             }
+            let mut triple = env::var("TARGET").unwrap();
+            if triple == "armv7-linux-androideabi" {
+                triple = "arm-linux-androideabi".to_string();
+            }
             builder = builder
                 .detect_include_paths(false)
                 .clang_arg(format!(
                     "--sysroot={}",
                     &ndk_root.join("sysroot").to_str().unwrap()
+                ))
+                .clang_arg(format!(
+                    "-isysroot={}",
+                    &ndk_root
+                        .join(format!("/sysroot/usr/include/{}", triple))
+                        .to_str()
+                        .unwrap()
                 ))
                 .clang_arg(format!("-D__ANDROID_API__={}", android_api_version))
                 // stddef.h isn't defined otherwise.
