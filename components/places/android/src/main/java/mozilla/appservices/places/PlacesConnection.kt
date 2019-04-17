@@ -80,7 +80,7 @@ class PlacesApi(path: String, encryptionKey: String? = null) : PlacesManager, Au
     }
 
     override fun syncHistory(syncInfo: SyncAuthInfo) {
-        rustCall(this) { error ->
+        val rustBuf = rustCall { error ->
             LibPlacesFFI.INSTANCE.sync15_history_sync(
                     this.handle.get(),
                     syncInfo.kid,
@@ -90,6 +90,7 @@ class PlacesApi(path: String, encryptionKey: String? = null) : PlacesManager, Au
                     error
             )
         }
+        LibPlacesFFI.INSTANCE.places_destroy_bytebuffer(rustBuf)
     }
 
     override fun syncBookmarks(syncInfo: SyncAuthInfo) {
