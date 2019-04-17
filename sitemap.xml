@@ -3,6 +3,8 @@
 <url> <loc>https://mozilla.github.io/application-services/help.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> <xhtml:link rel="alternate" hreflang="en" href="https://mozilla.github.io/application-services/en/help.html" /> </url>
 <url> <loc>https://mozilla.github.io/application-services/index.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> <xhtml:link rel="alternate" hreflang="en" href="https://mozilla.github.io/application-services/en/index.html" /> </url>
 <url> <loc>https://mozilla.github.io/application-services/users.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> <xhtml:link rel="alternate" hreflang="en" href="https://mozilla.github.io/application-services/en/users.html" /> </url>
+<url> <loc>https://mozilla.github.io/application-services/blog/2019/04/16/fxa-in-firefox.html</loc> <changefreq>weekly</changefreq> <priority>0.3</priority> </url>
+<url> <loc>https://mozilla.github.io/application-services/blog/2019/04/02/rust-ffi.html</loc> <changefreq>weekly</changefreq> <priority>0.3</priority> </url>
 <url> <loc>https://mozilla.github.io/application-services/blog/2018/10/02/train-121.html</loc> <changefreq>weekly</changefreq> <priority>0.3</priority> </url>
 <url> <loc>https://mozilla.github.io/application-services/blog/2018/09/14/train-120.html</loc> <changefreq>weekly</changefreq> <priority>0.3</priority> </url>
 <url> <loc>https://mozilla.github.io/application-services/blog/2018/09/14/train-119.html</loc> <changefreq>weekly</changefreq> <priority>0.3</priority> </url>

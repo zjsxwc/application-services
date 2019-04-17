@@ -4,7 +4,7 @@
         <title>Firefox Application Services Blog</title>
         <link>https://mozilla.github.io/application-services/blog</link>
         <description>The best place to stay up-to-date with the latest Firefox Application Services news and events.</description>
-        <lastBuildDate>Tue, 02 Oct 2018 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 16 Apr 2019 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,25 @@
             <link>https://mozilla.github.io/application-services/blog</link>
         </image>
         <copyright>Copyright © 2019 Firefox Application Services</copyright>
+        <item>
+            <title><![CDATA[Making Firefox Accounts more transparent in Firefox]]></title>
+            <link>https://mozilla.github.io/application-services/blog/2019/04/16/fxa-in-firefox.html</link>
+            <guid>https://mozilla.github.io/application-services/blog/2019/04/16/fxa-in-firefox.html</guid>
+            <pubDate>Tue, 16 Apr 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>Over the past few months the Firefox Accounts team have been working on making users more aware of Firefox Account and
+the benefits of having an account. This phase had an emphasis on our desktop users because we believe that would have the highest impact.</p>
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Crossing the Rust FFI frontier with Protocol Buffers]]></title>
+            <link>https://mozilla.github.io/application-services/blog/2019/04/02/rust-ffi.html</link>
+            <guid>https://mozilla.github.io/application-services/blog/2019/04/02/rust-ffi.html</guid>
+            <pubDate>Tue, 02 Apr 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>My team, the application services team at Mozilla, works on Firefox Sync, Firefox Accounts and WebPush.</p>
+<p>These features are currently shipped on Firefox Desktop, Android and iOS browsers.
+They will soon be available in our new products such as our upcoming Android browser, our password manager Lockbox, and Firefox for Fire TV.</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Firefox Accounts Train-121]]></title>
             <link>https://mozilla.github.io/application-services/blog/2018/10/02/train-121.html</link>
