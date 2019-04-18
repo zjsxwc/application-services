@@ -160,9 +160,9 @@ fn fix_include_dirs(mut builder: Builder) -> Builder {
                     &ndk_root.join("sysroot").to_str().unwrap()
                 ))
                 .clang_arg(format!(
-                    "-isysroot={}",
+                    "-isystem {}",
                     &ndk_root
-                        .join(format!("/sysroot/usr/include/{}", triple))
+                        .join(format!("sysroot/usr/include/{}", triple))
                         .to_str()
                         .unwrap()
                 ))
