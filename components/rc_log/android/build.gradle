@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
+//apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -20,53 +20,29 @@ android {
             consumerProguardFiles "$rootDir/proguard-rules-consumer-jna.pro"
         }
 
-        withoutLib {
-            initWith release
-        }
+//        withoutLib {
+//            initWith release
+//        }
     }
 
     sourceSets {
         test.resources.srcDirs += "$buildDir/rustJniLibs/desktop"
+        test.resources.srcDirs += "$buildDir/nativeLibs/desktop"
     }
 
     // Uncomment to include debug symbols in native library builds.
     // packagingOptions { doNotStrip "**/*.so" }
 }
-
-configurations {
-    withoutLib {
-    }
-}
-
+//
+//configurations {
+//    withoutLib {
+//    }
+//}
+//
 afterEvaluate {
     android.sourceSets.debug.jniLibs.srcDirs = android.sourceSets.main.jniLibs.srcDirs
     android.sourceSets.release.jniLibs.srcDirs = android.sourceSets.main.jniLibs.srcDirs
     android.sourceSets.main.jniLibs.srcDirs = []
-}
-
-cargo {
-    // The directory of the Cargo.toml to build.
-    module = '..'
-
-    // The Android NDK API level to target.
-    apiLevel = 21
-
-    // Where Cargo writes its outputs.
-    targetDirectory = '../../../target'
-
-    libname = 'rc_log_ffi'
-
-    targets = rootProject.ext.rustTargets
-
-    profile = rootProject.ext.nonMegazordProfile
-
-    exec = rootProject.ext.cargoExec
-
-    extraCargoBuildArguments = rootProject.ext.extraCargoBuildArguments
-
-    features {
-        defaultAnd("force_android")
-    }
 }
 
 configurations {
@@ -89,6 +65,9 @@ configurations {
 dependencies {
     jnaForTest "net.java.dev.jna:jna:$jna_version@jar"
     implementation "net.java.dev.jna:jna:$jna_version@aar"
+
+    jnaForTest project(path: ':full-megazord', configuration: 'jnaForTest')
+    api project(':full-megazord')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -116,10 +95,12 @@ afterEvaluate {
             productFlavor += "${it.name.capitalize()}"
         }
         def buildType = "${variant.buildType.name.capitalize()}"
-        tasks["generate${productFlavor}${buildType}Assets"].dependsOn(tasks["cargoBuild"])
+        // Needed?
+//        tasks["process${productFlavor}${buildType}Assets"].dependsOn(tasks.getByPath(":full-megazord:cargoBuild"))
 
         // For unit tests.
-        tasks["process${productFlavor}${buildType}UnitTestJavaRes"].dependsOn(tasks["cargoBuild"])
+        tasks["process${productFlavor}${buildType}UnitTestJavaRes"].dependsOn(tasks.getByPath(":full-megazord:cargoBuild"))
+        tasks["process${productFlavor}${buildType}UnitTestJavaRes"].dependsOn(tasks.getByPath(":full-megazord:copyNativeLibs"))
     }
 }
 

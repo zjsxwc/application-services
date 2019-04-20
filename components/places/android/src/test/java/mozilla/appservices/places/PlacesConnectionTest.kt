@@ -3,15 +3,16 @@
 
 package mozilla.appservices.places
 
+import mozilla.appservices.Megazord
 import org.junit.After
-import org.junit.rules.TemporaryFolder
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import org.junit.Test
-import org.junit.Assert.assertEquals
-import org.junit.Before
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
@@ -25,6 +26,7 @@ class PlacesConnectionTest {
 
     @Before
     fun initAPI() {
+        Megazord.initForTesting()
         api = PlacesApi(path = dbFolder.newFile().absolutePath)
         db = api.getWriter()
     }

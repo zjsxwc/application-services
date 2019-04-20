@@ -19,12 +19,12 @@ class LibRustLogAdapter {
     }
 
     private static String jnaLibraryName() {
-        String libname = System.getProperty("mozilla.appservices.rc_log_ffi_lib_name");
+        String libname = System.getProperty("mozilla.appservices.megazord");
         if (libname != null) {
-            Log.i("AppServices", "Using rc_log_ffi_lib_name: " + libname);
+            Log.i("AppServices", "Using megazord name: " + libname);
             return libname;
         } else {
-            return "rc_log_ffi";
+            return "megazord";
         }
     }
 

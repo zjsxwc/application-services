@@ -3,13 +3,12 @@
 
 package mozilla.appservices.rustlog
 
+import mozilla.appservices.Megazord
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-
-import org.junit.Test
-import org.junit.Assert.assertEquals
-import java.lang.RuntimeException
 import java.util.WeakHashMap
 
 @RunWith(RobolectricTestRunner::class)
@@ -25,6 +24,7 @@ class LogTest {
     // (note that it will still need to run sequentially!)
     @Test
     fun testLogging() {
+        Megazord.initForTesting()
         val logs: MutableList<String> = mutableListOf()
         val threadIds = mutableSetOf<Long>()
         val threads = WeakHashMap<Thread, Long>()

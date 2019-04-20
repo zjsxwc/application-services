@@ -5,33 +5,19 @@
 
 package mozilla.appservices.fxaclient.rust
 
-import android.util.Log
 import com.sun.jna.Library
 import com.sun.jna.Native
 import com.sun.jna.Pointer
-import java.lang.reflect.Proxy
 import mozilla.appservices.support.RustBuffer
+import java.lang.reflect.Proxy
 
 @Suppress("FunctionNaming", "FunctionParameterNaming", "LongParameterList", "TooGenericExceptionThrown")
 internal interface LibFxAFFI : Library {
     companion object {
-        private val JNA_LIBRARY_NAME = {
-            val libname = System.getProperty("mozilla.appservices.fxaclient_ffi_lib_name")
-            if (libname != null) {
-                Log.i("AppServices", "Using fxaclient_ffi_lib_name: " + libname)
-                libname
-            } else {
-                "fxaclient_ffi"
-            }
-        }()
+        private val JNA_LIBRARY_NAME = System.getProperty("mozilla.appservices.megazord")
 
         internal var INSTANCE: LibFxAFFI = try {
-            val lib = Native.load<LibFxAFFI>(JNA_LIBRARY_NAME, LibFxAFFI::class.java)
-            if (JNA_LIBRARY_NAME == "fxaclient_ffi") {
-                // Enable logcat logging if we aren't in a megazord.
-                lib.fxa_enable_logcat_logging()
-            }
-            lib
+            Native.load<LibFxAFFI>(JNA_LIBRARY_NAME, LibFxAFFI::class.java)
         } catch (e: UnsatisfiedLinkError) {
             Proxy.newProxyInstance(
                     LibFxAFFI::class.java.classLoader,

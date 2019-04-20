@@ -14,6 +14,16 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
 import kotlin.concurrent.write
 
+
+class RustHttpInit {
+    companion object {
+        @JvmStatic
+        fun init(client: Lazy<Client>) {
+            RustHttpConfig.setClient(client)
+        }
+    }
+}
+
 /**
  * Singleton allowing management of the HTTP backend
  * used by Rust components.

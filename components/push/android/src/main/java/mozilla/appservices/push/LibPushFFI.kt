@@ -5,7 +5,6 @@
 
 package mozilla.appservices.push
 
-import android.util.Log
 import com.sun.jna.Library
 import com.sun.jna.Native
 import com.sun.jna.Pointer
@@ -15,15 +14,7 @@ import java.lang.reflect.Proxy
 @Suppress("FunctionNaming", "FunctionParameterNaming", "LongParameterList", "TooGenericExceptionThrown")
 internal interface LibPushFFI : Library {
     companion object {
-        private val JNA_LIBRARY_NAME = {
-            val libname = System.getProperty("mozilla.appservices.push_ffi_lib_name")
-            if (libname != null) {
-                Log.i("AppServices", "Using push_ffi_lib_name: {$libname}")
-                libname
-            } else {
-                "push_ffi"
-            }
-        }()
+        private val JNA_LIBRARY_NAME = System.getProperty("mozilla.appservices.megazord")
 
         internal var INSTANCE: LibPushFFI = try {
             Native.load<LibPushFFI>(JNA_LIBRARY_NAME, LibPushFFI::class.java)

@@ -1,13 +1,14 @@
 package mozilla.appservices.push
 
+import mozilla.appservices.Megazord
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.junit.Assert.assertEquals
 import java.nio.charset.Charset
 
 @RunWith(RobolectricTestRunner::class)
@@ -21,6 +22,7 @@ class PushTest {
 
     @Before
     fun initDB() {
+        Megazord.initForTesting()
         dbFile = tmpFolder.newFile().toString()
     }
 

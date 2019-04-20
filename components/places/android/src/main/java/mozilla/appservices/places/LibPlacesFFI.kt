@@ -5,35 +5,21 @@
 
 package mozilla.appservices.places
 
-import android.util.Log
 import com.sun.jna.Library
 import com.sun.jna.Native
 import com.sun.jna.Pointer
 import com.sun.jna.PointerType
 import com.sun.jna.StringArray
-import java.lang.reflect.Proxy
 import mozilla.appservices.support.RustBuffer
+import java.lang.reflect.Proxy
 
 @Suppress("FunctionNaming", "FunctionParameterNaming", "LongParameterList", "TooGenericExceptionThrown")
 internal interface LibPlacesFFI : Library {
     companion object {
-        private val JNA_LIBRARY_NAME = {
-            val libname = System.getProperty("mozilla.appservices.places_ffi_lib_name")
-            if (libname != null) {
-                Log.i("AppServices", "Using places_ffi_lib_name: " + libname)
-                libname
-            } else {
-                "places_ffi"
-            }
-        }()
+        private val JNA_LIBRARY_NAME = System.getProperty("mozilla.appservices.megazord")
 
         internal var INSTANCE: LibPlacesFFI = try {
-            val lib = Native.load<LibPlacesFFI>(JNA_LIBRARY_NAME, LibPlacesFFI::class.java)
-            if (JNA_LIBRARY_NAME == "places_ffi") {
-                // Enable logcat logging if we aren't in a megazord.
-                lib.places_enable_logcat_logging()
-            }
-            lib
+            Native.load<LibPlacesFFI>(JNA_LIBRARY_NAME, LibPlacesFFI::class.java)
         } catch (e: UnsatisfiedLinkError) {
             Proxy.newProxyInstance(
                 LibPlacesFFI::class.java.classLoader,

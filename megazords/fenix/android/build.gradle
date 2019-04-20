@@ -3,8 +3,6 @@ apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-import com.sun.jna.Platform
-
 android {
     compileSdkVersion rootProject.ext.build.compileSdkVersion
 
@@ -75,12 +73,8 @@ cargo {
 }
 
 dependencies {
-    api project(path: ':fxa-client-library', configuration: 'withoutLib')
-    api project(path: ':places-library', configuration: 'withoutLib')
-    api project(path: ':push-library', configuration: 'withoutLib')
-    api project(path: ':rustlog-library', configuration: 'withoutLib')
-    api project(path: ':viaduct-library', configuration: 'withoutLib')
-    compile project(path: ':viaduct-library')
+    api project(':as-support-library')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "org.mozilla.components:concept-fetch:$android_components_version"
 

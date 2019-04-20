@@ -18,6 +18,7 @@ members = [
     "components/viaduct",
     "components/sync15",
     "components/rc_log",
+    "megazords/full",
     "megazords/fenix",
     "megazords/lockbox",
     "megazords/reference-browser",

@@ -54,3 +54,9 @@ projects:
     artifactId: fenix-megazord
     publishedArtifacts: [fenix-megazord, fenix-megazord-forUnitTests]
     description: Megazord of [fxaclient, places, push, logging].
+  full-megazord:
+    uploadSymbols: true
+    path: megazords/full/android
+    artifactId: full-megazord
+    publishedArtifacts: [full-megazord, full-megazord-forUnitTests]
+    description: Megazord of all app-services components.
