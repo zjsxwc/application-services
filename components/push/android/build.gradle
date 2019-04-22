@@ -26,7 +26,9 @@ android {
     }
 
     sourceSets {
+        main.jniLibs.srcDirs += "$buildDir/nativeLibs/android"
         test.resources.srcDirs += "$buildDir/rustJniLibs/desktop"
+        test.resources.srcDirs += "$buildDir/nativeLibs/desktop"
     }
 
     // Uncomment to include debug symbols in native library builds.
@@ -116,10 +118,12 @@ afterEvaluate {
         def buildType = "${variant.buildType.name.capitalize()}"
         if (variant.buildType.name != 'withoutLib') {
             tasks["generate${productFlavor}${buildType}Assets"].dependsOn(tasks["cargoBuild"])
+            tasks["generate${productFlavor}${buildType}Assets"].dependsOn(tasks["copyNativeLibs"])
         }
 
         // For unit tests.
         tasks["process${productFlavor}${buildType}UnitTestJavaRes"].dependsOn(tasks["cargoBuild"])
+        tasks["process${productFlavor}${buildType}UnitTestJavaRes"].dependsOn(tasks["copyNativeLibs"])
     }
 }
 
