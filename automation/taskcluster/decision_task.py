@@ -55,10 +55,11 @@ linux_build_env = {
 # Calls "$PLATFORM_libs" functions and returns
 # their tasks IDs.
 def libs_for(*platforms):
-    return list(map(lambda p: globals()[p + "_libs"](), platforms))
+    is_release = os.environ["TASK_FOR"] == "github-release"
+    return list(map(lambda p: globals()[p + "_libs"](is_release), platforms))
 
-def android_libs():
-    return (
+def android_libs(is_release):
+    task = (
         linux_build_task("Android libs (all architectures): build")
         .with_script("""
             pushd libs
@@ -69,11 +70,14 @@ def android_libs():
         .with_artifacts(
             "/build/repo/target.tar.gz",
         )
-        .find_or_create("build.libs.android." + CONFIG.git_sha_for_directory("libs"))
     )
+    if is_release:
+        return task.create()
+    else:
+        return task.find_or_create("build.libs.android." + CONFIG.git_sha_for_directory("libs"))
 
-def desktop_linux_libs():
-    return (
+def desktop_linux_libs(is_release):
+    task = (
         linux_build_task("Desktop libs (Linux): build")
         .with_script("""
             pushd libs
@@ -84,11 +88,14 @@ def desktop_linux_libs():
         .with_artifacts(
             "/build/repo/target.tar.gz",
         )
-        .find_or_create("build.libs.desktop.linux." + CONFIG.git_sha_for_directory("libs"))
     )
+    if is_release:
+        return task.create()
+    else:
+        return task.find_or_create("build.libs.desktop.linux." + CONFIG.git_sha_for_directory("libs"))
 
-def desktop_macos_libs():
-    return (
+def desktop_macos_libs(is_release):
+    task = (
         linux_cross_compile_build_task("Desktop libs (macOS): build")
         .with_script("""
             pushd libs
@@ -99,11 +106,14 @@ def desktop_macos_libs():
         .with_artifacts(
             "/build/repo/target.tar.gz",
         )
-        .find_or_create("build.libs.desktop.macos." + CONFIG.git_sha_for_directory("libs"))
     )
+    if is_release:
+        return task.create()
+    else:
+        return task.find_or_create("build.libs.desktop.macos." + CONFIG.git_sha_for_directory("libs"))
 
-def desktop_win32_x86_64_libs():
-    return (
+def desktop_win32_x86_64_libs(is_release):
+    task = (
         linux_build_task("Desktop libs (win32-x86-64): build")
         .with_script("""
             apt-get install --quiet --yes --no-install-recommends mingw-w64
@@ -115,8 +125,11 @@ def desktop_win32_x86_64_libs():
         .with_artifacts(
             "/build/repo/target.tar.gz",
         )
-        .find_or_create("build.libs.desktop.win32-x86-64." + CONFIG.git_sha_for_directory("libs"))
     )
+    if is_release:
+        return task.create()
+    else:
+        return task.find_or_create("build.libs.desktop.win32-x86-64." + CONFIG.git_sha_for_directory("libs"))
 
 def android_task(task_name, libs_tasks):
     task = linux_cross_compile_build_task(task_name)
@@ -202,9 +215,9 @@ def android_multiarch_release():
     for module_info in module_definitions():
         module = module_info['name']
         build_task = module_build_tasks[module]
-        for artifact_info in module_info['artifacts']:
-            artifact_name = artifact_info['name']
-            artifact = artifact_info['path']
+        for artifact in module_info['artifacts']:
+            artifact_name = artifact['name']
+            artifact_path = artifact['path']
             (
                 BeetmoverTask("Publish Android module: {} via beetmover".format(artifact_name))
                 .with_description("Publish release module {} to {}".format(artifact_name, bucket_public_url))
@@ -212,7 +225,7 @@ def android_multiarch_release():
                 # We want to make sure ALL builds succeeded before doing a release.
                 .with_dependencies(*module_build_tasks.values())
                 .with_upstream_artifact({
-                    "paths": [artifact],
+                    "paths": [artifact_path],
                     "taskId": build_task,
                     "taskType": "build",
                     "zipExtract": True,
@@ -230,12 +243,17 @@ def android_multiarch_release():
 def dockerfile_path(name):
     return os.path.join(os.path.dirname(__file__), "docker", name + ".dockerfile")
 
-
 def linux_task(name):
-    return DockerWorkerTask(name).with_worker_type("application-services-r")
-
+    task = (
+        DockerWorkerTask(name)
+        .with_worker_type("application-services-r")
+    )
+    if os.environ["TASK_FOR"] == "github-release":
+        task.with_features("chainOfTrust")
+    return task
 
 def linux_build_task(name):
+    use_indexed_docker_image = os.environ["TASK_FOR"] != "github-release"
     task = (
         linux_task(name)
         # https://docs.taskcluster.net/docs/reference/workers/docker-worker/docs/caches
@@ -252,7 +270,7 @@ def linux_build_task(name):
         .with_index_and_artifacts_expire_in(build_artifacts_expire_in)
         .with_artifacts("/build/sccache.log")
         .with_max_run_time_minutes(120)
-        .with_dockerfile(dockerfile_path("build"))
+        .with_dockerfile(dockerfile_path("build"), use_indexed_docker_image)
         .with_env(**build_env, **linux_build_env)
         .with_script("""
             rustup toolchain install stable

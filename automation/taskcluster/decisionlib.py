@@ -80,6 +80,7 @@ class Shared:
     """
     def __init__(self):
         self.now = datetime.datetime.utcnow()
+        self.tasks_cache = {}
         self.found_or_created_indexed_tasks = {}
         self.all_tasks = []
 
@@ -210,11 +211,6 @@ class Task:
         if any(r.startswith("index.") for r in routes):
             self.extra.setdefault("index", {})["expires"] = \
                 SHARED.from_now_json(self.index_and_artifacts_expire_in)
-        if hasattr(self, 'features') and self.features.get('chainOfTrust'):
-            image = self.docker_image
-            if image and isinstance(image, dict):
-                cot = self.extra.setdefault("chainOfTrust", {})
-                cot.setdefault('inputs', {})['docker-image'] = image['taskId']
 
         dict_update_if_truthy(
             queue_payload,
@@ -260,6 +256,20 @@ class Task:
             task_id = self.create()
 
         SHARED.found_or_created_indexed_tasks[index_path] = task_id
+        return task_id
+
+    def reuse_or_create(self, cache_id=None):
+        """
+        See if we can re-use a task with the same cache_id or
+        create a new one, this is similar as `find_or_create`
+        except that the scope of this function is limited to
+        its execution since nothing is persisted.
+        """
+        task_id = SHARED.tasks_cache.get(cache_id)
+        if task_id is not None:
+            return task_id
+        task_id = self.create()
+        SHARED.tasks_cache[cache_id] = task_id
         return task_id
 
 class BeetmoverTask(Task):
@@ -337,8 +347,10 @@ class DockerWorkerTask(Task):
                 deindent("\n".join(self.scripts))
             ],
         }
-        if len(self.artifacts) > 0 and "chainOfTrust" not in self.features:
-            self.features["chainOfTrust"] = True
+        if self.features.get("chainOfTrust"):
+            if isinstance(self.docker_image, dict):
+                cot = self.extra.setdefault("chainOfTrust", {})
+                cot.setdefault('inputs', {})['docker-image'] = self.docker_image['taskId']
         return dict_update_if_truthy(
             worker_payload,
             env=self.env,
@@ -396,7 +408,7 @@ class DockerWorkerTask(Task):
             git reset --hard "$APPSERVICES_HEAD_REV"
         """)
 
-    def with_dockerfile(self, dockerfile):
+    def with_dockerfile(self, dockerfile, use_indexed_task=True):
         """
         Build a Docker image based on the given `Dockerfile`, and use it for this task.
 
@@ -434,15 +446,21 @@ class DockerWorkerTask(Task):
                 "servobrowser/taskcluster-bootstrap:image-builder@sha256:" \
                 "0a7d012ce444d62ffb9e7f06f0c52fedc24b68c2060711b313263367f7272d9d"
             )
-            .find_or_create("appservices-docker-image." + digest)
         )
+        if self.features.get("chainOfTrust"):
+            image_build_task.with_features("chainOfTrust")
+        task_index = "appservices-docker-image." + digest
+        if use_indexed_task:
+            image_build_task_id = image_build_task.find_or_create(task_index)
+        else:
+            image_build_task_id = image_build_task.reuse_or_create(task_index)
 
         return self \
-        .with_dependencies(image_build_task) \
+        .with_dependencies(image_build_task_id) \
         .with_docker_image({
             "type": "task-image",
             "path": "public/image.tar.lz4",
-            "taskId": image_build_task,
+            "taskId": image_build_task_id,
         })
 
 
