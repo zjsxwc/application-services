@@ -5,7 +5,6 @@
 import Foundation
 import UIKit
 
-fileprivate let queue = DispatchQueue(label: "com.mozilla.logins-storage")
 
 open class LoginsStorage {
     private var raw: UInt64 = 0
@@ -15,6 +14,7 @@ open class LoginsStorage {
     // we might have a data race between reading `interrupt_handle` in
     // `interrupt()`, and writing it in `doDestroy` (or `doOpen`)
     private let interrupt_handle_lock: NSLock = NSLock()
+    private let queue = DispatchQueue(label: "com.mozilla.logins-storage")
 
     public init(databasePath: String) {
         self.dbPath = databasePath
@@ -22,6 +22,14 @@ open class LoginsStorage {
 
     deinit {
         self.close()
+    }
+
+    /// Returns the number of open LoginsStorage connections.
+    public static func numOpenConnections() -> UInt64 {
+        // Note: This should only be err if there's a bug in the Rust.
+        return try! LoginsStoreError.unwrap({ err in
+            sync15_passwords_num_open_connections(err)
+        })
     }
 
     private func doDestroy() {
@@ -35,8 +43,8 @@ open class LoginsStorage {
                 sync15_passwords_state_destroy(raw, err)
             })
             self.interrupt_handle_lock.lock()
+            defer { self.interrupt_handle_lock.unlock() }
             self.interrupt_handle = nil
-            self.interrupt_handle_lock.unlock()
         }
     }
 
